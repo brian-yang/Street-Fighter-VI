@@ -1,0 +1,6 @@
+# Does not add .class files to repo
+*.class
+
+# Does not add emacs save files to repo
+*~
+
