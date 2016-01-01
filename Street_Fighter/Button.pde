@@ -16,9 +16,17 @@ class Button {
   void Draw() {
     fill(218);
     stroke(255,0,0);
-    rect(x, y, w, h, 10);
+    rect(x, y, w, h, 10); // last argument causes the rounded corners
     textAlign(CENTER, CENTER);
     fill(0);
     text(label, x + (w / 2), y + (h / 2));
   }
+  
+  boolean MouseIsOver() {
+    if (mouseX > x && mouseX < (x + w) && mouseY > y && mouseY < (y + h)) {
+      return true;
+    }
+    return false;
+  }
+
 }
