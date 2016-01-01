@@ -1,0 +1,6 @@
+# Set the default behavior, in case other users have core.autocrlf set to false.
+* text=auto
+
+# Declare files that will be normalized (converted to LF line endings on pushing to the GitHub repo).
+*.java text
+*.pde text
