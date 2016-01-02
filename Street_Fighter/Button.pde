@@ -26,11 +26,8 @@ class Button {
     text(label, x + (w / 2), y + (h / 2));
   }
   
-  boolean MouseIsOver() {
-    if (mouseX > x && mouseX < (x + w) && mouseY > y && mouseY < (y + h)) {
-      return true;
-    }
-    return false;
+  boolean isHovering() {
+    return mouseX > x && mouseX < (x + w) && mouseY > y && mouseY < (y + h);
   }
   
   String getLabel() {

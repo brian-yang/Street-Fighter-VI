@@ -11,10 +11,10 @@ PImage bg;
 void setup() {
   size (1024, 768);
   smooth();
-  buttonSetup();
+
+  setupButtons();
   currentScreen = "Menu";
   bg = loadImage("Background.png");
-  
   screens = new ArrayList<Integer>();
 }
 
@@ -24,31 +24,31 @@ void draw() {
     for (int i = 1; i < BUTTONS.length; i++) {
       screens.add(Integer.valueOf(i));
     }
-    buttonPlacement(100, 125, 65, "vertical");
+    placeButtons(100, 125, 65, "vertical");
   } else if (currentScreen == "Versus") {
     background(0);
     screens.add(Integer.valueOf(0));
     screens.add(Integer.valueOf(BUTTONS.length - 1));
-    buttonPlacement(300, 650, 50, "horizontal");
+    placeButtons(300, 650, 50, "horizontal");
   }
   removeButtons();
 }
 
 void mousePressed() {
   for (int i = 0; i < BUTTONS.length; i++) {
-    if (BUTTONS[i].MouseIsOver()) {
+    if (BUTTONS[i].isHovering()) {
       currentScreen = BUTTONS[i].getLabel();  
     }
   }
 }
 
-void buttonSetup() {
+void setupButtons() {
   for (int i = 0; i < BUTTONS.length; i++) {
     BUTTONS[i] = new Button(LABELS[i], 300, 50);
   }
 }
 
-void buttonPlacement(float startX, float startY, float spacing, String mode) {
+void placeButtons(float startX, float startY, float spacing, String mode) {
   for (Integer I : screens) {
     BUTTONS[I].Draw();
     if (mode.equals("horizontal")) {
