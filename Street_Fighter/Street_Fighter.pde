@@ -1,65 +1,67 @@
+// =======================================================================================================================
 Button menu, vs, training, challenge, customize, data, options, store, quit;
-Button[] buttons;
-String[] labels;
+Button[] BUTTONS = new Button[] {menu, vs, training, challenge, customize, data, options, store, quit};
+String[] LABELS = new String[] {"Menu", "Versus", "Training", "Challenge", "Customize", "Data", "Option", "Store", "Quit"};
 String currentScreen;
 ArrayList<Integer> screens;
 PImage bg;
+// =======================================================================================================================
 
 void setup() {
   size (1024, 768);
   smooth();
-  buttonSetup();
+
+  setupButtons();
   currentScreen = "Menu";
   bg = loadImage("Background.png");
-  
   screens = new ArrayList<Integer>();
-  for (int i = 0; i < buttons.length; i++) {
-    screens.add(i);
-  }
 }
 
 void draw() {
   if (currentScreen == "Menu") {
     background(bg);
-    screens.remove(Integer.valueOf(0));
-    buttonPlacement(100, 150, 75, "vertical");
+    for (int i = 1; i < BUTTONS.length; i++) {
+      screens.add(Integer.valueOf(i));
+    }
+    placeButtons(100, 125, 65, "vertical");
   } else if (currentScreen == "Versus") {
     background(0);
-    PImage test = loadImage("0.png");
-    test.resize(100, 100);
-    image(test, 100, 100);
-    buttonPlacement(0, 0, 50, "horizontal");
+    screens.add(Integer.valueOf(0));
+    screens.add(Integer.valueOf(BUTTONS.length - 1));
+    placeButtons(300, 650, 50, "horizontal");
   }
-  for (int i = 0; i < buttons.length; i++) {
-    if (!screens.contains(i)) {
-      screens.add(i);
-    }
-  }
+  removeButtons();
 }
 
 void mousePressed() {
-  for (int i = 0; i < buttons.length; i++) {
-    if (buttons[i].MouseIsOver()) {
-      currentScreen = buttons[i].getLabel();  
+  for (int i = 0; i < BUTTONS.length; i++) {
+    if (BUTTONS[i].isHovering()) {
+      currentScreen = BUTTONS[i].getLabel();  
     }
   }
 }
 
-void buttonSetup() {
-  labels = new String[] {"Menu", "Versus", "Training", "Challenge", "Customize", "Data", "Option", "Store", "Quit"};
-  buttons = new Button[] {menu, vs, training, challenge, customize, data, options, store, quit};
-  for (int i = 0; i < buttons.length; i++) {
-    buttons[i] = new Button(labels[i], 300, 50);
+void setupButtons() {
+  for (int i = 0; i < BUTTONS.length; i++) {
+    BUTTONS[i] = new Button(LABELS[i], 300, 50);
   }
 }
 
-void buttonPlacement(float startX, float startY, float spacing, String mode) {
+void placeButtons(float startX, float startY, float spacing, String mode) {
   for (Integer I : screens) {
-    buttons[I].Draw();
+    BUTTONS[I].Draw();
     if (mode.equals("horizontal")) {
-      buttons[I].setXY(startX + I * spacing, startY);
+      BUTTONS[I].setXY(startX + I * spacing, startY);
     } else if (mode.equals("vertical")) {
-      buttons[I].setXY(startX, startY + I * spacing);
+      BUTTONS[I].setXY(startX, startY + I * spacing);
+    }
+  }
+}
+
+void removeButtons() {
+ for (int i = 0; i < BUTTONS.length; i++) {
+    if (screens.contains(i)) {
+      screens.remove(Integer.valueOf(i));
     }
   }
 }
