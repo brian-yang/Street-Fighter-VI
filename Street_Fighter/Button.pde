@@ -13,6 +13,10 @@ class Button {
     h = heightB;
   }
   
+  Button(String labelB, float widthB, float heightB) {
+    this(labelB, 0, 0, widthB, heightB);
+  }
+  
   void Draw() {
     fill(218);
     stroke(255,0,0);
@@ -31,6 +35,19 @@ class Button {
   
   String getLabel() {
     return label;
+  }
+  
+  void setX(float xpos) {
+    x = xpos;
+  }
+  
+  void setY(float ypos) {
+    y = ypos;
+  }
+
+  void setXY(float xpos, float ypos) {
+    setX(xpos);
+    setY(ypos);
   }
 
 }

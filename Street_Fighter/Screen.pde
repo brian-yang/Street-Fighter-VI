@@ -10,9 +10,4 @@ class Screen {
     this.name = name;
     bg = pic;
   }
- 
-  void Display() {
-    
-  }
-
 }
