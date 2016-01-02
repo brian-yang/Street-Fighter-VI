@@ -9,6 +9,7 @@ void setup() {
   smooth();
   
   buttonSetup();
+  buttonPlacement();
   currentScreen = "Menu";
   bg = loadImage("Background.png");
 }
