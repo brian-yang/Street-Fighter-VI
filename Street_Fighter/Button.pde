@@ -28,5 +28,9 @@ class Button {
     }
     return false;
   }
+  
+  String getLabel() {
+    return label;
+  }
 
 }
