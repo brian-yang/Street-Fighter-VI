@@ -1,5 +1,4 @@
 // =======================================================================================================================
-// DO NOT TOUCH
 Button menu, vs, training, challenge, customize, data, options, store, quit;
 Button[] BUTTONS = new Button[] {menu, vs, training, challenge, customize, data, options, store, quit};
 String[] LABELS = new String[] {"Menu", "Versus", "Training", "Challenge", "Customize", "Data", "Option", "Store", "Quit"};
