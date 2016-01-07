@@ -29,6 +29,8 @@ void draw() {
     screens.add(Integer.valueOf(0));
     screens.add(Integer.valueOf(BUTTONS.length - 1));
     placeButtons(300, 650, 50, "horizontal");
+  } else if (currentScreen == "Quit") {
+    exit();
   }
   removeButtons();
 }
@@ -36,7 +38,7 @@ void draw() {
 void mousePressed() {
   for (int i = 0; i < BUTTONS.length; i++) {
     if (BUTTONS[i].isHovering()) {
-      currentScreen = BUTTONS[i].getLabel();  
+      currentScreen = BUTTONS[i].getLabel();
     }
   }
 }
