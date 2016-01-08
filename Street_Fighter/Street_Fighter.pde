@@ -1,69 +1,76 @@
 // =======================================================================================================================
-Button menu, vs, training, challenge, customize, data, options, store, quit;
-Button[] BUTTONS = new Button[] {menu, vs, training, challenge, customize, data, options, store, quit};
-String[] LABELS = new String[] {"Menu", "Versus", "Training", "Challenge", "Customize", "Data", "Option", "Store", "Quit"};
-String currentScreen;
-ArrayList<Integer> screens;
+Screen menu, vs, training, challenge, data, options, quit;
+Screen[] screenList = {menu, vs, training, challenge, data, options, quit};
+String[] LABELS = new String[] {"Menu", "Versus", "Training", "Challenge", "Data", "Options", "Quit"};
+// =======================================================================================================================
+HashMap<String, Screen> screens;
+String curScreenName;
+Screen activeScreen;
+Button[][] buttons;
 PImage bg;
 // =======================================================================================================================
 
 void setup() {
-  size (1024, 768);
+  size(1024, 768);
   smooth();
 
-  setupButtons();
-  currentScreen = "Menu";
-  bg = loadImage("Background.png");
-  screens = new ArrayList<Integer>();
+  initializeScreens();
+  curScreenName = "Menu";
+  activeScreen = menu;
+  showScreen(activeScreen);
 }
 
 void draw() {
-  if (currentScreen == "Menu") {
+  /*
+  if (curScreenName == "Menu") {
+    setActiveScreen("Menu");    
+    /*
     background(bg);
-    for (int i = 1; i < BUTTONS.length; i++) {
-      screens.add(Integer.valueOf(i));
+    for (int i = 1; i < screens.size(); i++) {
+      screens.put(LABELS[i], Integer.valueOf(i));
     }
     placeButtons(100, 125, 65, "vertical");
-  } else if (currentScreen == "Versus") {
+  } else if (curScreenName == "Versus") {
+    /*
     background(0);
     screens.add(Integer.valueOf(0));
-    screens.add(Integer.valueOf(BUTTONS.length - 1));
+    screens.add(Integer.valueOf(screens.size() - 1));
     placeButtons(300, 650, 50, "horizontal");
-  } else if (currentScreen == "Quit") {
+  */
+  if (curScreenName == "Quit") {
     exit();
   }
-  removeButtons();
+  showScreen(activeScreen);
 }
 
 void mousePressed() {
-  for (int i = 0; i < BUTTONS.length; i++) {
-    if (BUTTONS[i].isHovering()) {
-      currentScreen = BUTTONS[i].getLabel();
+  for (int i = 0; i < buttons.length; i++) {
+    for (int j = 0; j < buttons[i].length; j++) {
+      if (buttons[i][j].isHovering()) {
+        setActiveScreen(buttons[i][j].getLabel());
+        curScreenName = buttons[i][j].getLabel();
+      }
     }
   }
 }
 
-void setupButtons() {
-  for (int i = 0; i < BUTTONS.length; i++) {
-    BUTTONS[i] = new Button(LABELS[i], 300, 50);
-  }
+/**
+ * We switch between screens with this function.
+ */
+void setActiveScreen(String name) {
+  activeScreen = screens.get(name);
 }
 
-void placeButtons(float startX, float startY, float spacing, String mode) {
-  for (Integer I : screens) {
-    BUTTONS[I].Draw();
-    if (mode.equals("horizontal")) {
-      BUTTONS[I].setXY(startX + I * spacing, startY);
-    } else if (mode.equals("vertical")) {
-      BUTTONS[I].setXY(startX, startY + I * spacing);
-    }
-  }
+void showScreen(Screen activeScreen) {
+  background(activeScreen.background);
+  activeScreen.placeMenuButtons();
+  // do if else here
 }
 
-void removeButtons() {
- for (int i = 0; i < BUTTONS.length; i++) {
-    if (screens.contains(i)) {
-      screens.remove(Integer.valueOf(i));
-    }
+void initializeScreens() {
+  screens = new HashMap<String, Screen>();
+  for (int i = 0; i < screenList.length; i++) {
+    screens.put(LABELS[i], screenList[i]);
   }
+  // initialize screens here
 }
