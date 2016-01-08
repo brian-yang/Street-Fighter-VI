@@ -1,14 +1,13 @@
 class Screen {
     Button[][] buttons;
-    PImage background;
+    String[] buttonLabels;
+    String background;
     // To implement
-    float buttonStartX;
-    float buttonStartY;
-    float buttonSpacing;
-    String buttonMode;
+
     
-    Screen(Button[][] buttons, PImage bg) {
+    Screen(Button[][] buttons, String[] buttonLabels, String bg) {
         this.background = bg;
+        this.buttonLabels = buttonLabels;
         this.buttons = buttons;
         setupMenuButtons();
     }
@@ -16,12 +15,12 @@ class Screen {
     void setupMenuButtons() {
       for (int i = 0; i < buttons.length; i++) {
         for (int j = 0; j < buttons.length; j++) {
-          buttons[i][j] = new Button(LABELS[i], 300, 50);
+          buttons[i][j] = new Button(buttonLabels[i], 300, 50);
         }
       }
     }
     
-    void placeMenuButtons() {
+    void placeMenuButtons(float buttonStartX, float buttonStartY, float buttonSpacing, String buttonMode) {
       for (int i = 0; i < buttons.length; i++) {
         for (int j = 0; j < buttons.length; j++) {
           buttons[i][j].Draw();

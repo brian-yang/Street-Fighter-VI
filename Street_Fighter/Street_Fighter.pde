@@ -1,12 +1,10 @@
 // =======================================================================================================================
 Screen menu, vs, training, challenge, data, options, quit;
 Screen[] screenList = {menu, vs, training, challenge, data, options, quit};
-String[] LABELS = new String[] {"Menu", "Versus", "Training", "Challenge", "Data", "Options", "Quit"};
 // =======================================================================================================================
 HashMap<String, Screen> screens;
 String curScreenName;
 Screen activeScreen;
-Button[][] buttons;
 PImage bg;
 // =======================================================================================================================
 
@@ -44,11 +42,11 @@ void draw() {
 }
 
 void mousePressed() {
-  for (int i = 0; i < buttons.length; i++) {
-    for (int j = 0; j < buttons[i].length; j++) {
-      if (buttons[i][j].isHovering()) {
-        setActiveScreen(buttons[i][j].getLabel());
-        curScreenName = buttons[i][j].getLabel();
+  for (int i = 0; i < activeScreen.buttons.length; i++) {
+    for (int j = 0; j < activeScreen.buttons[i].length; j++) {
+      if (activeScreen.buttons[i][j].isHovering()) {
+        setActiveScreen(activeScreen.buttons[i][j].getLabel());
+        curScreenName = activeScreen.buttons[i][j].getLabel();
       }
     }
   }
@@ -62,15 +60,24 @@ void setActiveScreen(String name) {
 }
 
 void showScreen(Screen activeScreen) {
-  background(activeScreen.background);
-  activeScreen.placeMenuButtons();
+  PImage bg = loadImage(activeScreen.background);
+  background(bg);
   // do if else here
+  if (curScreenName == "Menu") {
+    activeScreen.placeMenuButtons(100, 125, 65, "vertical");
+  }
 }
 
+// Initialize each screen
 void initializeScreens() {
+  // Menu
+  String[] labelsM = new String[] {"Menu", "Versus", "Training", "Challenge", "Data", "Options", "Quit"};
   screens = new HashMap<String, Screen>();
   for (int i = 0; i < screenList.length; i++) {
-    screens.put(LABELS[i], screenList[i]);
+    screens.put(labelsM[i], screenList[i]);
   }
-  // initialize screens here
+  Button[][] buttonsM = new Button[1][7];
+  menu = new Screen(buttonsM, labelsM, "Background.png");
 }
+
+
