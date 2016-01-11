@@ -1,6 +1,5 @@
 // =======================================================================================================================
 Screen menu, vs, training, challenge, data, options, quit;
-Screen[] screenList = {menu, vs, training, challenge, data, options, quit};
 // =======================================================================================================================
 HashMap<String, Screen> screens;
 String curScreenName;
@@ -15,38 +14,21 @@ void setup() {
   initializeScreens();
   curScreenName = "Menu";
   activeScreen = menu;
-  showScreen(activeScreen);
 }
 
 void draw() {
-  /*
-  if (curScreenName == "Menu") {
-    setActiveScreen("Menu");    
-    /*
-    background(bg);
-    for (int i = 1; i < screens.size(); i++) {
-      screens.put(LABELS[i], Integer.valueOf(i));
-    }
-    placeButtons(100, 125, 65, "vertical");
-  } else if (curScreenName == "Versus") {
-    /*
-    background(0);
-    screens.add(Integer.valueOf(0));
-    screens.add(Integer.valueOf(screens.size() - 1));
-    placeButtons(300, 650, 50, "horizontal");
-  */
-  if (curScreenName == "Quit") {
-    exit();
-  }
   showScreen(activeScreen);
+
 }
 
-void mousePressed() {
-  for (int i = 0; i < activeScreen.buttons.length; i++) {
-    for (int j = 0; j < activeScreen.buttons[i].length; j++) {
-      if (activeScreen.buttons[i][j].isHovering()) {
-        setActiveScreen(activeScreen.buttons[i][j].getLabel());
-        curScreenName = activeScreen.buttons[i][j].getLabel();
+void mouseReleased(){
+  //debug
+  //print(activeScreen);
+  Button[][] test = activeScreen.buttons;
+  for (int i = 0; i < test.length; i++) {
+    for (int j = 0; j < test[i].length; j++) {
+      if (test[i][j].isHovering()) {
+        setActiveScreen(test[i][j].getLabel());
       }
     }
   }
@@ -57,27 +39,45 @@ void mousePressed() {
  */
 void setActiveScreen(String name) {
   activeScreen = screens.get(name);
+  curScreenName = name;
 }
 
 void showScreen(Screen activeScreen) {
-  PImage bg = loadImage(activeScreen.background);
+  if (curScreenName.equals("Quit")) {
+    exit();
+  }
+  // Show screens
+  print(curScreenName);
+  print(activeScreen);
+  bg = loadImage(activeScreen.background);
   background(bg);
-  // do if else here
-  if (curScreenName == "Menu") {
+  if (curScreenName.equals("Menu")) {
     activeScreen.placeMenuButtons(100, 125, 65, "vertical");
+  }
+  if (curScreenName.equals("Versus")) {
+    activeScreen.placeMenuButtons(300, 650, 50, "horizontal");
   }
 }
 
 // Initialize each screen
 void initializeScreens() {
   // Menu
-  String[] labelsM = new String[] {"Menu", "Versus", "Training", "Challenge", "Data", "Options", "Quit"};
-  screens = new HashMap<String, Screen>();
-  for (int i = 0; i < screenList.length; i++) {
-    screens.put(labelsM[i], screenList[i]);
-  }
-  Button[][] buttonsM = new Button[1][7];
+  String[] labelsM = new String[] {"Versus", "Training", "Challenge", "Data", "Options", "Quit"};
+  Button[][] buttonsM = new Button[1][6];
   menu = new Screen(buttonsM, labelsM, "Background.png");
+  menu.setupMenuButtons();
+  // Versus
+  String[] labelsVS = new String[] {"Back", "Quit"};
+  Button[][] buttonsVS = new Button[1][2];
+  vs = new Screen(buttonsVS, labelsVS, "Background.png");
+  vs.setupMenuButtons();
+  // Training
+  
+  screens = new HashMap<String, Screen>();
+  screens.put("Menu", menu);
+  screens.put("Versus", vs);
+  screens.put("Training", training);
+  screens.put("Challenge", challenge);
+  screens.put("Data", data);
+  screens.put("Options", options);
 }
-
-
