@@ -18,7 +18,6 @@ void setup() {
 
 void draw() {
   showScreen(activeScreen);
-
 }
 
 void mouseReleased(){
@@ -47,14 +46,17 @@ void showScreen(Screen activeScreen) {
     exit();
   }
   // Show screens
-  print(curScreenName);
-  print(activeScreen);
+  //print(curScreenName);
+  //print(activeScreen);
   bg = loadImage(activeScreen.background);
   background(bg);
   if (curScreenName.equals("Menu")) {
-    activeScreen.placeMenuButtons(100, 125, 65, "vertical");
+    activeScreen.placeMenuButtons(100, 150, 80, "vertical");
   }
   if (curScreenName.equals("Versus")) {
+    activeScreen.placeMenuButtons(300, 650, 50, "horizontal");
+  }
+  if (curScreenName.equals("Training")) {
     activeScreen.placeMenuButtons(300, 650, 50, "horizontal");
   }
 }
@@ -72,6 +74,10 @@ void initializeScreens() {
   vs = new Screen(buttonsVS, labelsVS, "Background.png");
   vs.setupMenuButtons();
   // Training
+  String[] labelsT = new String[] {"Back", "Quit"};
+  Button[][] buttonsT = new Button[1][2];
+  training = new Screen(buttonsT, labelsT, "Background.png");
+  training.setupMenuButtons();
   
   screens = new HashMap<String, Screen>();
   screens.put("Menu", menu);
