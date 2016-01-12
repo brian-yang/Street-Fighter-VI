@@ -42,14 +42,16 @@ void setActiveScreen(String name) {
 }
 
 void showScreen(Screen activeScreen) {
-  if (curScreenName.equals("Quit")) {
-    exit();
-  }
-  // Show screens
+  //Debug
   //print(curScreenName);
   //print(activeScreen);
-  bg = loadImage(activeScreen.background);
-  background(bg);
+  if (curScreenName.equals("Quit")) {
+    exit();
+  } else {
+    bg = loadImage(activeScreen.background);
+    background(bg);
+  }
+  // Show screens
   if (curScreenName.equals("Menu")) {
     activeScreen.placeMenuButtons(100, 150, 80, "vertical");
   }
