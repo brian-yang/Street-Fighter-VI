@@ -17,7 +17,7 @@ class Button {
     this(labelB, 0, 0, widthB, heightB);
   }
   
-  void Draw() {
+  void place() {
     fill(218);
     stroke(255,0,0);
     rect(x, y, w, h, 10); // last argument causes the rounded corners

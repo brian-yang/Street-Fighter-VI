@@ -1,6 +1,4 @@
 // =======================================================================================================================
-Screen menu, vs, training, challenge, data, options, quit;
-// =======================================================================================================================
 HashMap<String, Screen> screens;
 String curScreenName;
 Screen activeScreen;
@@ -13,7 +11,7 @@ void setup() {
 
   initializeScreens();
   curScreenName = "Menu";
-  activeScreen = menu;
+  activeScreen = screens.get("Menu");
 }
 
 void draw() {
@@ -23,11 +21,11 @@ void draw() {
 void mouseReleased(){
   //debug
   //print(activeScreen);
-  Button[][] test = activeScreen.buttons;
-  for (int i = 0; i < test.length; i++) {
-    for (int j = 0; j < test[i].length; j++) {
-      if (test[i][j].isHovering()) {
-        setActiveScreen(test[i][j].getLabel());
+  ArrayList<ArrayList<Button>> activeButtons = activeScreen.buttons;
+  for (int i = 0; i < activeButtons.size(); i++) {
+    for (int j = 0; j < activeButtons.get(i).size(); j++) {
+      if (activeButtons.get(i).get(j).isHovering()) {
+        setActiveScreen(activeButtons.get(i).get(j).getLabel());
       }
     }
   }
@@ -48,6 +46,9 @@ void showScreen(Screen activeScreen) {
   if (curScreenName.equals("Quit")) {
     exit();
   } else {
+    if (!activeScreen.isSetUp) {
+      activeScreen.setupMenuButtons(300, 50);
+    }
     bg = loadImage(activeScreen.background);
     background(bg);
   }
@@ -65,27 +66,37 @@ void showScreen(Screen activeScreen) {
 
 // Initialize each screen
 void initializeScreens() {
-  // Menu
-  String[] labelsM = new String[] {"Versus", "Training", "Challenge", "Data", "Options", "Quit"};
-  Button[][] buttonsM = new Button[1][6];
-  menu = new Screen(buttonsM, labelsM, "Background.png");
-  menu.setupMenuButtons();
-  // Versus
-  String[] labelsVS = new String[] {"Back", "Quit"};
-  Button[][] buttonsVS = new Button[1][2];
-  vs = new Screen(buttonsVS, labelsVS, "Background.png");
-  vs.setupMenuButtons();
-  // Training
-  String[] labelsT = new String[] {"Back", "Quit"};
-  Button[][] buttonsT = new Button[1][2];
-  training = new Screen(buttonsT, labelsT, "Background.png");
-  training.setupMenuButtons();
-  
   screens = new HashMap<String, Screen>();
-  screens.put("Menu", menu);
-  screens.put("Versus", vs);
-  screens.put("Training", training);
-  screens.put("Challenge", challenge);
-  screens.put("Data", data);
-  screens.put("Options", options);
+  screens.put("Menu", createScreen("menu.txt", "Background.png"));
+  //screens.put("Versus", createScreen("vs.txt", "Background.png"));
+  //screens.put("Training", createScreen("training.txt", "Background.png"));
+  //screens.put("Challenge", createScreen("challenge.txt", "Background.png"));
+  //screens.put("Data", createScreen("data.txt", "Background.png"));
+  //screens.put("Options", createScreen("options.txt", "Background.png"));
+}
+
+void readLabels(String file, ArrayList<ArrayList<String>> labels) {  
+  String lines[] = loadStrings(file); // loads the string from another file
+  int row = 0;
+  for (int i = 0; i < lines.length; i++) {
+    // start new row
+    if (lines[i].startsWith("--")) {
+      row++;
+    }
+    // creates new arrays within 2d array
+    while (labels.size() - 1 != row) {
+      labels.add(new ArrayList<String>());
+    }
+    // add elements
+    println(lines[i]);
+    labels.get(row).add(lines[i]);
+  }
+}
+
+Screen createScreen(String file, String screenBG) {
+  ArrayList<ArrayList<String>> labels = new ArrayList<ArrayList<String>>();
+  readLabels(file, labels);
+  ArrayList<ArrayList<Button>> buttons = new ArrayList<ArrayList<Button>>(labels.size());
+  Screen s = new Screen(buttons, labels, screenBG);
+  return s;
 }
