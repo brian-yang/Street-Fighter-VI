@@ -24,29 +24,32 @@ void draw(){
 
 class Sprite{
   int x,y;
-  int numFrames, currentFrame;
-  PImage[] images;
+  int currentFrame;
+  ArrayList<PImage> images;
   float speedX, speedY;
   char dir;
   int step = 5;
   int count;
   boolean left, right, up, down;
+  int numFrames = 4;
   
   Sprite(){
+    images = new ArrayList<PImage>();
     for (int i = 0; i < 182; i++) {
       String imageName = "Cammy " + "(" + (i+1) + ").png";
-      images[i] = loadImage(imageName);
+      images.add(loadImage(imageName));
     }
   }
   
   void reset(){
     pushMatrix();
     fill(255);
-    if (dir == 'r'){
-      image(images[3], x, y);
-    }
     if (dir == 'l'){
-      image(images[3],-images[3].width,0);
+      scale(-1, 1);
+      image(images.get(3),-(x + images.get(3).width),y);
+    }
+    if (dir == 'r'){
+      image(images.get(3), x, y);
     }
     count = 5;
     popMatrix();
@@ -55,20 +58,15 @@ class Sprite{
   void walk(){
     currentFrame = 4;
     if(dir == 'l'){
-      this.x -= step;
-      image(images[currentFrame-1],-images[currentFrame-1].width,y);
+      x -= step;
+      scale(-1 ,1);
+      image(images.get(currentFrame),-(x + images.get(currentFrame).width),y);
       currentFrame = (currentFrame + 1) % numFrames;
-      if (currentFrame == numFrames){
-         currentFrame = 0;
     }
     if(dir == 'r'){
-      this.x += step;
-      image(images[currentFrame],x,y);
+      x += step;
+      image(images.get(currentFrame),x,y);
       currentFrame = (currentFrame + 1) % numFrames;
-      if (currentFrame == numFrames){
-         currentFrame = 0;
-    }
     }
   }
-}
 }
