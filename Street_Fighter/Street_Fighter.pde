@@ -29,6 +29,8 @@ void mouseReleased(){
       Button curButton = activeButtons.get(i).get(j);
       if (curButton.isHovering()) {
         setActiveScreen(curButton.getLabel());
+        print(curButton.x);
+        print(curButton.y);
       }
     }
   }
@@ -50,8 +52,9 @@ void showScreen(Screen activeScreen) {
     exit();
   } else {
     if (!activeScreen.isSetUp) {
-      activeScreen.setupButtons(0, 300, 50); // setup menu buttons
-    }
+      for (int i = 0; i < activeScreen.buttonLabels.size(); i++) {
+        activeScreen.setupButtons(i, 300, 50);
+      }     }
     bg = loadImage(activeScreen.background);
     background(bg);
   }
@@ -59,11 +62,12 @@ void showScreen(Screen activeScreen) {
   if (curScreenName.equals("Menu")) {
     activeScreen.placeButtons(0, 100, 150, 80, "vertical");
   }
-  if (curScreenName.equals("Versus")) {
-    activeScreen.placeButtons(0, 300, 650, 50, "horizontal");
-  }
+  //if (curScreenName.equals("Versus")) {
+    //activeScreen.placeButtons(0, 300, 650, 50, "horizontal");
+  //}
   if (curScreenName.equals("Training")) {
-    activeScreen.placeButtons(0, 300, 650, 50, "horizontal");
+    activeScreen.placeButtons(0, -200, 700, 450, "horizontal");
+    activeScreen.placeButtons(1, 0, 100, 250, "horizontal");
   }
 }
 
@@ -72,7 +76,7 @@ void initializeScreens() {
   screens = new HashMap<String, Screen>();
   screens.put("Menu", createScreen("menu.txt", "Background.png"));
   //screens.put("Versus", createScreen("vs.txt", "Background.png"));
-  //screens.put("Training", createScreen("training.txt", "Background.png"));
+  screens.put("Training", createScreen("training.txt", "Background.png"));
   //screens.put("Challenge", createScreen("challenge.txt", "Background.png"));
   //screens.put("Data", createScreen("data.txt", "Background.png"));
   //screens.put("Options", createScreen("options.txt", "Background.png"));

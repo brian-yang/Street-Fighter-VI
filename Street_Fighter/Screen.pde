@@ -26,9 +26,6 @@ class Screen {
             x += space;
           } else if (buttonMode.equals("vertical")) {
             y += space;
-          } else if (buttonMode.equals("grid")) {
-            x += space;
-            y += space;
           }
           buttons.get(index).get(j).setXY(x, y);
           buttons.get(index).get(j).place();

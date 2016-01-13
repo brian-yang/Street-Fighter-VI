@@ -12,7 +12,7 @@ class FileParser {
         labels.add(new ArrayList<String>());
       }
       // add elements - does not add lines starting with //
-      if (!lines[i].startsWith("//")) {
+      if (!lines[i].startsWith("//") && !lines[i].startsWith("--")) {
         labels.get(row).add(lines[i]);
       }
     }
