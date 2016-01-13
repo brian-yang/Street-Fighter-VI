@@ -3,12 +3,14 @@ HashMap<String, Screen> screens;
 String curScreenName;
 Screen activeScreen;
 PImage bg;
+FileParser parser;
 // =======================================================================================================================
 
 void setup() {
   size(1024, 768);
   smooth();
 
+  parser = new FileParser(); // see FileParser class
   initializeScreens();
   curScreenName = "Menu";
   activeScreen = screens.get("Menu");
@@ -24,8 +26,9 @@ void mouseReleased(){
   ArrayList<ArrayList<Button>> activeButtons = activeScreen.buttons;
   for (int i = 0; i < activeButtons.size(); i++) {
     for (int j = 0; j < activeButtons.get(i).size(); j++) {
-      if (activeButtons.get(i).get(j).isHovering()) {
-        setActiveScreen(activeButtons.get(i).get(j).getLabel());
+      Button curButton = activeButtons.get(i).get(j);
+      if (curButton.isHovering()) {
+        setActiveScreen(curButton.getLabel());
       }
     }
   }
@@ -47,20 +50,20 @@ void showScreen(Screen activeScreen) {
     exit();
   } else {
     if (!activeScreen.isSetUp) {
-      activeScreen.setupMenuButtons(300, 50);
+      activeScreen.setupButtons(0, 300, 50); // setup menu buttons
     }
     bg = loadImage(activeScreen.background);
     background(bg);
   }
   // Show screens
   if (curScreenName.equals("Menu")) {
-    activeScreen.placeMenuButtons(100, 150, 80, "vertical");
+    activeScreen.placeButtons(0, 100, 150, 80, "vertical");
   }
   if (curScreenName.equals("Versus")) {
-    activeScreen.placeMenuButtons(300, 650, 50, "horizontal");
+    activeScreen.placeButtons(0, 300, 650, 50, "horizontal");
   }
   if (curScreenName.equals("Training")) {
-    activeScreen.placeMenuButtons(300, 650, 50, "horizontal");
+    activeScreen.placeButtons(0, 300, 650, 50, "horizontal");
   }
 }
 
@@ -75,27 +78,9 @@ void initializeScreens() {
   //screens.put("Options", createScreen("options.txt", "Background.png"));
 }
 
-void readLabels(String file, ArrayList<ArrayList<String>> labels) {  
-  String lines[] = loadStrings(file); // loads the string from another file
-  int row = 0;
-  for (int i = 0; i < lines.length; i++) {
-    // start new row
-    if (lines[i].startsWith("--")) {
-      row++;
-    }
-    // creates new arrays within 2d array
-    while (labels.size() - 1 != row) {
-      labels.add(new ArrayList<String>());
-    }
-    // add elements
-    println(lines[i]);
-    labels.get(row).add(lines[i]);
-  }
-}
-
 Screen createScreen(String file, String screenBG) {
   ArrayList<ArrayList<String>> labels = new ArrayList<ArrayList<String>>();
-  readLabels(file, labels);
+  parser.readLabels(file, labels);
   ArrayList<ArrayList<Button>> buttons = new ArrayList<ArrayList<Button>>(labels.size());
   Screen s = new Screen(buttons, labels, screenBG);
   return s;

@@ -12,19 +12,16 @@ class Screen {
         isSetUp = false;
     }
     
-    void setupMenuButtons(float widthB, float heightB) {
-      for (int i = 0; i < buttonLabels.size(); i++) {
-        for (int j = 0; j < buttonLabels.get(i).size(); j++) {
-          buttons.add(new ArrayList<Button>());
-          buttons.get(i).add(new Button(buttonLabels.get(i).get(j), widthB, heightB));
-        }
+    void setupButtons(int index, float widthB, float heightB) {
+      for (int j = 0; j < buttonLabels.get(index).size(); j++) {
+        buttons.add(new ArrayList<Button>());
+        buttons.get(index).add(new Button(buttonLabels.get(index).get(j), widthB, heightB));
       }
       isSetUp = true;
     }
     
-    void placeMenuButtons(float x, float y, float space, String buttonMode) {
-      for (int i = 0; i < buttons.size(); i++) {
-        for (int j = 0; j < buttons.get(i).size(); j++) {
+    void placeButtons(int index, float x, float y, float space, String buttonMode) {
+        for (int j = 0; j < buttons.get(index).size(); j++) {
           if (buttonMode.equals("horizontal")) {
             x += space;
           } else if (buttonMode.equals("vertical")) {
@@ -33,10 +30,9 @@ class Screen {
             x += space;
             y += space;
           }
-          buttons.get(i).get(j).setXY(x, y);
-          buttons.get(i).get(j).place();
+          buttons.get(index).get(j).setXY(x, y);
+          buttons.get(index).get(j).place();
         }
-      }
     }
     
 }
