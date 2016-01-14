@@ -1,4 +1,5 @@
 Sprite s;
+int startTime;
 
 void setup(){
   size(600,400);
@@ -12,30 +13,59 @@ void draw(){
   background(255);
   if (keyPressed){
     if (key == 'd'){
-      s.dir = 'r';
+       s.dir = 'r';
+       s.walkRight();
     }
     if (key == 'a'){
-      s.dir = 'l';
+       s.dir = 'l';
+       s.walkLeft();
     }
-  s.walk();
+    if (key == 'q'){
+      s.punching1 = true;
+      s.punch1();
+    }
+    if (key == 'e'){
+      s.punching2 = true;
+      s.punch2();
+    }
+    if (key == 'r'){
+      s.upKicking = true;
+      s.upKick(); 
+    }
   }
   else s.reset();
 }
+void keyReleased() {
+  int elapsed = millis() - startTime;
+     if (key == 'd') {
+           startTime = millis();
+           println(float(elapsed) / 1000 + " seconds elapsed");
+           if (elapsed > 3000){
+             image(s.images.get(8),s.x,s.y);
+           }
+     }  
+     if (key == 'a') {
+           startTime = millis();
+     }
+}
+
+
 
 class Sprite{
   int x,y;
-  int currentFrame;
+  int walkFrame = 0;
+  int jumpFrame = 11;
+  int punch1Frame = 16;
+  int punch2Frame = 18;
+  int upKickFrame = 20;
   ArrayList<PImage> images;
-  float speedX, speedY;
+  boolean jumping, punching1, punching2, upKicking;
   char dir;
   int step = 5;
-  int count;
-  boolean left, right, up, down;
-  int numFrames = 4;
   
   Sprite(){
     images = new ArrayList<PImage>();
-    for (int i = 0; i < 182; i++) {
+    for (int i = 0; i < 25; i++) {
       String imageName = "Cammy " + "(" + (i+1) + ").png";
       images.add(loadImage(imageName));
     }
@@ -46,27 +76,73 @@ class Sprite{
     fill(255);
     if (dir == 'l'){
       scale(-1, 1);
-      image(images.get(3),-(x + images.get(3).width),y);
+      image(images.get(6),-(x + images.get(6).width),y);
+
     }
     if (dir == 'r'){
-      image(images.get(3), x, y);
+      image(images.get(6), x, y); 
     }
-    count = 5;
     popMatrix();
   }
   
-  void walk(){
-    currentFrame = 4;
-    if(dir == 'l'){
+  void walkLeft(){
       x -= step;
       scale(-1 ,1);
-      image(images.get(currentFrame),-(x + images.get(currentFrame).width),y);
-      currentFrame = (currentFrame + 1) % numFrames;
+      image(images.get(walkFrame),-(x + images.get(walkFrame).width),y);
+      walkFrame++;
+      if (walkFrame > 5){
+        walkFrame = 0;
+      }
     }
-    if(dir == 'r'){
+  
+  void walkRight(){
       x += step;
-      image(images.get(currentFrame),x,y);
-      currentFrame = (currentFrame + 1) % numFrames;
+      image(images.get(walkFrame),x,y);
+      walkFrame++;
+      if (walkFrame > 5){
+        walkFrame = 0;
+      }
+    }
+  
+  void jump(){
+    if (jumping == true){
+        image(images.get(jumpFrame),x,y);
+        jumpFrame++;
+        if (jumpFrame > 15){
+          jumpFrame = 11;
+        }
+    }
+  }
+  
+  void punch1(){
+    if (punching1 == true){
+        image(images.get(punch1Frame),x,y);
+        punch1Frame++;
+        if (punch1Frame > 17){
+          punch1Frame = 16;
+        }
+      }
+  }
+      
+  void punch2(){
+    if (punching2 == true){
+        image(images.get(punch2Frame),x,y);
+        punch2Frame++;
+        if (punch2Frame > 19){
+          punch2Frame = 18;
+        }
+      }
+  }
+      
+  void upKick(){
+    if (upKicking == true){
+        image(images.get(upKickFrame),x,y);
+        upKickFrame++;
+        if (upKickFrame > 24){
+          upKickFrame = 20;
+        }
     }
   }
 }
+  
+    
