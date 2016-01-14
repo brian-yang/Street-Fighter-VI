@@ -11,7 +11,7 @@ void setup(){
 
 void draw(){
   background(255);
-  if (keyPressed){
+  if (keyPressed || !s.curMove.equals("")){
     if (key == 'd'){
        s.dir = 'r';
        s.walkRight();
@@ -20,17 +20,14 @@ void draw(){
        s.dir = 'l';
        s.walkLeft();
     }
-    if (key == 'q'){
-      s.punching1 = true;
-      s.punch1();
+    if (key == 'q' && s.curMove.equals("") || s.curMove.equals("punchOne")){
+      s.attack(16, 17, "punchOne");
     }
-    if (key == 'e'){
-      s.punching2 = true;
-      s.punch2();
+    if (key == 'e' && s.curMove.equals("") || s.curMove.equals("punchTwo")){
+      s.attack(18, 19, "punchTwo");
     }
-    if (key == 'r'){
-      s.upKicking = true;
-      s.upKick(); 
+    if (key == 'r' && s.curMove.equals("") || s.curMove.equals("kickUp")){
+      s.attack(20, 24, "kickUp");
     }
   }
   else s.reset();
@@ -49,19 +46,16 @@ void keyReleased() {
      }
 }
 
-
-
 class Sprite{
-  int x,y;
+  int x;
+  int y = width/2;
   int walkFrame = 0;
   int jumpFrame = 11;
-  int punch1Frame = 16;
-  int punch2Frame = 18;
-  int upKickFrame = 20;
+  int attackFrame = 0;
   ArrayList<PImage> images;
-  boolean jumping, punching1, punching2, upKicking;
   char dir;
   int step = 5;
+  String curMove = "";
   
   Sprite(){
     images = new ArrayList<PImage>();
@@ -73,11 +67,9 @@ class Sprite{
   
   void reset(){
     pushMatrix();
-    fill(255);
     if (dir == 'l'){
       scale(-1, 1);
       image(images.get(6),-(x + images.get(6).width),y);
-
     }
     if (dir == 'r'){
       image(images.get(6), x, y); 
@@ -86,63 +78,54 @@ class Sprite{
   }
   
   void walkLeft(){
-      x -= step;
-      scale(-1 ,1);
-      image(images.get(walkFrame),-(x + images.get(walkFrame).width),y);
-      walkFrame++;
-      if (walkFrame > 5){
-        walkFrame = 0;
-      }
+    x -= step;
+    scale(-1 ,1);
+    image(images.get(walkFrame),-(x + images.get(walkFrame).width),y);
+    walkFrame++;
+    if (walkFrame > 5){
+      walkFrame = 0;
     }
+  }
   
   void walkRight(){
-      x += step;
-      image(images.get(walkFrame),x,y);
-      walkFrame++;
-      if (walkFrame > 5){
-        walkFrame = 0;
-      }
+    x += step;
+    image(images.get(walkFrame),x,y);
+    walkFrame++;
+    if (walkFrame > 5){
+      walkFrame = 0;
     }
+  }  
   
   void jump(){
-    if (jumping == true){
-        image(images.get(jumpFrame),x,y);
-        jumpFrame++;
-        if (jumpFrame > 15){
-          jumpFrame = 11;
-        }
+    if (!curMove.equals("jump")) {
+      curMove = "jump";
+    }
+    image(images.get(jumpFrame),x,y);
+    jumpFrame++;
+    if (jumpFrame > 15){
+      jumpFrame = 11;
     }
   }
   
-  void punch1(){
-    if (punching1 == true){
-        image(images.get(punch1Frame),x,y);
-        punch1Frame++;
-        if (punch1Frame > 17){
-          punch1Frame = 16;
-        }
-      }
-  }
-      
-  void punch2(){
-    if (punching2 == true){
-        image(images.get(punch2Frame),x,y);
-        punch2Frame++;
-        if (punch2Frame > 19){
-          punch2Frame = 18;
-        }
-      }
-  }
-      
-  void upKick(){
-    if (upKicking == true){
-        image(images.get(upKickFrame),x,y);
-        upKickFrame++;
-        if (upKickFrame > 24){
-          upKickFrame = 20;
-        }
+  void attack(int startFrame, int endFrame, String attackName) {
+    // checks if curMove has already been set to this attack
+    if (!curMove.equals(attackName)) {
+      curMove = attackName;
+      attackFrame = startFrame;
     }
-  }
+    // checks if character is facing left
+    if (dir == 'l') {
+      scale(-1, 1);
+      image(images.get(attackFrame), -(x + images.get(attackFrame).width), y);
+    } else {
+      image(images.get(attackFrame),x,y);
+    }
+    attackFrame++;
+    if (attackFrame > endFrame){
+      curMove = "";
+    }
+   }
+
 }
   
     
