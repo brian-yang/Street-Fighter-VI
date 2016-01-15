@@ -28,9 +28,13 @@ void mouseReleased(){
     for (int j = 0; j < activeButtons.get(i).size(); j++) {
       Button curButton = activeButtons.get(i).get(j);
       if (curButton.isHovering()) {
-        setActiveScreen(curButton.getLabel());
-        print(curButton.x);
-        print(curButton.y);
+        if (curScreenName.equals("Versus") || curScreenName.equals("Training")) {
+          if (parser.isInFile("characters.txt", curButton.getLabel())) { setActiveScreen("Arena"); }
+        } else {
+          setActiveScreen(curButton.getLabel());
+        }
+        //print(curButton.x);
+        //print(curButton.y);
       }
     }
   }
@@ -51,10 +55,11 @@ void showScreen(Screen activeScreen) {
   if (curScreenName.equals("Quit")) {
     exit();
   } else {
-    if (!activeScreen.isSetUp) {
+    if (!activeScreen.isSetUp && !curScreenName.equals("Arena")) {
       for (int i = 0; i < activeScreen.buttonLabels.size(); i++) {
         activeScreen.setupButtons(i, 300, 50);
-      }     }
+      }     
+    }
     bg = loadImage(activeScreen.background);
     background(bg);
   }
@@ -62,12 +67,12 @@ void showScreen(Screen activeScreen) {
   if (curScreenName.equals("Menu")) {
     activeScreen.placeButtons(0, 100, 150, 80, "vertical");
   }
-  //if (curScreenName.equals("Versus")) {
-    //activeScreen.placeButtons(0, 300, 650, 50, "horizontal");
-  //}
   if (curScreenName.equals("Training")) {
     activeScreen.placeButtons(0, -200, 700, 450, "horizontal");
     activeScreen.placeButtons(1, 0, 100, 250, "horizontal");
+  }
+  if (curScreenName.equals("Arena")) {
+    ((Arena) activeScreen).run();
   }
 }
 
@@ -80,6 +85,7 @@ void initializeScreens() {
   //screens.put("Challenge", createScreen("challenge.txt", "Background.png"));
   //screens.put("Data", createScreen("data.txt", "Background.png"));
   //screens.put("Options", createScreen("options.txt", "Background.png"));
+  screens.put("Arena", createArena("Background.png"));
 }
 
 Screen createScreen(String file, String screenBG) {
@@ -88,4 +94,9 @@ Screen createScreen(String file, String screenBG) {
   ArrayList<ArrayList<Button>> buttons = new ArrayList<ArrayList<Button>>(labels.size());
   Screen s = new Screen(buttons, labels, screenBG);
   return s;
+}
+
+Screen createArena(String screenBG) {
+  Screen arena = new Arena(screenBG);
+  return arena;
 }

@@ -12,6 +12,10 @@ class Screen {
         isSetUp = false;
     }
     
+    Screen(String bg) {
+        this.background = bg;
+    }
+    
     void setupButtons(int index, float widthB, float heightB) {
       for (int j = 0; j < buttonLabels.get(index).size(); j++) {
         buttons.add(new ArrayList<Button>());

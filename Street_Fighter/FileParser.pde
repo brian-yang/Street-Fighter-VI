@@ -17,4 +17,14 @@ class FileParser {
       }
     }
   }
+  
+  boolean isInFile(String file, String txt) {
+    String lines[] = loadStrings(file);
+    for (int i = 0; i < lines.length; i++) {
+      if (lines[i].equals(txt)) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

@@ -2,22 +2,19 @@ class Timer {
 PFont font;
 String time;
 int t;
-int interval = 5;
+int interval;
 
-  Timer(){
-      size(800,800);
+  Timer(int countdown){
+      interval = countdown;
       textSize(100);
       String[] fontList = PFont.list();
       printArray(fontList);
       font = createFont("Waree", 32);
       textFont(font);
-      background(255);
       fill(0);
   }
   
    void run(){
-      background(255);
-      
       t = interval-int(millis()/1000);      
       if(t > 0){
         time = nf(t , 3);
