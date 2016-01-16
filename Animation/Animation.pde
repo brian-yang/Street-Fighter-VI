@@ -1,16 +1,47 @@
-Sprite s;
+Sprite p,q;
+int nrKeys = 0;
+PFont font;
+boolean[]downKeys = new boolean[256];
 int startTime;
 
 void setup(){
   size(600,400);
   background(255);
   smooth();
+  font = createFont("Courier",20);
+  textFont(font);
   frameRate(10);
-  s = new Sprite();
+  p = new Sprite(0, width/2);
+  q = new Sprite(100, width/2);
 }
 
 void draw(){
-  background(255);
+  background(0);
+  nrKeys = 0;
+  for (int i=0; i<downKeys.length; i++) {
+     if (downKeys[i]) {
+       nrKeys++; 
+       text((char)i, 10*nrKeys,height/2);
+     }
+   }
+  text("Nr. of Keys: " + nrKeys, 20,20); 
+  actionP1(p);
+  actionP2(q);
+}
+
+void keyPressed() {
+ if (key<256) {
+   downKeys[key] = true; 
+ }
+}
+
+void keyReleased() {
+ if (key<256) {
+   downKeys[key] = false;  
+ }
+}
+
+void actionP1(Sprite s){
   if (keyPressed || !s.curMove.equals("")){
     if (key == 'd'){
        s.dir = 'r';
@@ -29,40 +60,95 @@ void draw(){
     if (key == 'r' && s.curMove.equals("") || s.curMove.equals("kickUp")){
       s.attack(20, 24, "kickUp");
     }
+    if (key == 'f' && s.curMove.equals("") || s.curMove.equals("kick")){
+      s.attack(25, 26, "kick");
+    }
+    if (key == 'x' && s.curMove.equals("") || s.curMove.equals("flyKick")){
+      s.attack(27, 29, "flyKick");
+    }
+    if (key == 'c' && s.curMove.equals("") || s.curMove.equals("spinningKnuckle")){
+      s.attack(30, 33, "spinningKnuckle");
+    }
+    if (key == 'g' && s.crouching && s.curMove.equals("") || s.curMove.equals("crouchKick")){
+      s.attack(36, 37, "crouchKick");
+    }
+    if (key == 's' && s.curMove.equals("") || s.curMove.equals("crouch")){
+      s.crouchMove(21 , 21, "crouch");
+    }
   }
   else s.reset();
 }
-void keyReleased() {
-  int elapsed = millis() - startTime;
-     if (key == 'd') {
-           startTime = millis();
-           println(float(elapsed) / 1000 + " seconds elapsed");
-           if (elapsed > 3000){
-             image(s.images.get(8),s.x,s.y);
-           }
-     }  
-     if (key == 'a') {
-           startTime = millis();
-     }
+
+void actionP2(Sprite s){
+  if (keyPressed || !s.curMove.equals("")){
+    if (keyCode == RIGHT){
+       s.dir = 'r';
+       s.walkRight();
+    }
+    if (keyCode == LEFT){
+       s.dir = 'l';
+       s.walkLeft();
+    }
+    if (key == ',' && s.curMove.equals("") || s.curMove.equals("punchOne")){
+      s.attack(16, 17, "punchOne");
+    }
+    if (key == '.' && s.curMove.equals("") || s.curMove.equals("punchTwo")){
+      s.attack(18, 19, "punchTwo");
+    }
+    if (key == '/' && s.curMove.equals("") || s.curMove.equals("kickUp")){
+      s.attack(20, 24, "kickUp");
+    }
+    if (keyCode == SHIFT && s.curMove.equals("") || s.curMove.equals("kick")){
+      s.attack(25, 26, "kick");
+    }
+    if (key == 'm' && s.curMove.equals("") || s.curMove.equals("flyKick")){
+      s.attack(27, 29, "flyKick");
+    }
+    if (key == 'n' && s.curMove.equals("") || s.curMove.equals("spinningKnuckle")){
+      s.attack(30, 33, "spinningKnuckle");
+    }
+    if (keyCode == DOWN && s.curMove.equals("") || s.curMove.equals("crouch")){
+      s.crouchMove(21 , 21, "crouch");
+    }
+  }
+  else s.reset();
 }
 
+
+//void keyReleased() {
+//  int elapsed = millis() - startTime;
+//     if (key == 'd') {
+//           startTime = millis();
+//           println(float(elapsed) / 1000 + " seconds elapsed");
+//           if (elapsed > 3000){
+//             image(p.images.get(8),p.x,p.y);
+//           }
+//     }  
+//     if (key == 'a') {
+//           startTime = millis();
+//     }
+//}
+
 class Sprite{
-  int x;
-  int y = width/2;
+  int x,y;
   int walkFrame = 0;
   int jumpFrame = 11;
   int attackFrame = 0;
+  int crouchFrame = 0;
   ArrayList<PImage> images;
   char dir;
   int step = 5;
   String curMove = "";
+  boolean crouching;
   
-  Sprite(){
+  Sprite(int x, int y){
     images = new ArrayList<PImage>();
-    for (int i = 0; i < 25; i++) {
+    for (int i = 0; i < 38; i++) {
       String imageName = "Cammy " + "(" + (i+1) + ").png";
       images.add(loadImage(imageName));
     }
+    this.x = x;
+    this.y = y;
   }
   
   void reset(){
@@ -107,6 +193,27 @@ class Sprite{
     }
   }
   
+  void crouchMove(int startFrame, int endFrame, String crouchName) {
+   // checks if curMove has already been set to this attack
+   crouching = true;
+   if (!curMove.equals(crouchName)) {
+     curMove = crouchName;
+     crouchFrame = startFrame;
+   }
+   // checks if character is facing left
+   if (dir == 'l') {
+     scale(-1, 1);
+     image(images.get(crouchFrame), -(x + images.get(crouchFrame).width), y + 40);
+   } else {
+     image(images.get(crouchFrame),x,y + 40);
+   }
+   crouchFrame++;
+   if (crouchFrame > endFrame){
+     curMove = "";
+   }
+  }
+   
+   
   void attack(int startFrame, int endFrame, String attackName) {
     // checks if curMove has already been set to this attack
     if (!curMove.equals(attackName)) {
