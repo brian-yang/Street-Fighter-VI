@@ -15,7 +15,7 @@ void setup(){
   smooth();
   font = createFont("Courier",20);
   textFont(font);
-  frameRate(10);
+  frameRate(8);
   p = new Sprite(0, width/2);
   q = new Sprite(100, width/2);
 }
@@ -65,7 +65,7 @@ void actionP1(Sprite s){
     if (key == 'r' && s.curMove.equals("") || s.curMove.equals("kickUp")){
       s.attack(20, 24, "kickUp");
     }
-    if (key == 'f' && s.curMove.equals("") || s.curMove.equals("kick")){
+    if (key == 'f' && !s.inAir && s.curMove.equals("") || s.curMove.equals("kick")){
       s.attack(25, 26, "kick");
     }
     if (key == 'x' && s.curMove.equals("") || s.curMove.equals("flyKick")){
@@ -88,6 +88,12 @@ void actionP1(Sprite s){
     }
     if (key == 's' && s.curMove.equals("") || s.curMove.equals("crouch")){
       s.crouchMove(21 , 21, "crouch");
+    }
+    if (key == 'w' && s.curMove.equals("") || s.curMove.equals("jump")){
+      s.jumpMove(47, 52, "jump");
+    }
+    if (key == 'f' && s.inAir && s.curMove.equals("") || s.curMove.equals("jumpKick")){
+      s.jumpMove(53, 54, "jumpKick");
     }
   }
   else s.reset();
@@ -158,18 +164,19 @@ void actionP2(Sprite s){
 class Sprite{
   int x,y;
   int walkFrame = 0;
-  int jumpFrame = 11;
+  int jumpFrame = 0;
   int attackFrame = 0;
   int crouchFrame = 0;
   ArrayList<PImage> images;
   char dir;
   int step = 5;
+  int upStep = 0;
   String curMove = "";
-  boolean crouching;
+  boolean crouching, inAir;
   
   Sprite(int x, int y){
     images = new ArrayList<PImage>();
-    for (int i = 0; i < 47; i++) {
+    for (int i = 0; i < 55; i++) {
       String imageName = "Cammy " + "(" + (i+1) + ").png";
       images.add(loadImage(imageName));
     }
@@ -208,15 +215,27 @@ class Sprite{
     }
   }  
   
-  void jump(){
-    if (!curMove.equals("jump")) {
-      curMove = "jump";
-    }
-    image(images.get(jumpFrame),x,y);
-    jumpFrame++;
-    if (jumpFrame > 15){
-      jumpFrame = 11;
-    }
+  void jumpMove(int startFrame, int endFrame, String jumpName) {
+    inAir = true;
+   // checks if curMove has already been set to this attack
+   if (!curMove.equals(jumpName)) {
+     curMove = jumpName;
+     jumpFrame = startFrame;
+   }
+   upStep += 15;
+   // checks if character is facing left
+   if (dir == 'l') {
+     scale(-1, 1);
+     image(images.get(jumpFrame), -(x + images.get(jumpFrame).width), y - upStep);
+   } else {
+     image(images.get(jumpFrame),x,y - upStep);
+   }
+   print (upStep + "/");
+   jumpFrame++;
+   if (jumpFrame > endFrame){
+     curMove = "";
+     upStep = 0;
+   }
   }
   
   void crouchMove(int startFrame, int endFrame, String crouchName) {
