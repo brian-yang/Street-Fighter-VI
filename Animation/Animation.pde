@@ -4,6 +4,11 @@ PFont font;
 boolean[]downKeys = new boolean[256];
 int startTime;
 
+
+// need to fix y cor for the crouchMoves 
+// need to make characters stop flickering
+
+
 void setup(){
   size(600,400);
   background(255);
@@ -51,10 +56,10 @@ void actionP1(Sprite s){
        s.dir = 'l';
        s.walkLeft();
     }
-    if (key == 'q' && s.curMove.equals("") || s.curMove.equals("punchOne")){
+    if (key == 'q' && !s.crouching && s.curMove.equals("") || s.curMove.equals("punchOne")){
       s.attack(16, 17, "punchOne");
     }
-    if (key == 'e' && s.curMove.equals("") || s.curMove.equals("punchTwo")){
+    if (key == 'e' && !s.crouching && s.curMove.equals("") || s.curMove.equals("punchTwo")){
       s.attack(18, 19, "punchTwo");
     }
     if (key == 'r' && s.curMove.equals("") || s.curMove.equals("kickUp")){
@@ -71,6 +76,15 @@ void actionP1(Sprite s){
     }
     if (key == 'g' && s.crouching && s.curMove.equals("") || s.curMove.equals("crouchKick")){
       s.attack(36, 37, "crouchKick");
+    }
+    if (key == 'h' && s.crouching && s.curMove.equals("") || s.curMove.equals("crouchKick2")){
+      s.attack(38, 41, "crouchKick2");
+    }
+    if (key == 'e' && s.crouching && s.curMove.equals("") || s.curMove.equals("crouchPunch")){
+      s.attack(42, 43, "crouchPunch");
+    }
+    if (key == 'q' && s.crouching && s.curMove.equals("") || s.curMove.equals("crouchPunch2")){
+      s.attack(44, 46, "crouchPunch2");
     }
     if (key == 's' && s.curMove.equals("") || s.curMove.equals("crouch")){
       s.crouchMove(21 , 21, "crouch");
@@ -89,10 +103,10 @@ void actionP2(Sprite s){
        s.dir = 'l';
        s.walkLeft();
     }
-    if (key == ',' && s.curMove.equals("") || s.curMove.equals("punchOne")){
+    if (key == ',' && !s.crouching && s.curMove.equals("") || s.curMove.equals("punchOne")){
       s.attack(16, 17, "punchOne");
     }
-    if (key == '.' && s.curMove.equals("") || s.curMove.equals("punchTwo")){
+    if (key == '.' && !s.crouching && s.curMove.equals("") || s.curMove.equals("punchTwo")){
       s.attack(18, 19, "punchTwo");
     }
     if (key == '/' && s.curMove.equals("") || s.curMove.equals("kickUp")){
@@ -107,7 +121,19 @@ void actionP2(Sprite s){
     if (key == 'n' && s.curMove.equals("") || s.curMove.equals("spinningKnuckle")){
       s.attack(30, 33, "spinningKnuckle");
     }
-    if (keyCode == DOWN && s.curMove.equals("") || s.curMove.equals("crouch")){
+    if (key == 'l' && s.crouching && s.curMove.equals("") || s.curMove.equals("crouchKick")){
+      s.attack(36, 37, "crouchKick");
+    }
+    if (key == 'k' && s.crouching && s.curMove.equals("") || s.curMove.equals("crouchKick2")){
+      s.attack(38, 41, "crouchKick2");
+    }
+    if (key == 'j' && s.crouching && s.curMove.equals("") || s.curMove.equals("crouchPunch")){
+      s.attack(42, 43, "crouchPunch");
+    }
+    if (key == ',' && s.crouching && s.curMove.equals("") || s.curMove.equals("crouchPunch2")){
+      s.attack(44, 46, "crouchPunch2");
+    }
+    if (key == DOWN && s.curMove.equals("") || s.curMove.equals("crouch")){
       s.crouchMove(21 , 21, "crouch");
     }
   }
@@ -143,7 +169,7 @@ class Sprite{
   
   Sprite(int x, int y){
     images = new ArrayList<PImage>();
-    for (int i = 0; i < 38; i++) {
+    for (int i = 0; i < 47; i++) {
       String imageName = "Cammy " + "(" + (i+1) + ").png";
       images.add(loadImage(imageName));
     }
