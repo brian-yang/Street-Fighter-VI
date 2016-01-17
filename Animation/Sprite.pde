@@ -30,27 +30,14 @@ class Sprite {
         this.name = name;
     }
 
-    void reset() {
-        if (name == "Cammy") {
-            if (dir == 'l') {
-                pushMatrix();
-                scale(-1, 1);
-                image(images.get(6), -(x + images.get(6).width) + smoothConstant, y);
-                popMatrix();
-                //println(-(x + images.get(6).width));
-            } else {
-                image(images.get(6), x - images.get(6).width, y);
-            }
-        }
-        if (name == "Ken") {
-            if (dir == 'l') {
-                pushMatrix();
-                scale(-1, 1);
-                image(images.get(182), -(x + images.get(182).width) + smoothConstant, y);
-                popMatrix();
-            } else {
-                image(images.get(182), x - images.get(182).width, y);
-            }
+    void reset(int resetFrame) {
+        if (dir == 'l') {
+            pushMatrix();
+            scale(-1, 1);
+            image(images.get(resetFrame), -(x + images.get(resetFrame).width) + smoothConstant, y);
+            popMatrix();
+        } else {
+            image(images.get(resetFrame), x - images.get(resetFrame).width, y);
         }
         crouching = false;
         inAir = false;

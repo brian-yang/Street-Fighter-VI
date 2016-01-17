@@ -158,7 +158,7 @@ void actionP1(Sprite s) {
         } else if (downKeys['f'] && s.curMove.equals("") || s.curMove.equals("jumpKick")) {
             s.jumpMove(53, 54, "jumpKick");
         } else {
-            s.reset();
+            s.reset(6);
         }
     }
     if (s.name == "Ken") {
@@ -197,7 +197,7 @@ void actionP1(Sprite s) {
         } else if (downKeys['b'] && s.curMove.equals("") || s.curMove.equals("kamekameha")) {
             s.attack(240, 243, "kamekameha");
         } else {
-            s.reset();
+            s.reset(182);
         }
     }
 }
@@ -228,7 +228,7 @@ void actionP2(Sprite s2) {
         } else if (downKeys2[']'] && s2.curMove.equals("") || s2.curMove.equals("jumpKick")) {
             s2.jumpMove(53, 54, "jumpKick");
         } else {
-            s2.reset();
+            s2.reset(6);
         }
     }
 
