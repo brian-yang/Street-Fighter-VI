@@ -15,8 +15,8 @@ void setup(){
   font = createFont("Courier",20);
   textFont(font);
   frameRate(8);
-  p = new Sprite(0, width/2);
-  q = new Sprite(100, width/2);
+  p = new Sprite(0, width/2, "Cammy");
+  q = new Sprite(100, width/2, "Cammy");
 }
 
 void draw(){
@@ -118,12 +118,12 @@ void setCommands(int index) {
 
 void actionP1(Sprite s){
     // P1
-    if (downKeys['d']){
+    if (downKeys['d'] && s.curMove.equals("") || s.curMove.equals("walkRight")){
        s.dir = 'r';
-       s.walkRight();
-    } else if (downKeys['a']){
+       s.walkMove(0, 5, "walkRight");
+    } else if (downKeys['a'] && s.curMove.equals("") || s.curMove.equals("walkLeft")){
        s.dir = 'l';
-       s.walkLeft();
+       s.walkMove(0, 5, "walkLeft");
     } else if (downKeys['s'] && s.curMove.equals("") || s.curMove.equals("crouch")){
       s.crouchMove(21 , 21, "crouch");
     } else if (downKeys['g'] && s.crouching && s.curMove.equals("") || s.curMove.equals("crouchKick")){
@@ -147,9 +147,9 @@ void actionP1(Sprite s){
     } else if (downKeys['c'] && s.curMove.equals("") || s.curMove.equals("spinningKnuckle")){
       s.attack(30, 33, "spinningKnuckle");
     } else if (downKeys['w'] && s.curMove.equals("") || s.curMove.equals("jump")){
-      s.jumpUp(47, 52, "jump");
+      //s.jumpUp(47, 52, "jump");
     } else if (downKeys['f'] && s.curMove.equals("") || s.curMove.equals("jumpKick")){
-      s.jumpUp(53, 54, "jumpKick");
+      //s.jumpUp(53, 54, "jumpKick");
     } else {
       s.reset();
     }
@@ -157,12 +157,12 @@ void actionP1(Sprite s){
 
 void actionP2(Sprite s2) {
     // P2
-    if (downKeys[256]){
+    if (downKeys[256] && s2.curMove.equals("") || s2.curMove.equals("walkRight")){
        s2.dir = 'r';
-       s2.walkRight();
-    } else if (downKeys[257]){
+       s2.walkMove(0, 5, "walkRight");
+    } else if (downKeys[257] && s2.curMove.equals("") || s2.curMove.equals("walkLeft")){
        s2.dir = 'l';
-       s2.walkLeft();
+       s2.walkMove(0, 5, "walkLeft");
     } else if (downKeys[','] && !s2.crouching && s2.curMove.equals("") || s2.curMove.equals("punchOne")){
       s2.attack(16, 17, "punchOne");
     } else if (downKeys['.'] && !s2.crouching && s2.curMove.equals("") || s2.curMove.equals("punchTwo")){
@@ -176,7 +176,7 @@ void actionP2(Sprite s2) {
     } else if (downKeys[258] && s2.curMove.equals("") || s2.curMove.equals("crouch")){
       s2.crouchMove(21 , 21, "crouch");
     } else if (downKeys[259] && s2.curMove.equals("") || s2.curMove.equals("jump")){
-      s2.jumpUp(47 , 52, "jump");
+      //s2.jumpUp(47 , 52, "jump");
     } else {
       s2.reset();
     }
