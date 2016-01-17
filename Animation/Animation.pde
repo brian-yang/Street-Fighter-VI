@@ -31,8 +31,8 @@ void draw() {
         }
     }
     text("Nr. of Keys: " + nrKeys, 20, 20);
-    actionP1(p);
-    actionP2(q);
+    action(p,q);
+    interact(p,q);
 }
 
 void keyPressed() {
@@ -122,7 +122,7 @@ boolean validKey(int index, char[] characters) {
     return false;
 }
 
-void actionP1(Sprite s) {
+void action(Sprite s, Sprite s2) {
     // P1  
     if (s.name == "Cammy") {
         if (downKeys['d'] && s.curMove.equals("") || s.curMove.equals("walkRight")) {
@@ -197,14 +197,11 @@ void actionP1(Sprite s) {
         } else if (downKeys['b'] && s.curMove.equals("") || s.curMove.equals("kamekameha")) {
             s.attack(240, 243, "kamekameha");
         } else {
-            s.reset(182);
+            s.reset(181);
         }
     }
-}
-
-void actionP2(Sprite s2) {
     // P2
-    if (s2.name == "Cammy") {
+       if (s2.name == "Cammy") {
         if (downKeys2[256] && s2.curMove.equals("") || s2.curMove.equals("walkRight")) {
             s2.dir = 'r';
             s2.walkMove(0, 5, "walkRight");
@@ -233,6 +230,11 @@ void actionP2(Sprite s2) {
     }
 
     if (s2.name == "Ken") {}
+}
+
+void interact(Sprite p, Sprite q){
+ rect(p.x-p.getWidth(),p.y,p.getWidth(),p.getHeight());
+ rect(q.x-p.getWidth(),q.y,q.getWidth(),q.getHeight());
 }
 
 //void keyReleased() {

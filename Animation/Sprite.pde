@@ -14,6 +14,7 @@ class Sprite {
     boolean crouching, inAir, walking;
     String name;
     int smoothConstant = 30; // tested constant
+    int Width, Height;
 
     Sprite(int x, int y, String name) {
         images = new ArrayList < PImage > ();
@@ -29,7 +30,43 @@ class Sprite {
         this.y = y;
         this.name = name;
     }
+    
+    int getWidth(){
+      if (walkFrame!= 0){
+        return images.get(walkFrame).width;
+      }
+      if (jumpFrame!= 0){
+        return images.get(jumpFrame).width;
+      }
+      if (attackFrame!= 0){
+        return images.get(attackFrame).width;
+      }
+      if (crouchFrame!= 0){
+        return images.get(crouchFrame).width;
+      }
+      else {
+        return (images.get(0).width);
+      }
+    }
 
+    int getHeight(){
+    if (walkFrame!= 0){
+       return images.get(walkFrame).height;
+     }
+     if (jumpFrame!= 0){
+       return images.get(jumpFrame).height;
+     }
+     if (attackFrame!= 0){
+       return images.get(attackFrame).height;
+     }
+     if (crouchFrame!= 0){
+       return images.get(crouchFrame).height;
+     }
+     else {
+       return images.get(0).height;
+     }
+    }
+   
     void reset(int resetFrame) {
         if (dir == 'l') {
             pushMatrix();
@@ -63,6 +100,7 @@ class Sprite {
         walkFrame++;
         if (walkFrame > endFrame) {
             curMove = "";
+            walkFrame = 0;
         }
     }
 
@@ -87,6 +125,7 @@ class Sprite {
         if (jumpFrame > endFrame) {
             curMove = "";
             upStep = 0;
+            jumpFrame = 0;
         }
     }
 
@@ -109,6 +148,7 @@ class Sprite {
         crouchFrame++;
         if (crouchFrame > endFrame) {
             curMove = "";
+            crouchFrame = 0;
         }
     }
 
@@ -131,6 +171,7 @@ class Sprite {
         attackFrame++;
         if (attackFrame > endFrame) {
             curMove = "";
+            attackFrame = 0;
         }
     }
 
