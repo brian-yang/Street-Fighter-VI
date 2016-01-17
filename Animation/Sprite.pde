@@ -81,7 +81,7 @@ class Sprite {
             image(images.get(jumpFrame), -(x + images.get(jumpFrame).width) + smoothConstant, y);
             popMatrix();
         } else {
-            image(images.get(jumpFrame), x, y - upStep);
+            image(images.get(jumpFrame), x - images.get(walkFrame).width, y - upStep);
         }
         jumpFrame++;
         if (jumpFrame > endFrame) {
@@ -104,7 +104,7 @@ class Sprite {
             image(images.get(crouchFrame), -(x + images.get(crouchFrame).width) + smoothConstant, y);
             popMatrix();
         } else {
-            image(images.get(crouchFrame), x, y + crouchStep);
+            image(images.get(crouchFrame), x - images.get(walkFrame).width, y + crouchStep);
         }
         crouchFrame++;
         if (crouchFrame > endFrame) {
@@ -126,7 +126,7 @@ class Sprite {
             image(images.get(attackFrame), -(x + images.get(attackFrame).width) + smoothConstant, y);
             popMatrix();
         } else {
-            image(images.get(attackFrame), x, y);
+            image(images.get(attackFrame), x - images.get(walkFrame).width, y);
         }
         attackFrame++;
         if (attackFrame > endFrame) {
