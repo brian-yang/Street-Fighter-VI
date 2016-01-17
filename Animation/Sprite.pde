@@ -1,5 +1,5 @@
 class Sprite{
-  int x,y;
+  int x, y;
   int walkFrame = 0;
   int jumpFrame = 0;
   int attackFrame = 0;
@@ -7,6 +7,8 @@ class Sprite{
   ArrayList<PImage> images;
   char dir;
   int step = 5;
+  int upStepInc = 15;
+  int crouchStep = 30;
   int upStep = 0;
   String curMove = "";
   boolean crouching, inAir, walking;
@@ -32,6 +34,9 @@ class Sprite{
     } else {
       image(images.get(6), x, y); 
     }
+    crouching = false;
+    inAir = false;
+    walking = false;
   }
   
   void walkMove(int startFrame, int endFrame, String moveName){
@@ -57,13 +62,13 @@ class Sprite{
   }
 
   void jumpMove(int startFrame, int endFrame, String jumpName) {
-   inAir = true;
    // checks if curMove has already been set to this attack
+   inAir = true;
    if (!curMove.equals(jumpName)) {
      curMove = jumpName;
      jumpFrame = startFrame;
    }
-   upStep += 15;
+   upStep += upStepInc;
    // checks if character is facing left
    if (dir == 'l') {
      pushMatrix();
@@ -73,7 +78,6 @@ class Sprite{
    } else {
      image(images.get(jumpFrame),x,y - upStep);
    }
-   print (upStep + "/");
    jumpFrame++;
    if (jumpFrame > endFrame){
      curMove = "";
@@ -92,10 +96,10 @@ class Sprite{
    if (dir == 'l') {
      pushMatrix();
      scale(-1, 1);
-     image(images.get(crouchFrame), -(x + images.get(crouchFrame).width), y + 40);
+     image(images.get(crouchFrame), -(x + images.get(crouchFrame).width), y + crouchStep);
      popMatrix();
    } else {
-     image(images.get(crouchFrame),x,y + 40);
+     image(images.get(crouchFrame),x, y + crouchStep);
    }
    crouchFrame++;
    if (crouchFrame > endFrame){

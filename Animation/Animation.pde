@@ -4,10 +4,6 @@ PFont font;
 boolean[] downKeys = new boolean[261]; // account for special keys
 int startTime;
 
-// need to fix y cor for the crouchMoves 
-// need to make characters stop flickering
-
-
 void setup(){
   size(600,400);
   background(255);
@@ -147,9 +143,9 @@ void actionP1(Sprite s){
     } else if (downKeys['c'] && s.curMove.equals("") || s.curMove.equals("spinningKnuckle")){
       s.attack(30, 33, "spinningKnuckle");
     } else if (downKeys['w'] && s.curMove.equals("") || s.curMove.equals("jump")){
-      //s.jumpUp(47, 52, "jump");
+      s.jumpMove(47, 52, "jump");
     } else if (downKeys['f'] && s.curMove.equals("") || s.curMove.equals("jumpKick")){
-      //s.jumpUp(53, 54, "jumpKick");
+      s.jumpMove(53, 54, "jumpKick");
     } else {
       s.reset();
     }
@@ -176,7 +172,7 @@ void actionP2(Sprite s2) {
     } else if (downKeys[258] && s2.curMove.equals("") || s2.curMove.equals("crouch")){
       s2.crouchMove(21 , 21, "crouch");
     } else if (downKeys[259] && s2.curMove.equals("") || s2.curMove.equals("jump")){
-      //s2.jumpUp(47 , 52, "jump");
+      s2.jumpMove(47 , 52, "jump");
     } else {
       s2.reset();
     }
