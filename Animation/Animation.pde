@@ -14,7 +14,7 @@ void setup(){
   smooth();
   font = createFont("Courier",20);
   textFont(font);
-  frameRate(3);
+  frameRate(8);
   p = new Sprite(0, width/2);
   q = new Sprite(100, width/2);
 }
@@ -127,13 +127,13 @@ void actionP1(Sprite s){
     } else if (downKeys['s'] && s.curMove.equals("") || s.curMove.equals("crouch")){
       s.crouchMove(21 , 21, "crouch");
     } else if (downKeys['g'] && s.crouching && s.curMove.equals("") || s.curMove.equals("crouchKick")){
-      s.attack(36, 37, "crouchKick");
+      s.crouchMove(36, 37, "crouchKick");
     } else if (downKeys['h'] && s.crouching && s.curMove.equals("") || s.curMove.equals("crouchKick2")){
-      s.attack(38, 41, "crouchKick2");
+      s.crouchMove(38, 41, "crouchKick2");
     } else if (downKeys['e'] && s.crouching && s.curMove.equals("") || s.curMove.equals("crouchPunch")){
-      s.attack(42, 43, "crouchPunch");
+      s.crouchMove(42, 43, "crouchPunch");
     } else if (downKeys['q'] && s.crouching && s.curMove.equals("") || s.curMove.equals("crouchPunch2")){
-      s.attack(44, 46, "crouchPunch2");
+      s.crouchMove(44, 46, "crouchPunch2");
     } else if (downKeys['q'] && !s.crouching && s.curMove.equals("") || s.curMove.equals("punchOne")){
       s.attack(16, 17, "punchOne");
     } else if (downKeys['e'] && !s.crouching && s.curMove.equals("") || s.curMove.equals("punchTwo")){
