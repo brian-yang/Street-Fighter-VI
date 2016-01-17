@@ -2,7 +2,12 @@ Sprite p,q;
 int nrKeys = 0;
 PFont font;
 boolean[] downKeys = new boolean[261]; // account for special keys
+boolean[] downKeys2 = new boolean[261]; // for player 2
 int startTime;
+char[] controls = new char[] {'w','a','s','d',
+                              'g','h','e','q',
+                              'r','f','x','c'};
+char[] controls2 = new char[] {',','.','/','m'};                              
 
 void setup(){
   size(600,400);
@@ -10,9 +15,10 @@ void setup(){
   smooth();
   font = createFont("Courier",20);
   textFont(font);
-  frameRate(8);
+  frameRate(10);
   p = new Sprite(0, width/2, "Cammy");
   q = new Sprite(100, width/2, "Cammy");
+  
 }
 
 void draw(){
@@ -32,94 +38,98 @@ void draw(){
 void keyPressed() {
  if (key < 256) {
    downKeys[key] = true; 
+   downKeys2[key] = true; 
  }
  if (keyCode == RIGHT) {
-   downKeys[256] = true;
+   downKeys2[256] = true; 
  }
  if (keyCode == LEFT) {
-   downKeys[257] = true;
+   downKeys2[257] = true;
  }
  if (keyCode == DOWN) {
-   downKeys[258] = true;
+   downKeys2[258] = true;
  }
  if (keyCode == UP) {
-   downKeys[259] = true;
+   downKeys2[259] = true;
  }
  if (keyCode == SHIFT) {
-   downKeys[260] = true;
+   downKeys2[260] = true;
  }
- interrupt();
+ interrupt(downKeys, 1);
+ interrupt(downKeys2, 2);
 }
 
 void keyReleased() {
  if (key < 256) {
-   downKeys[key] = false;  
+   downKeys[key] = false;
+   downKeys2[key] = false;   
  }
  if (keyCode == RIGHT) {
-   downKeys[256] = false;
+   downKeys2[256] = false;
  }
  if (keyCode == LEFT) {
-   downKeys[257] = false;
+   downKeys2[257] = false;
  }
  if (keyCode == DOWN) {
-   downKeys[258] = false;
+   downKeys2[258] = false;
  }
  if (keyCode == UP) {
-   downKeys[259] = false;
+   downKeys2[259] = false;
  }
  if (keyCode == SHIFT) {
-   downKeys[260] = false;
+   downKeys2[260] = false;
  }
 }
 
-void interrupt() {
+void interrupt(boolean[] commands, int playerNum) {
   if (key == CODED) {
     if (keyCode == RIGHT) {
-      setCommands(256);
+      setCommands(256, commands, playerNum);
     } else if (keyCode == LEFT) {
-      setCommands(257);
+      setCommands(257, commands, playerNum);
     } else if (keyCode == DOWN) {
-      setCommands(258);
+      setCommands(258, commands, playerNum);
     } else if (keyCode == UP) {
-      setCommands(259);
+      setCommands(259, commands, playerNum);
     } else if (keyCode == SHIFT) {
-      setCommands(260);
+      setCommands(260, commands, playerNum);
     }
   } else if (key < 256) {
-    setCommands(key);
+    setCommands(key, commands, playerNum);
   }
 }
 
-// keep this
-boolean checkKeys() {
-  int keys = 0;
-  for (int i = 0; i < downKeys.length; i++) {
-    if (downKeys[i]) {
-      keys++;
+void setCommands(int index, boolean[] commands, int playerNum) {
+  for (int i = 0; i < commands.length; i++) {
+    if (playerNum == 1) {
+      if (validKey(index, controls) && i != index) {
+        commands[i] = false;
+      }
+    } else if (playerNum == 2) {
+      if (validKey(index, controls2) && i != index) {
+        commands[i] = false;
+      }
     }
   }
-  if (keys != 1) {
-    return false;
-  }
-  return true;
 }
 
-void setCommands(int index) {
-  for (int i = 0; i < downKeys.length; i++) {
-    if (i != index) {
-      downKeys[i] = false;
+boolean validKey(int index, char[] characters) {
+  for (int i = 0; i < characters.length; i++) {
+    if (index == characters[i]) {
+      return true;
     }
   }
+  return false;
 }
 
 void actionP1(Sprite s){
     // P1
     if (downKeys['d'] && s.curMove.equals("") || s.curMove.equals("walkRight")){
        s.dir = 'r';
-       s.walkMove(0, 5, "walkRight");
+       s.walkRight(0, 5, "walkRight");
     } else if (downKeys['a'] && s.curMove.equals("") || s.curMove.equals("walkLeft")){
        s.dir = 'l';
-       s.walkMove(0, 5, "walkLeft");
+       s.walkLeft(0, 5, "walkLeft");
     } else if (downKeys['s'] && s.curMove.equals("") || s.curMove.equals("crouch")){
       s.crouchMove(21 , 21, "crouch");
     } else if (downKeys['g'] && s.crouching && s.curMove.equals("") || s.curMove.equals("crouchKick")){
@@ -153,25 +163,25 @@ void actionP1(Sprite s){
 
 void actionP2(Sprite s2) {
     // P2
-    if (downKeys[256] && s2.curMove.equals("") || s2.curMove.equals("walkRight")){
+    if (downKeys2[256] && s2.curMove.equals("") || s2.curMove.equals("walkRight")){
        s2.dir = 'r';
-       s2.walkMove(0, 5, "walkRight");
-    } else if (downKeys[257] && s2.curMove.equals("") || s2.curMove.equals("walkLeft")){
+       s2.walkRight(0, 5, "walkRight");
+    } else if (downKeys2[257] && s2.curMove.equals("") || s2.curMove.equals("walkLeft")){
        s2.dir = 'l';
-       s2.walkMove(0, 5, "walkLeft");
-    } else if (downKeys[','] && !s2.crouching && s2.curMove.equals("") || s2.curMove.equals("punchOne")){
+       s2.walkLeft(0, 5, "walkLeft");
+    } else if (downKeys2[','] && !s2.crouching && s2.curMove.equals("") || s2.curMove.equals("punchOne")){
       s2.attack(16, 17, "punchOne");
-    } else if (downKeys['.'] && !s2.crouching && s2.curMove.equals("") || s2.curMove.equals("punchTwo")){
+    } else if (downKeys2['.'] && !s2.crouching && s2.curMove.equals("") || s2.curMove.equals("punchTwo")){
       s2.attack(18, 19, "punchTwo");
-    } else if (downKeys['/'] && s2.curMove.equals("") || s2.curMove.equals("kickUp")){
+    } else if (downKeys2['/'] && s2.curMove.equals("") || s2.curMove.equals("kickUp")){
       s2.attack(20, 24, "kickUp");
-    } else if (downKeys[260] && !s2.inAir && s2.curMove.equals("") || s2.curMove.equals("kick")){
+    } else if (downKeys2[260] && !s2.inAir && s2.curMove.equals("") || s2.curMove.equals("kick")){
       s2.attack(25, 26, "kick");
-    } else if (downKeys['m'] && s2.curMove.equals("") || s2.curMove.equals("flyKick")){
+    } else if (downKeys2['m'] && s2.curMove.equals("") || s2.curMove.equals("flyKick")){
       s2.attack(27, 29, "flyKick");
-    } else if (downKeys[258] && s2.curMove.equals("") || s2.curMove.equals("crouch")){
+    } else if (downKeys2[258] && s2.curMove.equals("") || s2.curMove.equals("crouch")){
       s2.crouchMove(21 , 21, "crouch");
-    } else if (downKeys[259] && s2.curMove.equals("") || s2.curMove.equals("jump")){
+    } else if (downKeys2[259] && s2.curMove.equals("") || s2.curMove.equals("jump")){
       s2.jumpMove(47 , 52, "jump");
     } else {
       s2.reset();
