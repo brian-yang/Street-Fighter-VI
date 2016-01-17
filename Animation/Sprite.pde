@@ -11,13 +11,13 @@ class Sprite{
   int crouchStep = 30;
   int upStep = 0;
   String curMove = "";
-  boolean crouching, inAir, walking;
+  boolean crouching, inAir;
   String name;
   
   Sprite(int x, int y, String name){
     images = new ArrayList<PImage>();
-    for (int i = 0; i < 55; i++) {
-      String imageName = "Cammy " + "(" + (i+1) + ").png";
+    for (int i = 1; i <= 62; i++) {
+      String imageName = name + " " + "(" + i + ").png";
       images.add(loadImage(imageName));
     }
     this.x = x;
@@ -36,25 +36,31 @@ class Sprite{
     }
     crouching = false;
     inAir = false;
-    walking = false;
   }
   
-  void walkMove(int startFrame, int endFrame, String moveName){
-    walking = true;
-    if (!curMove.equals(moveName)) {
+  void walkLeft(int startFrame, int endFrame, String moveName){
+   if (!curMove.equals(moveName)) {
      curMove = moveName;
      walkFrame = startFrame;
    }
-   if (dir == 'l'){
-     x -= step;
-     pushMatrix();
-     scale(-1, 1);
-     image(images.get(walkFrame),-(x + images.get(walkFrame).width),y);
-     popMatrix();
-   } else {
-     x += step;
-     image(images.get(walkFrame),x,y);
+   x -= step;
+   pushMatrix();
+   scale(-1, 1);
+   image(images.get(walkFrame),-(x + images.get(walkFrame).width),y);
+   popMatrix();
+   walkFrame++;
+   if (walkFrame > endFrame){
+     curMove = "";
    }
+  }
+  
+  void walkRight(int startFrame, int endFrame, String moveName){
+   if (!curMove.equals(moveName)) {
+     curMove = moveName;
+     walkFrame = startFrame;
+   }
+   x += step;
+   image(images.get(walkFrame),x,y);
    walkFrame++;
    if (walkFrame > endFrame){
      curMove = "";
