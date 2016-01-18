@@ -9,89 +9,33 @@ class Sprite {
     int jumpFrame = 0;
     int attackFrame = 0;
     int crouchFrame = 0;
-    int resetFrame = 0;
     ArrayList < PImage > images;
     // states
-    boolean crouching, inAir, walking, attacking;
+    boolean crouching, inAir, walking;
     char dir;
     // how much should the sprite move
-    int step = 3;
+    int step = 10;
     int upStepInc = 20;
     int crouchStep = 30;
     int upStep = 0;
-    int smoothConstant = 40; // makes turning smoother
-    float health = 100;
-    float MAX_HEALTH = 100;
+    int smoothConstant = 30; // tested constant
 
     Sprite(int x, int y, String name) {
         images = new ArrayList < PImage > ();
         for (int i = 0; i < 181; i++) {
-            String imageName = "Cammy " + "(" + (i + 1) + ").png";
+            String imageName = "../Animation/Cammy " + "(" + (i + 1) + ").png";
             images.add(loadImage(imageName));
         }
         for (int i = 0; i < 116; i++) {
-            String imageName = "Ken " + "(" + (i + 1) + ").png";
+            String imageName = "../Animation/Ken " + "(" + (i + 1) + ").png";
             images.add(loadImage(imageName));
         }
         this.x = x;
         this.y = y;
         this.name = name;
         curMove = "";
-        //resetFrame = 0;
-    }
-    
-    float getX() {
-      return x;
-    }
-    
-    float getY() {
-      return y;
-    }
-    
-    float getWidth(){
-      if (walkFrame!= 0){
-        return images.get(walkFrame).width;
-      }
-      if (jumpFrame!= 0){
-        return images.get(jumpFrame).width;
-      }
-      if (attackFrame!= 0){
-        return images.get(attackFrame).width;
-      }
-      if (crouchFrame!= 0){
-        return images.get(crouchFrame).width;
-      }
-      else {
-        return (images.get(resetFrame).width);
-      }
     }
 
-    float getHeight(){
-    if (walkFrame!= 0){
-       return images.get(walkFrame).height;
-     }
-     if (jumpFrame!= 0){
-       return images.get(jumpFrame).height;
-     }
-     if (attackFrame!= 0){
-       return images.get(attackFrame).height;
-     }
-     if (crouchFrame!= 0){
-       return images.get(crouchFrame).height;
-     }
-     else {
-       return images.get(resetFrame).height;
-     }
-    }
-    
-    void takeDamage(int damage) {
-      if (health - damage > 0) {
-        health -= damage;
-      } else {
-        health = 0;
-      }
-    }
-   
     void reset(int resetFrame) {
         if (dir == 'l') {
             pushMatrix();
@@ -104,7 +48,6 @@ class Sprite {
         crouching = false;
         inAir = false;
         walking = false;
-        attacking = false;
     }
 
     void walkMove(int startFrame, int endFrame, String moveName) {
@@ -126,7 +69,6 @@ class Sprite {
         walkFrame++;
         if (walkFrame > endFrame) {
             curMove = "";
-            walkFrame = 0;
         }
     }
 
@@ -151,7 +93,6 @@ class Sprite {
         if (jumpFrame > endFrame) {
             curMove = "";
             upStep = 0;
-            jumpFrame = 0;
         }
     }
 
@@ -174,14 +115,12 @@ class Sprite {
         crouchFrame++;
         if (crouchFrame > endFrame) {
             curMove = "";
-            crouchFrame = 0;
         }
     }
 
 
     void attack(int startFrame, int endFrame, String attackName) {
         // checks if curMove has already been set to this attack
-        attacking = true;
         if (!curMove.equals(attackName)) {
             curMove = attackName;
             attackFrame = startFrame;
@@ -198,7 +137,6 @@ class Sprite {
         attackFrame++;
         if (attackFrame > endFrame) {
             curMove = "";
-            attackFrame = 0;
         }
     }
 

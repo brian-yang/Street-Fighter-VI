@@ -9,7 +9,6 @@ char[] controls = new char[] {'w', 'a', 's', 'd',
   'g', 'h', 'e', 'q', 
   'r', 'f', 'x', 'c'};
 char[] controls2 = new char[] {',', '.', '/', 'm'};
-PShape rectangle;
 
 void setup() {
   size(600, 400);
@@ -18,12 +17,12 @@ void setup() {
   font = createFont("Courier", 20);
   textFont(font);
   frameRate(10);
-  p = new Sprite(0, width / 2, "Ken");
-  q = new Sprite(100, width / 2, "Cammy");
+  p = new Sprite(100, width / 2, "Ken");
+  q = new Sprite(500, width / 2, "Cammy");
 }
 
 void draw() {
-  background(0);
+  grid();
   makeHealthBar();
   nrKeys = 0;
   for (int i = 0; i < downKeys.length; i++) {
@@ -34,9 +33,8 @@ void draw() {
   }
   text("Nr. of Keys: " + nrKeys, 20, 20);
   action(p,q);
-  hitbox(p);
-  hitbox(q);
-  shape(rectangle);
+  hitbox(p, q);
+  hitbox(q, p);
 }
 
 void keyPressed() {
@@ -124,6 +122,15 @@ boolean validKey(int index, char[] characters) {
     }
   }
   return false;
+}
+
+void grid() {
+  int step = 20;
+  background(255);
+  for(int i = 0; i < width/step; i++ ) {
+   line(i*step, 0, i*step, height);
+   line(0, i*step, width, i*step);
+ }
 }
 
 void action(Sprite s, Sprite s2) {
@@ -271,41 +278,11 @@ void makeHealthBar(){
   rect(350, 50, rectWidth, 40);
 }
 
-void hitbox(Sprite s){
- noFill();
- stroke(255);
- //noStroke();
- if (s.dir == 'l') {
-   if (s.inAir) {
-     rectangle = createShape(RECT,(s.x - (0.75) * s.getWidth()),s.y - s.upStep,s.getWidth(),s.getHeight());
-   } else {
-     rectangle = createShape(RECT,(s.x - (0.75) * s.getWidth()),s.y,s.getWidth(),s.getHeight());
-   }
- } else {
-   pushMatrix();
-   scale(-1, 1);
-   if (s.inAir) {
-     rectangle = createShape(RECT,(-(s.x + (0.75) * s.getWidth()) + s.smoothConstant),s.y - s.upStep,s.getWidth(),s.getHeight());
-   } else {
-     rectangle = createShape(RECT,(-(s.x + (0.75) * s.getWidth()) + s.smoothConstant),s.y,s.getWidth(),s.getHeight());
-   }
-   popMatrix();
- }
+void hitbox(Sprite s, Sprite s2){
+  if (s.getX() > s2.getX() - 1.25 * s2.getWidth() && s.getX() < s2.getX() + (0.8) * s2.getWidth() &&
+      s.getY() >= s2.getY() && s.getY() < s2.getY() + s2.getHeight()){
+        if (s.attacking) {
+          s2.takeDamage(10);
+        }
+  }
 }
-  
-//void interact(Sprite s, Sprite s2){
-//  if (s.name = "Cammy" && s2.curMove == "punchOne"){
-    
-//void keyReleased() {
-//  int elapsed = millis() - startTime;
-//     if (key == 'd') {
-//           startTime = millis();
-//           println(float(elapsed) / 1000 + " seconds elapsed");
-//           if (elapsed > 3000){
-//             image(p.images.get(8),p.x,p.y);
-//           }
-//     }  
-//     if (key == 'a') {
-//           startTime = millis();
-//     }
-//}
