@@ -8,7 +8,8 @@ int startTime;
 char[] controls = new char[] {'w', 'a', 's', 'd', 
   'g', 'h', 'e', 'q', 
   'r', 'f', 'x', 'c'};
-char[] controls2 = new char[] {',', '.', '/', 'm'};                              
+char[] controls2 = new char[] {',', '.', '/', 'm'};
+PShape rectangle;
 
 void setup() {
   size(600, 400);
@@ -33,8 +34,9 @@ void draw() {
   }
   text("Nr. of Keys: " + nrKeys, 20, 20);
   action(p,q);
-  interact(p);
-  interact(q);
+  hitbox(p);
+  hitbox(q);
+  shape(rectangle);
 }
 
 void keyPressed() {
@@ -269,29 +271,31 @@ void makeHealthBar(){
   rect(350, 50, rectWidth, 40);
 }
 
-void interact(Sprite s){
+void hitbox(Sprite s){
  noFill();
- //stroke(255);
- noStroke();
+ stroke(255);
+ //noStroke();
  if (s.dir == 'l') {
    if (s.inAir) {
-     rect(s.x - (0.75) * s.getWidth(),s.y - s.upStep,s.getWidth(),s.getHeight());
+     rectangle = createShape(RECT,(s.x - (0.75) * s.getWidth()),s.y - s.upStep,s.getWidth(),s.getHeight());
    } else {
-     rect(s.x - (0.75) * s.getWidth(),s.y,s.getWidth(),s.getHeight());
+     rectangle = createShape(RECT,(s.x - (0.75) * s.getWidth()),s.y,s.getWidth(),s.getHeight());
    }
  } else {
    pushMatrix();
    scale(-1, 1);
    if (s.inAir) {
-     rect(-(s.x + (0.75) * s.getWidth()) + s.smoothConstant,s.y - s.upStep,s.getWidth(),s.getHeight());
+     rectangle = createShape(RECT,(-(s.x + (0.75) * s.getWidth()) + s.smoothConstant),s.y - s.upStep,s.getWidth(),s.getHeight());
    } else {
-     rect(-(s.x + (0.75) * s.getWidth()) + s.smoothConstant,s.y,s.getWidth(),s.getHeight());
+     rectangle = createShape(RECT,(-(s.x + (0.75) * s.getWidth()) + s.smoothConstant),s.y,s.getWidth(),s.getHeight());
    }
    popMatrix();
  }
 }
   
-
+//void interact(Sprite s, Sprite s2){
+//  if (s.name = "Cammy" && s2.curMove == "punchOne"){
+    
 //void keyReleased() {
 //  int elapsed = millis() - startTime;
 //     if (key == 'd') {
