@@ -15,6 +15,8 @@ class Sprite {
     String name;
     int smoothConstant = 30; // tested constant
     int Width, Height;
+    int health = 100;
+    int MAX_HEALTH = 100;
 
     Sprite(int x, int y, String name) {
         images = new ArrayList < PImage > ();
