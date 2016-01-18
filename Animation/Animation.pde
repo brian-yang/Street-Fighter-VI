@@ -32,8 +32,9 @@ void draw() {
     }
   }
   text("Nr. of Keys: " + nrKeys, 20, 20);
-  action(p, q);
-  interact(p, q);
+  action(p,q);
+  interact(p);
+  interact(q);
 }
 
 void keyPressed() {
@@ -234,15 +235,6 @@ void action(Sprite s, Sprite s2) {
   }
 }
 
-void interact(Sprite p, Sprite q) {
-  noFill();
-  stroke(255);
-  rect(p.x-p.getWidth(), p.y, p.getWidth(), p.getHeight());
-  noFill();
-  stroke(255);
-  rect(q.x-q.getWidth(), q.y, q.getWidth(), q.getHeight());
-}
-
 void makeHealthBar(){
    if (p.health < 25){
     fill(255, 0, 0);
@@ -277,6 +269,29 @@ void makeHealthBar(){
   rect(350, 50, rectWidth, 40);
 }
 
+void interact(Sprite s){
+ noFill();
+ //stroke(255);
+ noStroke();
+ if (s.dir == 'l') {
+   if (s.inAir) {
+     rect(s.x - (0.75) * s.getWidth(),s.y - s.upStep,s.getWidth(),s.getHeight());
+   } else {
+     rect(s.x - (0.75) * s.getWidth(),s.y,s.getWidth(),s.getHeight());
+   }
+ } else {
+   pushMatrix();
+   scale(-1, 1);
+   if (s.inAir) {
+     rect(-(s.x + (0.75) * s.getWidth()) + s.smoothConstant,s.y - s.upStep,s.getWidth(),s.getHeight());
+   } else {
+     rect(-(s.x + (0.75) * s.getWidth()) + s.smoothConstant,s.y,s.getWidth(),s.getHeight());
+   }
+   popMatrix();
+ }
+}
+  
+
 //void keyReleased() {
 //  int elapsed = millis() - startTime;
 //     if (key == 'd') {
@@ -289,4 +304,4 @@ void makeHealthBar(){
 //     if (key == 'a') {
 //           startTime = millis();
 //     }
-//}you
+//}

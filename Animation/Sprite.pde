@@ -1,18 +1,23 @@
 class Sprite {
+    // x-y coords
     int x, y;
+    // current move and name
+    String name;
+    String curMove;
+    // frames
     int walkFrame = 0;
     int jumpFrame = 0;
     int attackFrame = 0;
     int crouchFrame = 0;
     ArrayList < PImage > images;
+    // states
+    boolean crouching, inAir, walking;
     char dir;
+    // how much should the sprite move
     int step = 3;
-    int upStepInc = 15;
+    int upStepInc = 20;
     int crouchStep = 30;
     int upStep = 0;
-    String curMove = "";
-    boolean crouching, inAir, walking;
-    String name;
     int smoothConstant = 30; // tested constant
     int Width, Height;
     int health = 100;
@@ -31,6 +36,7 @@ class Sprite {
         this.x = x;
         this.y = y;
         this.name = name;
+        curMove = "";
     }
     
     int getWidth(){
@@ -118,7 +124,7 @@ class Sprite {
         if (dir == 'l') {
             pushMatrix();
             scale(-1, 1);
-            image(images.get(jumpFrame), -(x + images.get(jumpFrame).width) + smoothConstant, y);
+            image(images.get(jumpFrame), -(x + images.get(jumpFrame).width) + smoothConstant, y - upStep);
             popMatrix();
         } else {
             image(images.get(jumpFrame), x - images.get(walkFrame).width, y - upStep);
@@ -142,7 +148,7 @@ class Sprite {
         if (dir == 'l') {
             pushMatrix();
             scale(-1, 1);
-            image(images.get(crouchFrame), -(x + images.get(crouchFrame).width) + smoothConstant, y);
+            image(images.get(crouchFrame), -(x + images.get(crouchFrame).width) + smoothConstant, y + crouchStep);
             popMatrix();
         } else {
             image(images.get(crouchFrame), x - images.get(walkFrame).width, y + crouchStep);
