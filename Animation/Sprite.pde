@@ -19,9 +19,13 @@ class Sprite {
     int upStepInc = 20;
     int crouchStep = 30;
     int upStep = 0;
+    // health
+    float health = 1000;
+    float MAX_HEALTH = 1000;
+    // constants
     int smoothConstant = 40; // makes turning smoother
-    float health = 100;
-    float MAX_HEALTH = 100;
+    int leftBound = 45; // xcor of left boundary
+    int rightBound = width; // xcor of right boundary
 
     Sprite(int x, int y, String name) {
         images = new ArrayList < PImage > ();
@@ -114,13 +118,17 @@ class Sprite {
             walkFrame = startFrame;
         }
         if (dir == 'l') {
-            x -= step;
+            if (x >= leftBound) {
+              x -= step;
+            }
             pushMatrix();
             scale(-1, 1);
             image(images.get(walkFrame), -(x + images.get(walkFrame).width) + smoothConstant, y);
             popMatrix();
         } else {
-            x += step;
+            if (x <= rightBound) {
+              x += step;
+            }
             image(images.get(walkFrame), x - images.get(walkFrame).width, y);
         }
         walkFrame++;
