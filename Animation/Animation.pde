@@ -1,16 +1,15 @@
 Sprite p, q;
 float rectWidth = 200;
-int nrKeys = 0;
 PFont font;
 boolean[] downKeys = new boolean[261]; // account for special keys
 boolean[] downKeys2 = new boolean[261]; // for player 2
-int startTime;
 char[] controls = new char[] {'w', 'a', 's', 'd', 
   'g', 'h', 'e', 'q', 
   'r', 'f', 'x', 'c'};
 char[] controls2 = new char[] {',', '.', '/', 'm'};
 
 void setup() {
+
   size(600, 400);
   background(255);
   smooth();
@@ -24,14 +23,6 @@ void setup() {
 void draw() {
   grid();
   makeHealthBar();
-  nrKeys = 0;
-  for (int i = 0; i < downKeys.length; i++) {
-    if (downKeys[i]) {
-      nrKeys++;
-      text((char) i, 10 * nrKeys, height / 2);
-    }
-  }
-  text("Nr. of Keys: " + nrKeys, 20, 20);
   action(p,q);
   hitbox(p, q);
   hitbox(q, p);
@@ -132,6 +123,8 @@ void grid() {
    line(0, i*step, width, i*step);
  }
 }
+
+
 
 void action(Sprite s, Sprite s2) {
   // P1  
@@ -245,9 +238,9 @@ void action(Sprite s, Sprite s2) {
 }
 
 void makeHealthBar(){
-   if (p.health < 25){
+   if (p.health < 0.25 * q.MAX_HEALTH){
     fill(255, 0, 0);
-  } else if (p.health < 50){
+  } else if (p.health < 0.4 * q.MAX_HEALTH){
     fill(255, 200, 0);
   } else{
     fill(0, 255, 0);
@@ -255,15 +248,15 @@ void makeHealthBar(){
    
   noStroke();
   float drawWidth = (p.health / p.MAX_HEALTH) * rectWidth;
-  rect(50, 50, drawWidth, 40);
+  rect(50, 50, drawWidth, 40, 50);
    
   stroke(0);
   noFill();
-  rect(50, 50, rectWidth, 40);
+  rect(50, 50, rectWidth, 40, 50);
   
-  if (q.health < 25){
+  if (q.health < 0.25 * q.MAX_HEALTH){
     fill(255, 0, 0);
-  } else if (q.health < 50){
+  } else if (q.health < 0.4 * q.MAX_HEALTH){
     fill(255, 200, 0);
   } else{
     fill(0, 255, 0);
@@ -271,18 +264,23 @@ void makeHealthBar(){
    
   noStroke();
   float drawWidth2 = (q.health / q.MAX_HEALTH) * rectWidth;
-  rect(350, 50, drawWidth2, 40);
+  rect(350, 50, drawWidth2, 40, 50);
    
   stroke(0);
   noFill();
-  rect(350, 50, rectWidth, 40);
+  rect(350, 50, rectWidth, 40, 50);
 }
 
 void hitbox(Sprite s, Sprite s2){
-  if (s.getX() > s2.getX() - 1.25 * s2.getWidth() && s.getX() < s2.getX() + (0.8) * s2.getWidth() &&
+  if (s.getX() > s2.getX() - 1.25 * s2.getWidth() && s.getX() < s2.getX() && s.dir == 'r' &&
       s.getY() >= s2.getY() && s.getY() < s2.getY() + s2.getHeight()){
-        if (s.attacking) {
-          s2.takeDamage(10);
-        }
+      if (s.attacking) {
+        s2.takeDamage(10);
+      }
+  } else if (s.getX() < s2.getX() + 0.8 * s2.getWidth() && s.getX() > s2.getX() && s.dir == 'l' &&
+            s.getY() >= s2.getY() && s.getY() < s2.getY() + s2.getHeight()){
+      if (s.attacking) {
+        s2.takeDamage(10);
+      }
   }
 }
