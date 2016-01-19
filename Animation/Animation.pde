@@ -16,8 +16,8 @@ void setup() {
   font = createFont("Courier", 20);
   textFont(font);
   frameRate(10);
-  p = new Sprite(100, width / 2, "Ken");
-  q = new Sprite(500, width / 2, "Cammy");
+  p = new Sprite(100, width / 2, "Cammy");
+  q = new Sprite(200, width / 2, "Cammy");
 }
 
 void draw() {
@@ -129,11 +129,11 @@ void grid() {
 void action(Sprite s, Sprite s2) {
   // P1  
   if (s.name == "Cammy") {
-    if (downKeys['d'] && s.curMove.equals("") || s.curMove.equals("walkRight")) {
+    if (downKeys['d'] && s.curMove.equals("") || s.curMove.equals("walkRight") && !s.gettingHit) {
       s.dir = 'r';
       s.walkMove(0, 5, "walkRight");
     } else if (downKeys['a'] && s.curMove.equals("") || s.curMove.equals("walkLeft")) {
-      s.dir = 'l';
+      s.dir = 'l'; 
       s.walkMove(0, 5, "walkLeft");
     } else if (downKeys['s'] && s.curMove.equals("") || s.curMove.equals("crouch")) {
       s.crouchMove(21, 21, "crouch");
@@ -161,6 +161,8 @@ void action(Sprite s, Sprite s2) {
       s.jumpMove(47, 52, "jump");
     } else if (downKeys['f'] && s.curMove.equals("") || s.curMove.equals("jumpKick")) {
       s.jumpMove(53, 54, "jumpKick");
+    } else if (s.gettingHit && s2.attacking && s.curMove.equals("") || s.curMove.equals("gotHit")){
+      s.getHit(106, 108, "gotHit");
     } else {
       s.reset(6);
     }
@@ -228,6 +230,8 @@ void action(Sprite s, Sprite s2) {
       s2.jumpMove(47, 52, "jump");
     } else if (downKeys2[']'] && s2.curMove.equals("") || s2.curMove.equals("jumpKick")) {
       s2.jumpMove(53, 54, "jumpKick");
+    } else if (s2.gettingHit && s.attacking && s2.curMove.equals("") || s2.curMove.equals("gotHit")){
+      s2.getHit(106, 108, "gotHit");
     } else {
       s2.reset(6);
     }
@@ -274,8 +278,9 @@ void makeHealthBar(){
 void hitbox(Sprite s, Sprite s2){
   if (s.getX() > s2.getX() - 1.25 * s2.getWidth() && s.getX() < s2.getX() && s.dir == 'r' &&
       s.getY() >= s2.getY() && s.getY() < s2.getY() + s2.getHeight()){
-      if (s.attacking) {
+      if (s.attacking){
         s2.takeDamage(10);
+        s2.gettingHit = true;
       }
   } else if (s.getX() < s2.getX() + 0.8 * s2.getWidth() && s.getX() > s2.getX() && s.dir == 'l' &&
             s.getY() >= s2.getY() && s.getY() < s2.getY() + s2.getHeight()){

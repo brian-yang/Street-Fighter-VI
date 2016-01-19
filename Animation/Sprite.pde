@@ -8,11 +8,12 @@ class Sprite {
     int walkFrame = 0;
     int jumpFrame = 0;
     int attackFrame = 0;
+    int getHitFrame = 0;
     int crouchFrame = 0;
     int resetFrame = 0;
     ArrayList < PImage > images;
     // states
-    boolean crouching, inAir, walking, attacking;
+    boolean crouching, inAir, walking, attacking, gettingHit;
     char dir;
     // how much should the sprite move
     int step = 3;
@@ -183,6 +184,28 @@ class Sprite {
         if (crouchFrame > endFrame) {
             curMove = "";
             crouchFrame = 0;
+        }
+    }
+    
+    void getHit(int startFrame, int endFrame, String getHitName) {
+        gettingHit = true;
+        if (!curMove.equals(getHitName)) {
+            curMove = getHitName;
+            getHitFrame = startFrame;
+        }
+        // checks if character is facing left
+        if (dir == 'r') {
+            pushMatrix();
+            scale(-1, 1);
+            image(images.get(getHitFrame), -(x + images.get(getHitFrame).width) + smoothConstant, y);
+            popMatrix();
+        } else {
+            image(images.get(getHitFrame), x - images.get(getHitFrame).width, y);
+        }
+        getHitFrame++;
+        if (getHitFrame > endFrame) {
+            curMove = "";
+            getHitFrame = 0;
         }
     }
 
