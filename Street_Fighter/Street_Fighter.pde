@@ -145,7 +145,7 @@ void resetKeys() {
             downKeys[i] = false;
         }
         for (int i = 0; i < downKeys2.length; i++) {
-            downKeys[i] = false;
+            downKeys2[i] = false;
         }
     }
 // =================================================================
@@ -154,7 +154,7 @@ void setActiveScreen(String name) {
     activeScreen = screens.get(name);
     curScreenName = name;
     if (name.equals("Arena")) {
-        ((Arena) activeScreen).initialize("Ken", "Cammy");
+        ((Arena) activeScreen).initialize("Cammy", "Cammy");
     }
 }
 
@@ -167,7 +167,7 @@ void showScreen(Screen activeScreen) {
     } else {
         if (!activeScreen.isSetUp) {
             if (curScreenName.equals("Arena")) {
-                ((Arena) activeScreen).initialize("Ken", "Cammy");
+                ((Arena) activeScreen).initialize("Cammy", "Cammy");
             } else {
                 for (int i = 0; i < activeScreen.buttonLabels.size(); i++) {
                     activeScreen.setupButtons(i, 300, 50);
