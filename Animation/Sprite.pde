@@ -11,7 +11,7 @@ class Sprite {
     boolean crouching, inAir, walking, attacking, gettingHit;
     char dir;
     // how much should the sprite move
-    int step = 3;
+    int step = 5;
     int upStepInc = 20;
     int crouchStep = 30;
     int upStep = 0;
@@ -32,6 +32,9 @@ class Sprite {
         for (int i = 0; i < 116; i++) {
             String imageName = "Ken " + "(" + (i + 1) + ").png";
             images.add(loadImage(imageName));
+        }
+        for (PImage i: images){
+          i.resize(i.width * 2, i.height * 2);
         }
         this.x = x;
         this.y = y;
