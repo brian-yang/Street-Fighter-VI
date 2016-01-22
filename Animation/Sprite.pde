@@ -34,7 +34,7 @@ class Sprite {
             images.add(loadImage(imageName));
         }
         for (PImage i: images){
-          i.resize(i.width * 2, i.height * 2);
+          i.resize((int) (i.width * 1.5),(int) (i.height * 1.5));
         }
         this.x = x;
         this.y = y;
@@ -72,10 +72,10 @@ class Sprite {
         if (dir == 'l') {
             pushMatrix();
             scale(-1, 1);
-            image(images.get(curFrame), -(x + images.get(curFrame).width) + smoothConstant, y);
+            image(images.get(curFrame), -(x + images.get(curFrame).width / 2), y);
             popMatrix();
         } else {
-            image(images.get(curFrame), x - images.get(curFrame).width, y);
+            image(images.get(curFrame), x - images.get(curFrame).width / 2, y);
         }
         crouching = false;
         inAir = false;
@@ -97,13 +97,13 @@ class Sprite {
             }
             pushMatrix();
             scale(-1, 1);
-            image(images.get(curFrame), -(x + images.get(curFrame).width) + smoothConstant, y);
+            image(images.get(curFrame), -(x + images.get(curFrame).width / 2), y);
             popMatrix();
         } else {
             if (x <= rightBound) {
               x += step;
             }
-            image(images.get(curFrame), x - images.get(curFrame).width, y);
+            image(images.get(curFrame), x - images.get(curFrame).width / 2, y);
         }
         curFrame++;
         if (curFrame > endFrame) {
@@ -124,10 +124,10 @@ class Sprite {
         if (dir == 'l') {
             pushMatrix();
             scale(-1, 1);
-            image(images.get(curFrame), -(x + images.get(curFrame).width) + smoothConstant, y - upStep);
+            image(images.get(curFrame), -(x + images.get(curFrame).width / 2), y - upStep);
             popMatrix();
         } else {
-            image(images.get(curFrame), x - images.get(curFrame).width, y - upStep);
+            image(images.get(curFrame), x - images.get(curFrame).width / 2, y - upStep);
         }
         curFrame++;
         if (curFrame > endFrame) {
@@ -148,10 +148,10 @@ class Sprite {
         if (dir == 'l') {
             pushMatrix();
             scale(-1, 1);
-            image(images.get(curFrame), -(x + images.get(curFrame).width) + smoothConstant, y + crouchStep);
+            image(images.get(curFrame), -(x + images.get(curFrame).width / 2), y + crouchStep);
             popMatrix();
         } else {
-            image(images.get(curFrame), x - images.get(curFrame).width, y + crouchStep);
+            image(images.get(curFrame), x - images.get(curFrame).width / 2, y + crouchStep);
         }
         curFrame++;
         if (curFrame > endFrame) {
@@ -170,10 +170,10 @@ class Sprite {
         if (dir == 'r') {
             pushMatrix();
             scale(-1, 1);
-            image(images.get(curFrame), -(x + images.get(curFrame).width) + smoothConstant, y);
+            image(images.get(curFrame), -(x + images.get(curFrame).width / 2), y);
             popMatrix();
         } else {
-            image(images.get(curFrame), x - images.get(curFrame).width, y);
+            image(images.get(curFrame), x - images.get(curFrame).width / 2, y);
         }
         curFrame++;
         if (curFrame > endFrame) {
@@ -195,10 +195,10 @@ class Sprite {
         if (dir == 'l') {
             pushMatrix();
             scale(-1, 1);
-            image(images.get(curFrame), -(x + images.get(curFrame).width) + smoothConstant, y);
+            image(images.get(curFrame), -(x + images.get(curFrame).width / 2), y);
             popMatrix();
         } else {
-            image(images.get(curFrame), x - images.get(curFrame).width, y);
+            image(images.get(curFrame), x - images.get(curFrame).width / 2, y);
         }
         curFrame++;
         if (curFrame > endFrame) {
