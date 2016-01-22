@@ -1,0 +1,7 @@
++knockback
++jump down frames
+keys mapping
+character selection menu
+(smoother walking - increase speed)
+(jump forward)
+
