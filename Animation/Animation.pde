@@ -130,14 +130,14 @@ void grid() {
 void action(Sprite s, Sprite s2) {
   // P1  
   if (s.name == "Cammy") {
-    if (downKeys['d'] && s.curMove.equals("") || s.curMove.equals("walkRight")) {
+    if (s.state.equals("getHit") && s.curMove.equals("") || s.curMove.equals("getHit")){
+      s.getHit(106, 108, "getHit");
+    } else if (downKeys['d'] && s.curMove.equals("") || s.curMove.equals("walkRight")) {
       s.dir = 'r';
       s.walkMove(0, 5, "walkRight");
     } else if (downKeys['a'] && s.curMove.equals("") || s.curMove.equals("walkLeft")) {
       s.dir = 'l'; 
       s.walkMove(0, 5, "walkLeft");
-    } else if (s.gettingHit && s.curMove.equals("") || s.curMove.equals("gotHit")){
-      s.getHit(106, 108, "gotHit");
     } else if (downKeys['s'] && s.curMove.equals("") || s.curMove.equals("crouch")) {
       s.crouchMove(21, 21, "crouch");
     } else if (downKeys['g'] && s.crouching && s.curMove.equals("") || s.curMove.equals("crouchKick")) {
@@ -170,14 +170,14 @@ void action(Sprite s, Sprite s2) {
   }
   // P2
   if (s2.name == "Cammy") {
-    if (downKeys2[256] && s2.curMove.equals("") || s2.curMove.equals("walkRight")) {
+    if (s2.state.equals("getHit") && s2.curMove.equals("") || s2.curMove.equals("getHit")){
+      s2.getHit(106, 108, "getHit");
+    } else if (downKeys2[256] && s2.curMove.equals("") || s2.curMove.equals("walkRight")) {
       s2.dir = 'r';
       s2.walkMove(0, 5, "walkRight");
     } else if (downKeys2[257] && s2.curMove.equals("") || s2.curMove.equals("walkLeft")) {
       s2.dir = 'l';
       s2.walkMove(0, 5, "walkLeft");
-    } else if (s2.gettingHit && s2.curMove.equals("") || s2.curMove.equals("gotHit")){
-      s2.getHit(106, 108, "gotHit");
     } else if (downKeys2[','] && !s2.crouching && s2.curMove.equals("") || s2.curMove.equals("punchOne")) {
       s2.attack(16, 17, "punchOne");
     } else if (downKeys2['.'] && !s2.crouching && s2.curMove.equals("") || s2.curMove.equals("punchTwo")) {
@@ -277,17 +277,48 @@ void makeHealthBar(){
 }
 
 void hitbox(Sprite s, Sprite s2){
-  if (s.getX() > s2.getX() - 1.25 * s2.getWidth() && s.getX() < s2.getX() && s.dir == 'r' &&
-      s.getY() >= s2.getY() && s.getY() < s2.getY() + s2.getHeight()){
-      if (s.attacking){
-        s2.takeDamage(10);
-        s2.gettingHit = true;
+  if (hitboxRight(s, s2)) {
+      if (s.state.equals("attack")) {
+        beginHit(s2);
+      } else if (s2.curMove.equals("getHit")) {
+        endHit(s2);
       }
-  } else if (s.getX() < s2.getX() + 0.8 * s2.getWidth() && s.getX() > s2.getX() && s.dir == 'l' &&
-            s.getY() >= s2.getY() && s.getY() < s2.getY() + s2.getHeight()){
-      if (s.attacking) {
-        s2.takeDamage(10);
-        s2.gettingHit = true;
+  } 
+  else if (hitboxLeft(s, s2)) {
+      if (s.state.equals("attack")) {
+        beginHit(s2);
+      } else if (s2.curMove.equals("getHit")) {
+        endHit(s2);
       }
+  } else if (s2.curMove.equals("getHit")) {
+        endHit(s2);
   }
+}
+
+boolean hitboxRight(Sprite s, Sprite s2) {
+  float widthFactor = 1.25;
+  return s.dir == 'r' && 
+        s.getX() > s2.getX() - widthFactor * s2.getWidth() && 
+        s.getX() < s2.getX() &&
+        s.getY() >= s2.getY() &&
+        s.getY() < s2.getY() + s2.getHeight();
+}
+
+boolean hitboxLeft(Sprite s, Sprite s2) {
+  float widthFactor = 0.8;
+  return s.dir == 'l' &&
+        s.getX() < s2.getX() + widthFactor * s2.getWidth() && 
+        s.getX() > s2.getX() && 
+        s.getY() >= s2.getY() && 
+        s.getY() < s2.getY() + s2.getHeight();
+}
+
+void beginHit(Sprite s) {
+  s.takeDamage(10);
+  s.state = "getHit";
+}
+
+void endHit(Sprite s) {
+  s.state = "";
+  s.curMove = "";
 }

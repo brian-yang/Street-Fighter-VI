@@ -8,7 +8,8 @@ class Sprite {
     int curFrame = 0;
     ArrayList < PImage > images;
     // states
-    boolean crouching, inAir, walking, attacking, gettingHit;
+    boolean crouching, inAir;
+    String state;
     char dir;
     // how much should the sprite move
     int step = 5;
@@ -19,7 +20,6 @@ class Sprite {
     float health = 1000;
     float MAX_HEALTH = 1000;
     // constants
-    int smoothConstant = 40; // makes turning smoother
     int leftBound = 45; // xcor of left boundary
     int rightBound = width; // xcor of right boundary
 
@@ -41,6 +41,7 @@ class Sprite {
         this.name = name;
         curMove = "";
         curFrame = 0;
+        state = "";
     }
     
     float getX() {
@@ -79,14 +80,11 @@ class Sprite {
         }
         crouching = false;
         inAir = false;
-        walking = false;
-        attacking = false;
-        gettingHit = false;
+        state = "";
     }
 
     void walkMove(int startFrame, int endFrame, String moveName) {
-        walking = true;
-        gettingHit = false;
+        state = "walk";
         if (!curMove.equals(moveName)) {
             curMove = moveName;
             curFrame = startFrame;
@@ -161,7 +159,7 @@ class Sprite {
     }
     
     void getHit(int startFrame, int endFrame, String getHitName) {
-        gettingHit = true;
+        state = "getHit";
         if (!curMove.equals(getHitName)) {
             curMove = getHitName;
             curFrame = startFrame;
@@ -179,14 +177,13 @@ class Sprite {
         if (curFrame > endFrame) {
             curMove = "";
             curFrame = 0;
-            gettingHit = false;
         }
     }
 
 
     void attack(int startFrame, int endFrame, String attackName) {
         // checks if curMove has already been set to this attack
-        attacking = true;
+        state = "attack";
         if (!curMove.equals(attackName)) {
             curMove = attackName;
             curFrame = startFrame;
