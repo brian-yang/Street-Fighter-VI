@@ -15,8 +15,8 @@ void setup() {
   font = createFont("Courier", 20);
   textFont(font);
   frameRate(10);
-  p = new Sprite(width/2 - 100, 200, "Cammy");
-  q = new Sprite(width/2 + 100, 200, "Cammy");
+  p = new Sprite(width/2 - 100, 200, "Ken");
+  q = new Sprite(width/2 + 100, 200, "Ken");
   q.dir = 'l';
 }
 
@@ -227,27 +227,27 @@ void action(Sprite s, Sprite s2) {
        s.crouchMove(188, 190, "crouchKick");
      } else if (downKeys['h'] && s.crouching && s.curMove.equals("") || s.curMove.equals("crouchKick2")) {
        s.crouchMove(191, 196, "crouchKick2");
-     } else if (downKeys['e'] && s.crouching && s.curMove.equals("") || s.curMove.equals("crouchPunch")) {
+     } else if (downKeys['q'] && s.crouching && s.curMove.equals("") || s.curMove.equals("crouchPunch")) {
        s.crouchMove(197, 200, "crouchPunch");
-     //} else if (downKeys['q'] && s.crouching && s.curMove.equals("") || s.curMove.equals("crouchPunch2")) {
+     //} else if (downKeys['e'] && s.crouching && s.curMove.equals("") || s.curMove.equals("crouchPunch2")) {
      //  s.crouchMove(204, 207, "crouchPunch2");
      } else if (s.state == "crouch"){
         s.crouchMove(187, 187, "crouch");
      } else if (downKeys['q'] && !s.crouching && s.curMove.equals("") || s.curMove.equals("punchOne")) {
        s.attack(201, 203, "punchOne");
-     } else if (downKeys['r'] && s.curMove.equals("") || s.curMove.equals("kick1")) {
-       s.attack(215, 217, "kick1");
+     } else if (downKeys['r'] && s.curMove.equals("") || s.curMove.equals("kickUp")) {
+       s.attack(215, 217, "kickUp");
      } else if (downKeys['f'] && !s.inAir && s.curMove.equals("") || s.curMove.equals("kick2")) {
        s.attack(218, 225, "kick2");
-     } else if (downKeys['v'] && !s.inAir && s.curMove.equals("") || s.curMove.equals("kick3")) {
+     } else if (downKeys['g'] && !s.inAir && s.curMove.equals("") || s.curMove.equals("kick3")) {
        s.attack(244, 247, "kick3");
-     } else if (downKeys['x'] && s.curMove.equals("") || s.curMove.equals("flyKick")) {
+     } else if (downKeys['f'] && s.curMove.equals("") || s.curMove.equals("flyKick")) {
        s.attack(254, 257, "flyKick");
-     } else if (downKeys['c'] && s.curMove.equals("") || s.curMove.equals("spinningKick")) {
+     } else if (downKeys['x'] && s.curMove.equals("") || s.curMove.equals("spinningKick")) {
        s.attack(258, 267, "spinningKick");
      } else if (downKeys['w'] && s.curMove.equals("") || s.curMove.equals("jump")) {
        s.jumpMove(229, 232, "jump");
-     } else if (downKeys['b'] && s.curMove.equals("") || s.curMove.equals("kamekameha")) {
+     } else if (downKeys['c'] && s.curMove.equals("") || s.curMove.equals("kamekameha")) {
        s.attack(240, 243, "kamekameha");
      } else {
        s.reset(181);
@@ -266,7 +266,7 @@ void action(Sprite s, Sprite s2) {
        s2.crouchMove(188, 190, "crouchKick");
      } else if (downKeys2['m'] && s2.crouching && s2.curMove.equals("") || s2.curMove.equals("crouchKick2")) {
        s2.crouchMove(191, 196, "crouchKick2");
-     } else if (downKeys2[','] && s2.crouching && s2.curMove.equals("") || s2.curMove.equals("crouchPunch")) {
+     } else if (downKeys2['j'] && s2.crouching && s2.curMove.equals("") || s2.curMove.equals("crouchPunch")) {
        s2.crouchMove(197, 200, "crouchPunch");
      //} else if (downKeys2['k'] && s2.crouching && s2.curMove.equals("") || s2.curMove.equals("crouchPunch2")) {
      //  s2.crouchMove(204, 207, "crouchPunch2");
@@ -274,19 +274,19 @@ void action(Sprite s, Sprite s2) {
         s2.crouchMove(187, 187, "crouch");
      } else if (downKeys2['j'] && !s2.crouching && s2.curMove.equals("") || s2.curMove.equals("punchOne")) {
        s2.attack(201, 203, "punchOne");
-     } else if (downKeys2['l'] && s2.curMove.equals("") || s2.curMove.equals("kick1")) {
-       s2.attack(215, 217, "kick1");
+     } else if (downKeys2['l'] && s2.curMove.equals("") || s2.curMove.equals("kickUp")) {
+       s2.attack(215, 217, "kickUp");
      } else if (downKeys2['n'] && !s2.inAir && s2.curMove.equals("") || s2.curMove.equals("kick2")) {
        s2.attack(218, 225, "kick2");
      } else if (downKeys2['m'] && !s2.inAir && s2.curMove.equals("") || s2.curMove.equals("kick3")) {
        s2.attack(244, 247, "kick3");
-     } else if (downKeys2[','] && s2.curMove.equals("") || s2.curMove.equals("flyKick")) {
+     } else if (downKeys2['n'] && s2.curMove.equals("") || s2.curMove.equals("flyKick")) {
        s2.attack(254, 257, "flyKick");
-     } else if (downKeys2['.'] && s.inAir && s2.curMove.equals("") || s2.curMove.equals("spinningKick")) {
+     } else if (downKeys2[','] && s.inAir && s2.curMove.equals("") || s2.curMove.equals("spinningKick")) {
        s2.attack(258, 267, "spinningKick");
      } else if (downKeys2[259] && s2.curMove.equals("") || s2.curMove.equals("jump")) {
        s2.jumpMove(229, 232, "jump");
-     } else if (downKeys2[';'] && s2.curMove.equals("") || s2.curMove.equals("kamekameha")) {
+     } else if (downKeys2['.'] && s2.curMove.equals("") || s2.curMove.equals("kamekameha")) {
        s2.attack(240, 243, "kamekameha");
      } else {
        s2.reset(181);
