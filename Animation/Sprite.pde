@@ -143,6 +143,7 @@ class Sprite {
     }
 
     void crouchMove(int startFrame, int endFrame, String crouchName) {
+        state = "crouch";
         // checks if curMove has already been set to this attack
         crouching = true;
         if (!curMove.equals(crouchName)) {

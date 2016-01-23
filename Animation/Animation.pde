@@ -149,8 +149,8 @@ void action(Sprite s, Sprite s2) {
       s.crouchMove(42, 43, "crouchPunch");
     } else if (downKeys['q'] && s.crouching && s.curMove.equals("") || s.curMove.equals("crouchPunch2")) {
       s.crouchMove(44, 46, "crouchPunch2");
-    } else if (s.crouching){
-      s.reset(21);
+    } else if (s.state == "crouch"){
+      s.crouchMove(21, 21, "crouch");
     } else if (downKeys['q'] && !s.crouching && s.curMove.equals("") || s.curMove.equals("punchOne")) {
       s.attack(16, 17, "punchOne");
     } else if (downKeys['e'] && !s.crouching && s.curMove.equals("") || s.curMove.equals("punchTwo")) {
