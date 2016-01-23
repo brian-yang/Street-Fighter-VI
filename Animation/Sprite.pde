@@ -8,7 +8,6 @@ class Sprite {
     int curFrame = 0;
     ArrayList < PImage > images;
     // states
-    boolean crouching, inAir;
     String state;
     char dir;
     // ===== CONSTANTS =====
@@ -80,8 +79,6 @@ class Sprite {
         } else {
             image(images.get(curFrame), x - images.get(curFrame).width / 2, y);
         }
-        crouching = false;
-        inAir = false;
         state = "";
     }
 
@@ -114,7 +111,11 @@ class Sprite {
 
     void jumpMove(int startFrame, int endFrame, String jumpName) {
         // checks if curMove has already been set to this attack
-        inAir = true;
+        if (jumpName.equals("inAir")) {
+          state = "inAir";
+        } else {
+          state = "attack";
+        }        
         if (!curMove.equals(jumpName)) {
             curMove = jumpName;
             curFrame = startFrame;
@@ -138,9 +139,12 @@ class Sprite {
     }
 
     void crouchMove(int startFrame, int endFrame, String crouchName) {
-        state = "crouch";
         // checks if curMove has already been set to this attack
-        crouching = true;
+        if (crouchName.equals("crouch")) {
+          state = "crouch";
+        } else {
+          state = "attack";
+        }
         if (!curMove.equals(crouchName)) {
             curMove = crouchName;
             curFrame = startFrame;
@@ -169,7 +173,7 @@ class Sprite {
         }
         // checks if character is facing left
         if (dir == 'r') {
-            if (x - KNOCKBACK <= RIGHT_BOUND) {
+            if (x - KNOCKBACK >= LEFT_BOUND) {
               x -= KNOCKBACK;
             }
             pushMatrix();
