@@ -4,6 +4,7 @@ String curScreenName;
 Screen activeScreen;
 PImage bg;
 FileParser parser;
+// checks if a key has been pressed when the fight has started
 boolean[] downKeys = new boolean[261];
 boolean[] downKeys2 = new boolean[261];
 // list of controls for each player -- do not change unless you change it in the Arena class too
@@ -31,22 +32,34 @@ void mouseReleased() {
     //print(activeScreen);
     if (!curScreenName.equals("Arena")) {
         ArrayList < ArrayList < Button >> activeButtons = activeScreen.buttons;
-        for (int i = 0; i < activeButtons.size(); i++) {
-            for (int j = 0; j < activeButtons.get(i).size(); j++) {
-                Button curButton = activeButtons.get(i).get(j);
-                if (curButton.isHovering()) {
-                    if (parser.isInFile("characters.txt", curButton.getLabel())) {
-                        setActiveScreen("Arena");
-                        resetKeys();
-                    } else {
-                        setActiveScreen(curButton.getLabel());
-                    }
-                }
+        checkScreenButtons(activeButtons);
+    }
+}
+// =======================================================================
+// ==============================BUTTONS==================================
+
+// checks if the mouse is hovering over a button
+void checkScreenButtons(ArrayList < ArrayList < Button >> buttons) {
+    for (int i = 0; i < buttons.size(); i++) {
+        for (int j = 0; j < buttons.get(i).size(); j++) {
+            Button curButton = buttons.get(i).get(j);
+            if (curButton.isHovering()) {
+                activateButton(curButton);
             }
         }
     }
 }
 
+// activates a button (if user is in the character select menu
+// and the button is a fighter, then set up the arena)
+void activateButton(Button b) {
+    if (parser.isInFile("characters.txt", b.getLabel())) {
+        setActiveScreen("Arena");
+        resetKeys();
+    } else {
+        setActiveScreen(b.getLabel());
+    }
+}
 // =======================================================================
 // ============================KEY PRESSES================================
 void keyPressed() {
@@ -99,6 +112,8 @@ void keyReleased() {
     }
 }
 
+// interrupts a command if another key has been pressed
+// i.e. interrups while walking
 void interrupt(boolean[] commands, int playerNum) {
     if (key == CODED) {
         if (keyCode == RIGHT) {
@@ -117,6 +132,7 @@ void interrupt(boolean[] commands, int playerNum) {
     }
 }
 
+// makes sure no attack commands are being run simultaneously
 void setCommands(int index, boolean[] commands, int playerNum) {
     for (int i = 0; i < commands.length; i++) {
         if (playerNum == 1) {
@@ -131,6 +147,8 @@ void setCommands(int index, boolean[] commands, int playerNum) {
     }
 }
 
+// checks if a key that has been pressed is a valid key for the player
+// i.e. if the arrow keys are pressed, then it should only affect player 2
 boolean validKey(int index, char[] characters) {
     for (int i = 0; i < characters.length; i++) {
         if (index == characters[i]) {
@@ -140,6 +158,7 @@ boolean validKey(int index, char[] characters) {
     return false;
 }
 
+// resets keys when a new fight has begun
 void resetKeys() {
         for (int i = 0; i < downKeys.length; i++) {
             downKeys[i] = false;
@@ -150,6 +169,8 @@ void resetKeys() {
     }
 // =================================================================
 // ============================SCREENS==============================
+
+// sets the current screen to a new screen
 void setActiveScreen(String name) {
     activeScreen = screens.get(name);
     curScreenName = name;
@@ -158,50 +179,41 @@ void setActiveScreen(String name) {
     }
 }
 
+// displays the current screen
 void showScreen(Screen activeScreen) {
-    //Debug
-    //print(curScreenName);
-    //print(activeScreen);
     if (curScreenName.equals("Quit")) {
         exit();
-    } else {
-        if (!activeScreen.isSetUp) {
-            if (curScreenName.equals("Arena")) {
-                ((Arena) activeScreen).initialize("Cammy", "Cammy");
-            } else {
-                for (int i = 0; i < activeScreen.buttonLabels.size(); i++) {
-                    activeScreen.setupButtons(i, 300, 50);
-                }
-            }
+    } else if (!activeScreen.isSetUp && !curScreenName.equals("Arena")) {
+        for (int i = 0; i < activeScreen.buttonLabels.size(); i++) {
+            activeScreen.setupButtons(i, 300, 50);
         }
-        bg = loadImage(activeScreen.background);
-        background(bg);
     }
-    // Show screens
+    // Show background and place buttons
+    bg = loadImage(activeScreen.background);
+    background(bg);
     if (curScreenName.equals("Menu")) {
-        activeScreen.placeButtons(0, 100, 150, 80, "vertical");
+        activeScreen.placeButtons(0, 100, 100, 150, "vertical");
     }
     if (curScreenName.equals("Training")) {
-        activeScreen.placeButtons(0, -200, 700, 450, "horizontal");
-        activeScreen.placeButtons(1, 0, 100, 250, "horizontal");
+        activeScreen.placeButtons(0, -400, 700, 510, "horizontal");
+        activeScreen.placeButtons(1, width / 2 - 165, 100, 100, "vertical");
+        // start button
     }
     if (curScreenName.equals("Arena")) {
         ((Arena) activeScreen).run(downKeys, downKeys2);
     }
 }
 
-// Initialize each screen
+// store each screen in a hashmap of screens
 void initializeScreens() {
     screens = new HashMap < String, Screen > ();
     screens.put("Menu", createScreen("menu.txt", "Background.png"));
     //screens.put("Versus", createScreen("vs.txt", "Background.png"));
     screens.put("Training", createScreen("training.txt", "Background.png"));
-    //screens.put("Challenge", createScreen("challenge.txt", "Background.png"));
-    //screens.put("Data", createScreen("data.txt", "Background.png"));
-    //screens.put("Options", createScreen("options.txt", "Background.png"));
     screens.put("Arena", createArena("Background.png"));
 }
 
+// instantiates screens
 Screen createScreen(String file, String screenBG) {
     ArrayList < ArrayList < String >> labels = new ArrayList < ArrayList < String >> ();
     parser.readLabels(file, labels);
@@ -210,6 +222,7 @@ Screen createScreen(String file, String screenBG) {
     return s;
 }
 
+// instantiates arena
 Arena createArena(String screenBG) {
     Arena arena = new Arena(screenBG);
     return arena;
