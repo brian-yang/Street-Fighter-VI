@@ -281,27 +281,18 @@ void makeHealthBar(){
 void hitbox(Sprite s, Sprite s2){
   if (hitboxRight(s, s2)) {
       if (s.state.equals("attack")) {
-        beginHit(s2);
+        beginHit(s2, s);
       }
   } 
   else if (hitboxLeft(s, s2)) {
       if (s.state.equals("attack")) {
-        beginHit(s2);
+        beginHit(s2, s);
       }
   }
 }
-
+// checks if Sprite s is within hitbox of Sprite s2 on the s's right side
 boolean hitboxRight(Sprite s, Sprite s2) {
-  float widthFactor = 0.75;
-  return s.dir == 'r' && 
-        s.getX() > s2.getX() - widthFactor * s2.getWidth() && 
-        s.getX() < s2.getX() &&
-        s.getY() >= s2.getY() &&
-        s.getY() < s2.getY() + s2.getHeight();
-}
-
-boolean hitboxLeft(Sprite s, Sprite s2) {
-  float widthFactor = 0.75;
+  float widthFactor = 0.73;
   return s.dir == 'l' &&
         s.getX() < s2.getX() + widthFactor * s2.getWidth() && 
         s.getX() > s2.getX() && 
@@ -309,7 +300,22 @@ boolean hitboxLeft(Sprite s, Sprite s2) {
         s.getY() < s2.getY() + s2.getHeight();
 }
 
-void beginHit(Sprite s) {
+// checks if Sprite s is within hitbox of Sprite s2 on the s's left side
+boolean hitboxLeft(Sprite s, Sprite s2) {
+  float widthFactor = 0.73;
+  return s.dir == 'r' && 
+        s.getX() > s2.getX() - widthFactor * s2.getWidth() && 
+        s.getX() < s2.getX() &&
+        s.getY() >= s2.getY() &&
+        s.getY() < s2.getY() + s2.getHeight();
+}
+
+void beginHit(Sprite s, Sprite s2) {
   s.takeDamage(10);
   s.state = "getHit";
+  if (s2.dir == 'r') {
+    s.dir = 'l';
+  } else {
+    s.dir = 'r';
+  }
 }

@@ -12,17 +12,17 @@ class Sprite {
     String state;
     char dir;
     // how much should the sprite move
-    int step = 5;
-    int upStepInc = 20;
-    int crouchStep = 30;
-    int upStep = 0;
+    int STEP = 8;
+    int ACCEL = 20;
+    int CROUCH_STEP = 30;
+    int UP_STEP = 0;
     // health
     float health = 1000;
     float MAX_HEALTH = 1000;
     // constants
-    int knockBack = 10;
-    int leftBound = 30; // xcor of left boundary
-    int rightBound = width - 15; // xcor of right boundary
+    int KNOCKBACK = 10;
+    int LEFT_BOUND = 30; // xcor of left boundary
+    int RIGHT_BOUND = width - 15; // xcor of right boundary
 
     Sprite(int x, int y, String name) {
         images = new ArrayList < PImage > ();
@@ -91,16 +91,16 @@ class Sprite {
             curFrame = startFrame;
         }
         if (dir == 'l') {
-            if (x - step >= leftBound) {
-              x -= step;
+            if (x - STEP >= LEFT_BOUND) {
+              x -= STEP;
             }
             pushMatrix();
             scale(-1, 1);
             image(images.get(curFrame), -(x + images.get(curFrame).width / 2), y);
             popMatrix();
         } else {
-            if (x + step <= rightBound) {
-              x += step;
+            if (x + STEP <= RIGHT_BOUND) {
+              x += STEP;
             }
             image(images.get(curFrame), x - images.get(curFrame).width / 2, y);
         }
@@ -118,20 +118,20 @@ class Sprite {
             curMove = jumpName;
             curFrame = startFrame;
         }
-        upStep += upStepInc;
+        UP_STEP += ACCEL;
         // checks if character is facing left
         if (dir == 'l') {
             pushMatrix();
             scale(-1, 1);
-            image(images.get(curFrame), -(x + images.get(curFrame).width / 2), y - upStep);
+            image(images.get(curFrame), -(x + images.get(curFrame).width / 2), y - UP_STEP);
             popMatrix();
         } else {
-            image(images.get(curFrame), x - images.get(curFrame).width / 2, y - upStep);
+            image(images.get(curFrame), x - images.get(curFrame).width / 2, y - UP_STEP);
         }
         curFrame++;
         if (curFrame > endFrame) {
             curMove = "";
-            upStep = 0;
+            UP_STEP = 0;
             curFrame = 0;
         }
     }
@@ -147,10 +147,10 @@ class Sprite {
         if (dir == 'l') {
             pushMatrix();
             scale(-1, 1);
-            image(images.get(curFrame), -(x + images.get(curFrame).width / 2), y + crouchStep);
+            image(images.get(curFrame), -(x + images.get(curFrame).width / 2), y + CROUCH_STEP);
             popMatrix();
         } else {
-            image(images.get(curFrame), x - images.get(curFrame).width / 2, y + crouchStep);
+            image(images.get(curFrame), x - images.get(curFrame).width / 2, y + CROUCH_STEP);
         }
         curFrame++;
         if (curFrame > endFrame) {
@@ -167,16 +167,16 @@ class Sprite {
         }
         // checks if character is facing left
         if (dir == 'r') {
-            if (x - knockBack >= leftBound) {
-              x -= knockBack;
+            if (x - KNOCKBACK <= RIGHT_BOUND) {
+              x -= KNOCKBACK;
             }
             pushMatrix();
             scale(-1, 1);
             image(images.get(curFrame), -(x + images.get(curFrame).width / 2), y);
             popMatrix();
         } else {
-            if (x + knockBack <= rightBound) {
-              x += knockBack;
+            if (x + KNOCKBACK <= RIGHT_BOUND) {
+              x += KNOCKBACK;
             }
             image(images.get(curFrame), x - images.get(curFrame).width / 2, y);
         }
