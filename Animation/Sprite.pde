@@ -80,12 +80,7 @@ class Sprite {
         } else {
             image(images.get(curFrame), x - images.get(curFrame).width / 2, y);
         }
-        if (curMove == "crouch" || curMove == "crouchPunch" || curMove == "crouchPunch2" || curMove == "crouchKick" || 
-        curMove == "crouchKick2"){
-        crouching = true;
-        }
-        else { crouching = false;
-        }
+        crouching = false;
         inAir = false;
         state = "";
     }
@@ -154,10 +149,10 @@ class Sprite {
         if (dir == 'l') {
             pushMatrix();
             scale(-1, 1);
-            image(images.get(curFrame), -(x + images.get(curFrame).width / 2), y + 2 * CROUCH_STEP);
+            image(images.get(curFrame), -(x + images.get(curFrame).width / 2), y + 2 * CROUCH_STEP - 20);
             popMatrix();
         } else {
-            image(images.get(curFrame), x - images.get(curFrame).width / 2, y + 2 * CROUCH_STEP);
+            image(images.get(curFrame), x - images.get(curFrame).width / 2, y + 2 * CROUCH_STEP - 20);
         }
         curFrame++;
         if (curFrame > endFrame) {
