@@ -15,7 +15,7 @@ void setup() {
   font = createFont("Courier", 20);
   textFont(font);
   frameRate(10);
-  p = new Sprite(width/2 - 100, 200, "Ken");
+  p = new Sprite(width/2 - 100, 200, "Cammy");
   q = new Sprite(width/2 + 100, 200, "Cammy");
   q.dir = 'l';
 }
@@ -145,9 +145,9 @@ void action(Sprite s, Sprite s2) {
       s.crouchMove(36, 37, "crouchKick");
     } else if (downKeys['h'] && s.crouching && s.curMove.equals("") || s.curMove.equals("crouchKick2")) {
       s.crouchMove(38, 41, "crouchKick2");
-    } else if (downKeys['e'] && s.crouching && s.curMove.equals("") || s.curMove.equals("crouchPunch")) {
+    } else if (downKeys['q'] && s.crouching && s.curMove.equals("") || s.curMove.equals("crouchPunch")) {
       s.crouchMove(42, 43, "crouchPunch");
-    } else if (downKeys['q'] && s.crouching && s.curMove.equals("") || s.curMove.equals("crouchPunch2")) {
+    } else if (downKeys['e'] && s.crouching && s.curMove.equals("") || s.curMove.equals("crouchPunch2")) {
       s.crouchMove(44, 46, "crouchPunch2");
     } else if (s.state == "crouch"){
       s.crouchMove(21, 21, "crouch");
@@ -159,14 +159,14 @@ void action(Sprite s, Sprite s2) {
       s.attack(20, 24, "kickUp");
     } else if (downKeys['f'] && !s.inAir && s.curMove.equals("") || s.curMove.equals("kick")) {
       s.attack(25, 26, "kick");
-    } else if (downKeys['x'] && s.curMove.equals("") || s.curMove.equals("flyKick")) {
-      s.attack(27, 29, "flyKick");
-    } else if (downKeys['c'] && s.curMove.equals("") || s.curMove.equals("spinningKnuckle")) {
+    } else if (downKeys['g'] && s.curMove.equals("") || s.curMove.equals("kick2")) {
+      s.attack(27, 29, "kick2");
+    } else if (downKeys['x'] && s.curMove.equals("") || s.curMove.equals("spinningKnuckle")) {
       s.attack(30, 33, "spinningKnuckle");
     } else if (downKeys['w'] && s.curMove.equals("") || s.curMove.equals("jump")) {
       s.jumpMove(47, 52, "jump");
-    } else if (downKeys['f'] && s.inAir && s.curMove.equals("") || s.curMove.equals("jumpKick")) {
-      s.jumpMove(53, 54, "jumpKick");
+    } else if (downKeys['g'] && s.inAir && s.curMove.equals("") || s.curMove.equals("flyKick")) {
+      s.jumpMove(53, 54, "flyKick");
     } else {
       s.reset(6);
     }
@@ -201,13 +201,13 @@ void action(Sprite s, Sprite s2) {
       s2.attack(20, 24, "kickUp");
     } else if (downKeys2['n'] && !s2.inAir && s2.curMove.equals("") || s2.curMove.equals("kick")) {
       s2.attack(25, 26, "kick");
-    } else if (downKeys2['m'] && s2.curMove.equals("") || s2.curMove.equals("flyKick")) {
-      s2.attack(27, 29, "flyKick");
+    } else if (downKeys2['m'] && s2.curMove.equals("") || s2.curMove.equals("kick2")) {
+      s2.attack(27, 29, "kick2");
     } else if (downKeys2[','] && s2.curMove.equals("") || s2.curMove.equals("spinningKnuckle")) {
       s2.attack(30, 33, "spinningKnuckle");
     } else if (downKeys2[259] && s2.curMove.equals("") || s2.curMove.equals("jump")) {
       s2.jumpMove(47, 52, "jump");
-    } else if (downKeys2['.'] && s2.inAir && s2.curMove.equals("") || s2.curMove.equals("jumpKick")) {
+    } else if (downKeys2['m'] && s2.inAir && s2.curMove.equals("") || s2.curMove.equals("jumpKick")) {
       s2.jumpMove(53, 54, "jumpKick");
     } else {
       s2.reset(6);

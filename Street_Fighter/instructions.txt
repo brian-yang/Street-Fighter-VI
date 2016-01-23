@@ -1,9 +1,32 @@
-Back
-Quit
---
-Ken
-Ryu
-Cammy
-Chun-li
---
-Start
+Instructions:
+Player 1(Cammy):
+W,A,S,D: Jump, Left, Crouch, Right
+Q: Light Punch
+E: Heavy Punch
+S + F: Crouching Light Kick
+S + G: Crouching Heavy Kick 
+S + Q: Crouch Punch 1
+S + E: Crouch Punch 2
+R: Kick Up
+F: Light Kick
+G: Heavy Kick
+W + F: Flying Light Kick
+W + G: Flying Heavy Kick
+X: Special Move
+
+
+Player 2(Cammy):
+Up, Left, Down, Right: Jump, Left, Crouch, Right
+J: Light Punch
+K: Heavy Punch
+Down + N: Crouching Light Kick
+Down + M: Crouching Heavy Kick 
+Down + J: Crouch Punch 1
+Down + K: Crouch Punch 2
+L: Kick Up
+N: Light Kick
+M: Heavy Kick
+Up + N: Flying Light Kick
+Up + M: Flying Heavy Kick
+,: Special Move
+
