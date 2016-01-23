@@ -11,16 +11,17 @@ class Sprite {
     boolean crouching, inAir;
     String state;
     char dir;
-    // how much should the sprite move
+    // ===== CONSTANTS =====
+    // movement
     int STEP = 8;
+    int KNOCKBACK = 10;
     int ACCEL = 20;
     int CROUCH_STEP = 30;
     int UP_STEP = 0;
     // health
     float health = 1000;
     float MAX_HEALTH = 1000;
-    // constants
-    int KNOCKBACK = 10;
+    // boundaries
     int LEFT_BOUND = 30; // xcor of left boundary
     int RIGHT_BOUND = width - 15; // xcor of right boundary
 

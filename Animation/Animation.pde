@@ -8,8 +8,6 @@ char[] controls = new char[] {'w', 'a', 's', 'd',
   'r', 'f', 'x', 'c'};
 char[] controls2 = new char[] {',', '.', '/', 'm'};
 
-// need to fix left and right knockback -- currently only knockbacks right
-
 void setup() {
   size(600, 400);
   background(0);
