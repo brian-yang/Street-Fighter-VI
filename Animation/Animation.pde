@@ -8,6 +8,8 @@ char[] controls = new char[] {'w', 'a', 's', 'd',
   'r', 'f', 'x', 'c'};
 char[] controls2 = new char[] {',', '.', '/', 'm'};
 
+// need to fix left and right knockback -- currently only knockbacks right
+
 void setup() {
   size(600, 400);
   background(0);
@@ -280,23 +282,17 @@ void hitbox(Sprite s, Sprite s2){
   if (hitboxRight(s, s2)) {
       if (s.state.equals("attack")) {
         beginHit(s2);
-      } else if (s2.curMove.equals("getHit")) {
-        endHit(s2);
       }
   } 
   else if (hitboxLeft(s, s2)) {
       if (s.state.equals("attack")) {
         beginHit(s2);
-      } else if (s2.curMove.equals("getHit")) {
-        endHit(s2);
       }
-  } else if (s2.curMove.equals("getHit")) {
-        endHit(s2);
   }
 }
 
 boolean hitboxRight(Sprite s, Sprite s2) {
-  float widthFactor = 1.25;
+  float widthFactor = 0.75;
   return s.dir == 'r' && 
         s.getX() > s2.getX() - widthFactor * s2.getWidth() && 
         s.getX() < s2.getX() &&
@@ -305,7 +301,7 @@ boolean hitboxRight(Sprite s, Sprite s2) {
 }
 
 boolean hitboxLeft(Sprite s, Sprite s2) {
-  float widthFactor = 0.8;
+  float widthFactor = 0.75;
   return s.dir == 'l' &&
         s.getX() < s2.getX() + widthFactor * s2.getWidth() && 
         s.getX() > s2.getX() && 
@@ -316,9 +312,4 @@ boolean hitboxLeft(Sprite s, Sprite s2) {
 void beginHit(Sprite s) {
   s.takeDamage(10);
   s.state = "getHit";
-}
-
-void endHit(Sprite s) {
-  s.state = "";
-  s.curMove = "";
 }

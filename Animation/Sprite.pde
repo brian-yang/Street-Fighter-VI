@@ -20,8 +20,9 @@ class Sprite {
     float health = 1000;
     float MAX_HEALTH = 1000;
     // constants
-    int leftBound = 45; // xcor of left boundary
-    int rightBound = width; // xcor of right boundary
+    int knockBack = 10;
+    int leftBound = 30; // xcor of left boundary
+    int rightBound = width - 15; // xcor of right boundary
 
     Sprite(int x, int y, String name) {
         images = new ArrayList < PImage > ();
@@ -90,7 +91,7 @@ class Sprite {
             curFrame = startFrame;
         }
         if (dir == 'l') {
-            if (x >= leftBound) {
+            if (x - step >= leftBound) {
               x -= step;
             }
             pushMatrix();
@@ -98,7 +99,7 @@ class Sprite {
             image(images.get(curFrame), -(x + images.get(curFrame).width / 2), y);
             popMatrix();
         } else {
-            if (x <= rightBound) {
+            if (x + step <= rightBound) {
               x += step;
             }
             image(images.get(curFrame), x - images.get(curFrame).width / 2, y);
@@ -166,17 +167,24 @@ class Sprite {
         }
         // checks if character is facing left
         if (dir == 'r') {
+            if (x - knockBack >= leftBound) {
+              x -= knockBack;
+            }
             pushMatrix();
             scale(-1, 1);
             image(images.get(curFrame), -(x + images.get(curFrame).width / 2), y);
             popMatrix();
         } else {
+            if (x + knockBack <= rightBound) {
+              x += knockBack;
+            }
             image(images.get(curFrame), x - images.get(curFrame).width / 2, y);
         }
         curFrame++;
         if (curFrame > endFrame) {
             curMove = "";
             curFrame = 0;
+            state = "";
         }
     }
 
