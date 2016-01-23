@@ -13,6 +13,7 @@ G: Heavy Kick
 W + F: Flying Light Kick
 W + G: Flying Heavy Kick
 X: Special Move
+If Ken or Ryu: c: Kamekameha
 
 
 Player 2(Cammy):
@@ -29,4 +30,5 @@ M: Heavy Kick
 Up + N: Flying Light Kick
 Up + M: Flying Heavy Kick
 ,: Special Move
+If Ken or Ryu: . :Kamekameha
 

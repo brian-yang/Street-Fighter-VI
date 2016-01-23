@@ -34,3 +34,10 @@ Bug: The health bars are not in the right place.
 
 Goal: Add more characters and moves. Fix character select screen.
 
+**Anthony Liang** -- Tried to fix crouch and make character stay in crouch when down key is pressed.
+Also created instruction screen and standardized character controls.
+
+Bug: When first player crouches (Ken), the second character also crouches.
+
+Goal: Fix bug and work on making it smoother. 
+
