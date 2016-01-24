@@ -28,16 +28,44 @@ Goal: Add a few more animations for different attacks. Fix bug.
 
 **Brian Yang** -- Fixed knockback and getHit animation
 
-New Feature: Ported battle system into main app
+New Feature: Ported battle system into main app.
 
 Bug: The health bars are not in the right place.
 
 Goal: Add more characters and moves. Fix character select screen.
 
+### 1/20/2016
+**Anthony Liang** -- Enlarged characters
+-- Removed grid background
+-- Tested Ken
+
+Goal: Prevent players from spamming.
+
+### 1/22/2016
+**Brian Yang** -- Centered frames
+-- Prevented spamming
+
+Bug: Hitbox is not completely accurate.
+
+New Feature: Added knockback to battles.
+
+Goal: Complete character select screen.
+
+### 1/23/2016
 **Anthony Liang** -- Tried to fix crouch and make character stay in crouch when down key is pressed.
 Also created instruction screen and standardized character controls.
 
 Bug: When first player crouches (Ken), the second character also crouches.
 
-Goal: Fix bug and work on making it smoother. 
+Goal: Fix bug and work on making it smoother.
+
+**Brian Yang** -- Fixed some bugs with knockback
+-- Fixed crouch
+-- Completed player selection screen
+
+Bug: Fighting is laggy.
+
+New Feature: Added player selection screen.
+
+Goal: Complete jump animation.
 
