@@ -38,6 +38,10 @@ class Sprite {
             String imageName = "Ryu " + "(" + (i + 1) + ").png";
             images.add(loadImage(imageName));
         }
+        for (int i = 0; i < 98; i++) {
+            String imageName = "Chun-li " + "(" + (i + 1) + ").png";
+            images.add(loadImage(imageName));
+        }
         for (PImage i: images){
           i.resize((int) (i.width * 1.5),(int) (i.height * 1.5));
         }
