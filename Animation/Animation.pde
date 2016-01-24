@@ -128,7 +128,7 @@ void grid() {
 }
 
 
-
+// String checks need to use equals()
 void action(Sprite s, Sprite s2) {
   // P1
   if (s.name == "Cammy") {
@@ -169,12 +169,11 @@ void action(Sprite s, Sprite s2) {
     } else {
       s.reset(6);
     }
-    println(s.curMove);
   }
   // P2
   if (s2.name == "Cammy") {
      if (s2.state.equals("getHit") && s2.curMove.equals("") || s2.curMove.equals("getHit")){
-      s.getHit(106, 108, "getHit");
+      s2.getHit(106, 108, "getHit");
     } else if (downKeys2[256] && s2.curMove.equals("") || s2.curMove.equals("walkRight")) {
       s2.dir = 'r';
       s2.walkMove(0, 5, "walkRight");

@@ -5,8 +5,11 @@ Screen activeScreen;
 PImage bg;
 FileParser parser;
 // checks if a key has been pressed when the fight has started
-boolean[] downKeys = new boolean[261];
-boolean[] downKeys2 = new boolean[261];
+boolean[] downKeys = new boolean[260];
+boolean[] downKeys2 = new boolean[260];
+String fighter1 = "";
+String fighter2 = "";
+boolean playerTurn = true; // determines whose turn it is to select a character
 // list of controls for each player -- do not change unless you change it in the Arena class too
 char[] controls = new char[] {'w','a','s','d',
                            'g','h','e','q',
@@ -31,8 +34,7 @@ void mouseReleased() {
     //debug
     //print(activeScreen);
     if (!curScreenName.equals("Arena")) {
-        ArrayList < ArrayList < Button >> activeButtons = activeScreen.buttons;
-        checkScreenButtons(activeButtons);
+        checkScreenButtons(activeScreen.buttons);
     }
 }
 // =======================================================================
@@ -53,10 +55,22 @@ void checkScreenButtons(ArrayList < ArrayList < Button >> buttons) {
 // activates a button (if user is in the character select menu
 // and the button is a fighter, then set up the arena)
 void activateButton(Button b) {
-    if (parser.isInFile("characters.txt", b.getLabel())) {
+    if (b.getLabel().equals("Quit")) {
+        exit();
+    } else if (parser.isInFile("characters.txt", b.getLabel())) {
+        if (playerTurn) {
+          fighter1 = b.getLabel();
+          playerTurn = false;
+        } else {
+          fighter2 = b.getLabel();
+          playerTurn = true;
+        }
+    } else if (!fighter1.isEmpty() && !fighter2.isEmpty() && b.getLabel().equals("Fight!")) {
         setActiveScreen("Arena");
         resetKeys();
-    } else {
+    } else if (b.getLabel().equals("Back")) {
+        setActiveScreen("Menu");
+    } else if (!b.getLabel().equals("Fight!")) {
         setActiveScreen(b.getLabel());
     }
 }
@@ -115,47 +129,55 @@ void keyReleased() {
 // interrupts a command if another key has been pressed
 // i.e. interrups while walking
 void interrupt(boolean[] commands, int playerNum) {
-    if (key == CODED) {
-        if (keyCode == RIGHT) {
-            setCommands(256, commands, playerNum);
-        } else if (keyCode == LEFT) {
-            setCommands(257, commands, playerNum);
-        } else if (keyCode == DOWN) {
-            setCommands(258, commands, playerNum);
-        } else if (keyCode == UP) {
-            setCommands(259, commands, playerNum);
-        } else if (keyCode == SHIFT) {
-            setCommands(260, commands, playerNum);
-        }
-    } else if (key < 256) {
-        setCommands(key, commands, playerNum);
+  if (key == CODED) {
+    if (keyCode == RIGHT) {
+      setCommands(256, commands, playerNum);
+    } else if (keyCode == LEFT) {
+      setCommands(257, commands, playerNum);
     }
+  } else if (key < 256) {
+    if (key != 's' || key != 'w') {
+      setCommands(key, commands, playerNum);
+    }
+  }
 }
 
 // makes sure no attack commands are being run simultaneously
 void setCommands(int index, boolean[] commands, int playerNum) {
-    for (int i = 0; i < commands.length; i++) {
-        if (playerNum == 1) {
-            if (validKey(index, controls) && i != index) {
-                commands[i] = false;
-            }
-        } else if (playerNum == 2) {
-            if (validKey(index, controls2) && i != index) {
-                commands[i] = false;
-            }
+  for (int i = 0; i < commands.length; i++) {
+    if (playerNum == 1) {
+      if (validKey(index, controls) && i != index) {
+        if (i == 's' && commands['s'] && !commands['w']) {
+          commands[i] = true;
+        } else if (i == 'w' && commands['w'] && !commands['s']) {
+          commands[i] = true;
+        } else {
+          commands[i] = false;
         }
+      }
+    } else if (playerNum == 2) {
+      if (validKey(index, controls2) && i != index) {
+        if (i == 258 && commands[258] && !commands[259]) {
+          commands[i] = true;
+        } else if (i == 259 && commands[259] && !commands[258]) {
+          commands[i] = true;
+        } else {
+          commands[i] = false;
+        }
+      }
     }
+  }
 }
 
 // checks if a key that has been pressed is a valid key for the player
 // i.e. if the arrow keys are pressed, then it should only affect player 2
 boolean validKey(int index, char[] characters) {
-    for (int i = 0; i < characters.length; i++) {
-        if (index == characters[i]) {
-            return true;
-        }
+  for (int i = 0; i < characters.length; i++) {
+    if (index == characters[i]) {
+      return true;
     }
-    return false;
+  }
+  return false;
 }
 
 // resets keys when a new fight has begun
@@ -175,33 +197,30 @@ void setActiveScreen(String name) {
     activeScreen = screens.get(name);
     curScreenName = name;
     if (name.equals("Arena")) {
-        ((Arena) activeScreen).initialize("Cammy", "Cammy");
+        ((Arena) activeScreen).initialize(fighter1, fighter2);
     }
 }
 
 // displays the current screen
 void showScreen(Screen activeScreen) {
-    if (curScreenName.equals("Quit")) {
-        exit();
-    } else if (!activeScreen.isSetUp) {
+    if (!activeScreen.isSetUp) {
         for (int i = 0; i < activeScreen.buttonLabels.size(); i++) {
             activeScreen.setupButtons(i, 300, 50);
         }
-        bg = loadImage(activeScreen.background);
-        background(bg);
     }
     // Show background and place buttons
-
+    bg = loadImage(activeScreen.background);
+    background(bg);
     if (curScreenName.equals("Menu")) {
         activeScreen.placeButtons(0, 100, 200, 100, "vertical");
     }
     if (curScreenName.equals("Training")) {
-        activeScreen.placeButtons(0, -400, 700, 510, "horizontal");
-        activeScreen.placeButtons(1, width / 2 - 165, 100, 100, "vertical");
-        // start button
+        activeScreen.placeButtons(0, -415, 700, 510, "horizontal");
+        activeScreen.placeButtons(1, width / 2 - 165, 100, 75, "vertical");
+        activeScreen.placeButtons(2, width / 2 - 165, 500, 100, "vertical");
     }
     if (curScreenName.equals("Instructions")) {
-        activeScreen.placeButtons(0, -400, 700, 510, "horizontal");
+        activeScreen.placeButtons(0, -415, 700, 510, "horizontal");
         fill(218);
         stroke(255,0,0);
         rect(65, 150, 900, 500, 10);

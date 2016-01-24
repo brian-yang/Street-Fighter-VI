@@ -8,20 +8,21 @@ class Sprite {
     int curFrame = 0;
     ArrayList < PImage > images;
     // states
-    boolean crouching, inAir, walking, attacking, gettingHit;
+    String state;
     char dir;
-    // how much should the sprite move
-    int step = 3;
-    int upStepInc = 20;
-    int crouchStep = 30;
-    int upStep = 0;
+    // ===== CONSTANTS =====
+    // movement
+    int STEP = 8;
+    int KNOCKBACK = 10;
+    int ACCEL = 20;
+    int CROUCH_STEP = 30;
+    int UP_STEP = 0;
     // health
     float health = 1000;
     float MAX_HEALTH = 1000;
-    // constants
-    int smoothConstant = 40; // makes turning smoother
-    int leftBound = 45; // xcor of left boundary
-    int rightBound = width; // xcor of right boundary
+    // boundaries
+    int LEFT_BOUND = 30; // xcor of left boundary
+    int RIGHT_BOUND = width - 15; // xcor of right boundary
 
     Sprite(int x, int y, String name) {
         images = new ArrayList < PImage > ();
@@ -33,11 +34,15 @@ class Sprite {
             String imageName = "../Animation/Ken " + "(" + (i + 1) + ").png";
             images.add(loadImage(imageName));
         }
+        for (PImage i: images){
+          i.resize((int) (i.width * 1.5),(int) (i.height * 1.5));
+        }
         this.x = x;
         this.y = y;
         this.name = name;
         curMove = "";
         curFrame = 0;
+        state = "";
     }
     
     float getX() {
@@ -69,38 +74,33 @@ class Sprite {
         if (dir == 'l') {
             pushMatrix();
             scale(-1, 1);
-            image(images.get(curFrame), -(x + images.get(curFrame).width) + smoothConstant, y);
+            image(images.get(curFrame), -(x + images.get(curFrame).width / 2), y);
             popMatrix();
         } else {
-            image(images.get(curFrame), x - images.get(curFrame).width, y);
+            image(images.get(curFrame), x - images.get(curFrame).width / 2, y);
         }
-        crouching = false;
-        inAir = false;
-        walking = false;
-        attacking = false;
-        gettingHit = false;
+        state = "";
     }
 
     void walkMove(int startFrame, int endFrame, String moveName) {
-        walking = true;
-        gettingHit = false;
+        state = "walk";
         if (!curMove.equals(moveName)) {
             curMove = moveName;
             curFrame = startFrame;
         }
         if (dir == 'l') {
-            if (x >= leftBound) {
-              x -= step;
+            if (x - STEP >= LEFT_BOUND) {
+              x -= STEP;
             }
             pushMatrix();
             scale(-1, 1);
-            image(images.get(curFrame), -(x + images.get(curFrame).width) + smoothConstant, y);
+            image(images.get(curFrame), -(x + images.get(curFrame).width / 2), y);
             popMatrix();
         } else {
-            if (x <= rightBound) {
-              x += step;
+            if (x + STEP <= RIGHT_BOUND) {
+              x += STEP;
             }
-            image(images.get(curFrame), x - images.get(curFrame).width, y);
+            image(images.get(curFrame), x - images.get(curFrame).width / 2, y);
         }
         curFrame++;
         if (curFrame > endFrame) {
@@ -111,32 +111,40 @@ class Sprite {
 
     void jumpMove(int startFrame, int endFrame, String jumpName) {
         // checks if curMove has already been set to this attack
-        inAir = true;
+        if (jumpName.equals("inAir")) {
+          state = "inAir";
+        } else {
+          state = "attack";
+        }        
         if (!curMove.equals(jumpName)) {
             curMove = jumpName;
             curFrame = startFrame;
         }
-        upStep += upStepInc;
+        UP_STEP += ACCEL;
         // checks if character is facing left
         if (dir == 'l') {
             pushMatrix();
             scale(-1, 1);
-            image(images.get(curFrame), -(x + images.get(curFrame).width) + smoothConstant, y - upStep);
+            image(images.get(curFrame), -(x + images.get(curFrame).width / 2), y - UP_STEP);
             popMatrix();
         } else {
-            image(images.get(curFrame), x - images.get(curFrame).width, y - upStep);
+            image(images.get(curFrame), x - images.get(curFrame).width / 2, y - UP_STEP);
         }
         curFrame++;
         if (curFrame > endFrame) {
             curMove = "";
-            upStep = 0;
+            UP_STEP = 0;
             curFrame = 0;
         }
     }
 
     void crouchMove(int startFrame, int endFrame, String crouchName) {
         // checks if curMove has already been set to this attack
-        crouching = true;
+        if (crouchName.equals("crouch")) {
+          state = "crouch";
+        } else {
+          state = "attack";
+        }
         if (!curMove.equals(crouchName)) {
             curMove = crouchName;
             curFrame = startFrame;
@@ -145,10 +153,10 @@ class Sprite {
         if (dir == 'l') {
             pushMatrix();
             scale(-1, 1);
-            image(images.get(curFrame), -(x + images.get(curFrame).width) + smoothConstant, y + crouchStep);
+            image(images.get(curFrame), -(x + images.get(curFrame).width / 2), y + 2 * CROUCH_STEP - 20);
             popMatrix();
         } else {
-            image(images.get(curFrame), x - images.get(curFrame).width, y + crouchStep);
+            image(images.get(curFrame), x - images.get(curFrame).width / 2, y + 2 * CROUCH_STEP - 20);
         }
         curFrame++;
         if (curFrame > endFrame) {
@@ -158,32 +166,38 @@ class Sprite {
     }
     
     void getHit(int startFrame, int endFrame, String getHitName) {
-        gettingHit = true;
+        state = "getHit";
         if (!curMove.equals(getHitName)) {
             curMove = getHitName;
             curFrame = startFrame;
         }
         // checks if character is facing left
         if (dir == 'r') {
+            if (x - KNOCKBACK >= LEFT_BOUND) {
+              x -= KNOCKBACK;
+            }
             pushMatrix();
             scale(-1, 1);
-            image(images.get(curFrame), -(x + images.get(curFrame).width) + smoothConstant, y);
+            image(images.get(curFrame), -(x + images.get(curFrame).width / 2), y);
             popMatrix();
         } else {
-            image(images.get(curFrame), x - images.get(curFrame).width, y);
+            if (x + KNOCKBACK <= RIGHT_BOUND) {
+              x += KNOCKBACK;
+            }
+            image(images.get(curFrame), x - images.get(curFrame).width / 2, y);
         }
         curFrame++;
         if (curFrame > endFrame) {
             curMove = "";
             curFrame = 0;
-            gettingHit = false;
+            state = "";
         }
     }
 
 
     void attack(int startFrame, int endFrame, String attackName) {
         // checks if curMove has already been set to this attack
-        attacking = true;
+        state = "attack";
         if (!curMove.equals(attackName)) {
             curMove = attackName;
             curFrame = startFrame;
@@ -192,10 +206,10 @@ class Sprite {
         if (dir == 'l') {
             pushMatrix();
             scale(-1, 1);
-            image(images.get(curFrame), -(x + images.get(curFrame).width) + smoothConstant, y);
+            image(images.get(curFrame), -(x + images.get(curFrame).width / 2), y);
             popMatrix();
         } else {
-            image(images.get(curFrame), x - images.get(curFrame).width, y);
+            image(images.get(curFrame), x - images.get(curFrame).width / 2, y);
         }
         curFrame++;
         if (curFrame > endFrame) {

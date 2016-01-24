@@ -6,4 +6,4 @@ Ryu
 Cammy
 Chun-li
 --
-Start
+Fight!
