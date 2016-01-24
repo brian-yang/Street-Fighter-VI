@@ -15,7 +15,7 @@ void setup() {
   font = createFont("Courier", 20);
   textFont(font);
   frameRate(10);
-  p = new Sprite(width/2 - 100, 200, "Ken");
+  p = new Sprite(width/2 - 100, 200, "Cammy");
   q = new Sprite(width/2 + 100, 200, "Chun-li");
   q.dir = 'l';
 }
@@ -164,8 +164,8 @@ void action(Sprite s, Sprite s2) {
       s.attack(30, 33, "spinningKnuckle");
     } else if (downKeys['f'] && downKeys['w'] && s.curMove.equals("") || s.curMove.equals("flyKick")) {
       s.jumpMove(53, 54, "flyKick");
-    //} else if (downKeys['g'] && downKeys['w'] && s.curMove.equals("") || s.curMove.equals("flyKick2")) {
-    //  s.jumpMove(53, 54, "flyKick2");
+    } else if (downKeys['h'] && s.curMove.equals("") || s.curMove.equals("flyKick2")) {
+     s.attack(80, 85, "flyKick2");
     } else if (downKeys['w'] && s.curMove.equals("") || s.curMove.equals("jump")) {
       s.jumpMove(47, 52, "jump");
     } else {
@@ -257,7 +257,9 @@ void action(Sprite s, Sprite s2) {
      }
   }
   if (s2.name == "Ken") {
-      if (downKeys2[256] && s2.curMove.equals("") || s2.curMove.equals("walkRight")) {
+     if (s.state.equals("getHit") && s.curMove.equals("") || s.curMove.equals("getHit")){
+       s.getHit(226, 228, "getHit");
+     } else if (downKeys2[256] && s2.curMove.equals("") || s2.curMove.equals("walkRight")) {
        s2.dir = 'r';
        s2.walkMove(181, 186, "walkRight");
      } else if (downKeys2[257] && s2.curMove.equals("") || s2.curMove.equals("walkLeft")) {
@@ -296,7 +298,9 @@ void action(Sprite s, Sprite s2) {
      }
   }
   if (s.name == "Ryu"){
-    if (downKeys['d'] && s.curMove.equals("") || s.curMove.equals("walkRight")) {
+     if (s.state.equals("getHit") && s.curMove.equals("") || s.curMove.equals("getHit")){
+       s.getHit(312, 314, "getHit");
+     } else if (downKeys['d'] && s.curMove.equals("") || s.curMove.equals("walkRight")) {
        s.dir = 'r';
        s.walkMove(300, 304, "walkRight");
      } else if (downKeys['a'] && s.curMove.equals("") || s.curMove.equals("walkLeft")) {
@@ -335,7 +339,9 @@ void action(Sprite s, Sprite s2) {
      }
   }
   if (s2.name == "Ryu"){
-    if (downKeys2[256] && s2.curMove.equals("") || s2.curMove.equals("walkRight")) {
+     if (s.state.equals("getHit") && s.curMove.equals("") || s.curMove.equals("getHit")){
+       s.getHit(312, 314, "getHit");
+     } else if (downKeys2[256] && s2.curMove.equals("") || s2.curMove.equals("walkRight")) {
        s2.dir = 'r';
        s2.walkMove(300, 304, "walkRight");
      } else if (downKeys2[257] && s2.curMove.equals("") || s2.curMove.equals("walkLeft")) {
