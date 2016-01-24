@@ -15,8 +15,8 @@ void setup() {
   font = createFont("Courier", 20);
   textFont(font);
   frameRate(10);
-  p = new Sprite(width/2 - 100, 200, "Chun-li");
-  q = new Sprite(width/2 + 100, 200, "Cammy");
+  p = new Sprite(width/2 - 100, 200, "Ken");
+  q = new Sprite(width/2 + 100, 200, "Chun-li");
   q.dir = 'l';
 }
 
@@ -216,7 +216,9 @@ void action(Sprite s, Sprite s2) {
   }
   
   if (s.name == "Ken") {
-     if (downKeys['d'] && s.curMove.equals("") || s.curMove.equals("walkRight")) {
+     if (s.state.equals("getHit") && s.curMove.equals("") || s.curMove.equals("getHit")){
+       s.getHit(226, 228, "getHit");
+     } else if (downKeys['d'] && s.curMove.equals("") || s.curMove.equals("walkRight")) {
        s.dir = 'r';
        s.walkMove(181, 186, "walkRight");
      } else if (downKeys['a'] && s.curMove.equals("") || s.curMove.equals("walkLeft")) {
@@ -228,8 +230,8 @@ void action(Sprite s, Sprite s2) {
        s.crouchMove(191, 196, "crouchKick2");
      } else if (downKeys['q'] && downKeys['s'] && s.curMove.equals("") || s.curMove.equals("crouchPunch")) {
        s.crouchMove(197, 200, "crouchPunch");
-     //} else if (downKeys['e'] && downKeys['s'] && s.curMove.equals("") || s.curMove.equals("crouchPunch2")) {
-     //  s.crouchMove(197, 200, "crouchPunch2");
+     } else if (downKeys['e'] && downKeys['s'] && s.curMove.equals("") || s.curMove.equals("crouchPunch2")) {
+      s.crouchMove(204, 207, "crouchPunch2");
      } else if (downKeys['s'] && s.curMove.equals("") || s.curMove.equals("crouch")) {
        s.crouchMove(187, 187, "crouch");
      } else if (downKeys['q'] && !downKeys['s'] && s.curMove.equals("") || s.curMove.equals("punch")) {
@@ -267,8 +269,8 @@ void action(Sprite s, Sprite s2) {
        s2.crouchMove(191, 196, "crouchKick2");
      } else if (downKeys2['j'] && downKeys2[258] && s2.curMove.equals("") || s2.curMove.equals("crouchPunch")) {
        s2.crouchMove(197, 200, "crouchPunch");
-     //} else if (downKeys['e'] && downKeys['s'] && s.curMove.equals("") || s.curMove.equals("crouchPunch2")) {
-     //  s.crouchMove(197, 200, "crouchPunch2");
+     } else if (downKeys['k'] && downKeys['s'] && s.curMove.equals("") || s.curMove.equals("crouchPunch2")) {
+      s.crouchMove(204, 207, "crouchPunch2");
      } else if (downKeys2[258] && s2.curMove.equals("") || s2.curMove.equals("crouch")) {
        s2.crouchMove(187, 187, "crouch");
      } else if (downKeys2['j'] && !downKeys2[258] && s2.curMove.equals("") || s2.curMove.equals("punch")) {
@@ -405,11 +407,54 @@ void action(Sprite s, Sprite s2) {
      } else if (downKeys['w'] && s.curMove.equals("") || s.curMove.equals("jump")) {
        s.jumpMove(341, 343, "jump");
      } else if (downKeys['c'] && s.curMove.equals("") || s.curMove.equals("kamekameha")) {
-       s.attack(529, 536, "kamekameha");
+       s.specialAttack(529, 536, "kamekameha");
+     } else if (downKeys['t'] && s.curMove.equals("") || s.curMove.equals("combo")) {
+       s.attack(513, 521, "combo");
      } else {
        s.reset(430);
      }
   }
+  if (s2.name == "Chun-li"){
+    if (downKeys2[256] && s2.curMove.equals("") || s2.curMove.equals("walkRight")) {
+       s2.dir = 'r';
+       s2.walkMove(433, 437, "walkRight");
+     } else if (downKeys2[257] && s2.curMove.equals("") || s2.curMove.equals("walkLeft")) {
+       s2.dir = 'l';
+       s2.walkMove(433, 437, "walkLeft");
+     } else if (downKeys2[258] && downKeys['n'] && s2.curMove.equals("") || s2.curMove.equals("crouchKick")) {
+       s2.crouchMove(454, 457, "crouchKick");
+     } else if (downKeys2[258] && downKeys['m'] && s2.curMove.equals("") || s2.curMove.equals("crouchKick2")) {
+       s2.crouchMove(470, 471, "crouchKick2");
+     } else if (downKeys2[258] && downKeys['j'] && s2.curMove.equals("") || s2.curMove.equals("crouchPunch")) {
+       s2.crouchMove(462, 463, "crouchPunch");
+     //} else if (downKeys2[258] && downKeys2['k'] && s2.curMove.equals("") || s2.curMove.equals("crouchPunch2")) {
+     //  s2.crouchMove(197, 200, "crouchPunch2");
+     } else if (downKeys2[258] && s2.curMove.equals("") || s2.curMove.equals("crouch")) {
+       s2.crouchMove(473, 473, "crouch");
+     } else if (downKeys2['j'] && !downKeys2['s'] && s2.curMove.equals("") || s2.curMove.equals("punch")) {
+       s2.attack(460, 461, "punch");
+     } else if (downKeys2['k'] && !downKeys2['s'] && s2.curMove.equals("") || s2.curMove.equals("punch2")) {
+       s2.attack(464, 465, "punch2");
+     } else if (downKeys2['l'] && s2.curMove.equals("") || s2.curMove.equals("kickUp")) {
+       s2.attack(466, 469, "kickUp");
+     } else if (downKeys2['n'] && !downKeys2[259] && s2.curMove.equals("") || s2.curMove.equals("kick")) {
+       s2.attack(451, 453, "kick");
+     } else if (downKeys2['m'] && !downKeys2[259] && s2.curMove.equals("") || s2.curMove.equals("kick2")) {
+       s2.attack(485, 493, "kick2");
+     } else if (downKeys2['/'] && s2.curMove.equals("") || s2.curMove.equals("flyKick")) {
+       s2.attack(502, 512, "flyKick");
+     } else if (downKeys2[','] && s2.curMove.equals("") || s2.curMove.equals("spinningKick")) {
+       s2.attack(477, 484, "spinningKick");
+     } else if (downKeys2[259] && s2.curMove.equals("") || s2.curMove.equals("jump")) {
+       s2.jumpMove(341, 343, "jump");
+     } else if (downKeys2['.'] && s2.curMove.equals("") || s2.curMove.equals("kamekameha")) {
+       s2.specialAttack(529, 536, "kamekameha");
+     } else if (downKeys2['p'] && s2.curMove.equals("") || s2.curMove.equals("combo")) {
+       s2.attack(513, 521, "combo");
+     } else {
+       s2.reset(430);
+     }
+  }    
     
 }
 

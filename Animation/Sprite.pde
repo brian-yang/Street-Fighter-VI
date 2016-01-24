@@ -130,15 +130,26 @@ class Sprite {
             if (x + KNOCKBACK <= RIGHT_BOUND) {
               x += KNOCKBACK;
             }
-            image(images.get(curFrame), x - images.get(curFrame).width / 2, y);
+            if (name == "Ken"){
+              image(images.get(curFrame), -(x + images.get(curFrame).width / 2), y);
+            } else{
+              image(images.get(curFrame), x - images.get(curFrame).width / 2, y);
+            }
         } else {
             if (x - KNOCKBACK >= LEFT_BOUND) {
               x -= KNOCKBACK;
             }
-            pushMatrix();
-            scale(-1, 1);
-            image(images.get(curFrame), -(x + images.get(curFrame).width / 2), y);
-            popMatrix();
+            if (name == "Ken"){
+              pushMatrix();
+              scale(-1, 1);
+              image(images.get(curFrame), x - images.get(curFrame).width / 2, y);
+              popMatrix();
+            } else {
+              pushMatrix();
+              scale(-1, 1);
+              image(images.get(curFrame), -(x + images.get(curFrame).width / 2), y);
+              popMatrix();
+            }
         }
         curFrame++;
         if (curFrame > endFrame) {
@@ -234,6 +245,29 @@ class Sprite {
             popMatrix();
         } else {
             image(images.get(curFrame), x - images.get(curFrame).width / 2, y);
+        }
+        curFrame++;
+        if (curFrame > endFrame) {
+            curMove = "";
+            curFrame = 0;
+            state = "";
+        }
+    }
+    
+     void specialAttack(int startFrame, int endFrame, String attackName) {
+        // checks if curMove has already been set to this attack
+        state = "specialMove";
+        if (!curMove.equals(attackName)) {
+            curMove = attackName;
+            curFrame = startFrame;
+        }
+        if (dir == 'l') {
+            pushMatrix();
+            scale(-1, 1);
+            image(images.get(curFrame), -x, y);
+            popMatrix();
+        } else {
+            image(images.get(curFrame), x , y);
         }
         curFrame++;
         if (curFrame > endFrame) {
