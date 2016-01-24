@@ -1,5 +1,4 @@
-Instructions:
-Player 1(Cammy):
+Player 1:
 W,A,S,D: Jump, Left, Crouch, Right
 Q: Light Punch
 E: Heavy Punch
@@ -14,9 +13,8 @@ W + F: Flying Light Kick
 W + G: Flying Heavy Kick
 X: Special Move
 If Ken or Ryu: c: Kamekameha
-
-
-Player 2(Cammy):
+--
+Player 2:
 Up, Left, Down, Right: Jump, Left, Crouch, Right
 J: Light Punch
 K: Heavy Punch

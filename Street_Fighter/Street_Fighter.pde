@@ -183,21 +183,37 @@ void setActiveScreen(String name) {
 void showScreen(Screen activeScreen) {
     if (curScreenName.equals("Quit")) {
         exit();
-    } else if (!activeScreen.isSetUp && !curScreenName.equals("Arena")) {
+    } else if (!activeScreen.isSetUp) {
         for (int i = 0; i < activeScreen.buttonLabels.size(); i++) {
             activeScreen.setupButtons(i, 300, 50);
         }
+        bg = loadImage(activeScreen.background);
+        background(bg);
     }
     // Show background and place buttons
-    bg = loadImage(activeScreen.background);
-    background(bg);
+
     if (curScreenName.equals("Menu")) {
-        activeScreen.placeButtons(0, 100, 100, 150, "vertical");
+        activeScreen.placeButtons(0, 100, 200, 100, "vertical");
     }
     if (curScreenName.equals("Training")) {
         activeScreen.placeButtons(0, -400, 700, 510, "horizontal");
         activeScreen.placeButtons(1, width / 2 - 165, 100, 100, "vertical");
         // start button
+    }
+    if (curScreenName.equals("Instructions")) {
+        activeScreen.placeButtons(0, -400, 700, 510, "horizontal");
+        fill(218);
+        stroke(255,0,0);
+        rect(65, 150, 900, 500, 10);
+        line(510, 150, 510, 650);
+        textAlign(CENTER, CENTER);
+        ArrayList<String> instructions = new ArrayList<String>();
+        parser.readTextBlocks("instructions.txt", instructions);
+        for (int i = 0; i < instructions.size(); i++) {
+          fill(0);
+          textSize(15);
+          text(instructions.get(i), 260 + i * 490, 375);
+        }
     }
     if (curScreenName.equals("Arena")) {
         ((Arena) activeScreen).run(downKeys, downKeys2);
@@ -210,10 +226,13 @@ void initializeScreens() {
     screens.put("Menu", createScreen("menu.txt", "Background.png"));
     //screens.put("Versus", createScreen("vs.txt", "Background.png"));
     screens.put("Training", createScreen("training.txt", "Background.png"));
+    screens.put("Instructions", createScreen("instructions-buttons.txt", "Background.png"));
     screens.put("Arena", createArena("Background.png"));
 }
 
 // instantiates screens
+// ====================
+// screens with buttons
 Screen createScreen(String file, String screenBG) {
     ArrayList < ArrayList < String >> labels = new ArrayList < ArrayList < String >> ();
     parser.readLabels(file, labels);
@@ -222,7 +241,13 @@ Screen createScreen(String file, String screenBG) {
     return s;
 }
 
-// instantiates arena
+// plain screen
+Screen createScreen(String screenBG) {
+    Screen s = new Screen(screenBG);
+    return s;
+}
+
+// arena
 Arena createArena(String screenBG) {
     Arena arena = new Arena(screenBG);
     return arena;

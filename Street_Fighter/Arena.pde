@@ -7,6 +7,7 @@ class Arena extends Screen {
   
   Arena(String bg) {
     super(bg);
+    isSetUp = true;
   }
   
   void initialize(String fighter1, String fighter2) {
@@ -14,7 +15,6 @@ class Arena extends Screen {
     timer = new Timer(99);
     p = new Sprite(100, width / 2, fighter1);
     q = new Sprite(200, width / 2, fighter2);
-    isSetUp = true;
   }
 
   void run(boolean[] keys, boolean[] keys2) {
