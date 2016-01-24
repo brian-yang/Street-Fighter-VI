@@ -148,7 +148,7 @@ class Sprite {
         }
     }
 
-    void jumpMove(int startFrame, int endFrame, String jumpName) {
+    void jumpMove(int startFrame, int endFrame, String jumpName, boolean moveHorizontal) {
         // checks if curMove has already been set to this attack
         if (jumpName.equals("jump")) {
           state = "jump";
@@ -169,11 +169,22 @@ class Sprite {
           y -= UP_STEP;
         }
         if (dir == 'l') {
+            if (moveHorizontal) {
+              print("ok");
+              if (x - STEP >= LEFT_BOUND) {
+                x -= STEP;
+              }
+            }
             pushMatrix();
             scale(-1, 1);
             image(images.get(curFrame), -(x + images.get(curFrame).width / 2), y);
             popMatrix();
         } else {
+            if (moveHorizontal) {
+              if (x + STEP <= RIGHT_BOUND) {
+                x += STEP;
+              }
+            }
             image(images.get(curFrame), x - images.get(curFrame).width / 2, y);
         }
         if (goingUp) {

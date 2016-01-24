@@ -29,6 +29,7 @@ void draw() {
 }
 
 void keyPressed() {
+  println(key);
   if (key < 256) {
     downKeys[key] = true;
     downKeys2[key] = true;
@@ -163,11 +164,19 @@ void action(Sprite s, Sprite s2) {
     } else if (downKeys['x'] && s.curMove.equals("") || s.curMove.equals("spinningKnuckle")) {
       s.attack(30, 33, "spinningKnuckle");
     } else if (downKeys['f'] && downKeys['w'] && s.curMove.equals("") || s.curMove.equals("flyKick")) {
-      s.jumpMove(53, 54, "flyKick");
+      s.jumpMove(53, 54, "flyKick", false);
     } else if (downKeys['h'] && s.curMove.equals("") || s.curMove.equals("flyKick2")) {
      s.attack(80, 85, "flyKick2");
     } else if (downKeys['w'] && s.curMove.equals("") || s.curMove.equals("jump")) {
-      s.jumpMove(47, 52, "jump");
+      if (downKeys['a']) { // either or - not both
+        s.dir = 'l';
+        s.jumpMove(47, 52, "jump", true);
+      } else if (downKeys['d']) {
+        s.dir = 'r';
+        s.jumpMove(47, 52, "jump", true);
+      } else {
+        s.jumpMove(47, 52, "jump", false);
+      }
     } else {
       s.reset(6);
     }
@@ -205,11 +214,19 @@ void action(Sprite s, Sprite s2) {
     } else if (downKeys2[','] && s2.curMove.equals("") || s2.curMove.equals("spinningKnuckle")) {
       s2.attack(30, 33, "spinningKnuckle");
     } else if (downKeys2['n'] && downKeys2[259] && s2.curMove.equals("") || s2.curMove.equals("flyKick")) {
-      s2.jumpMove(53, 54, "flyKick");
+      s2.jumpMove(53, 54, "flyKick", false);
     //} else if (downKeys2['m'] && downKeys2[259] && s2.curMove.equals("") || s2.curMove.equals("flyKick2")) {
     //  s2.jumpMove(53, 54, "flyKick2");
     } else if (downKeys2[259] && s2.curMove.equals("") || s2.curMove.equals("jump")) {
-      s2.jumpMove(47, 52, "jump");
+      if (downKeys[256]) { // either or - not both
+        s.dir = 'l';
+        s.jumpMove(47, 52, "jump", true);
+      } else if (downKeys[257]) {
+        s.dir = 'r';
+        s.jumpMove(47, 52, "jump", true);
+      } else {
+        s.jumpMove(47, 52, "jump", false);
+      }
     } else {
       s2.reset(6);
     }
@@ -249,7 +266,15 @@ void action(Sprite s, Sprite s2) {
      } else if (downKeys['x'] && s.curMove.equals("") || s.curMove.equals("spinningKick")) {
        s.attack(258, 267, "spinningKick");
      } else if (downKeys['w'] && s.curMove.equals("") || s.curMove.equals("jump")) {
-       s.jumpMove(229, 232, "jump");
+      if (downKeys['a']) { // either or - not both
+        s.dir = 'l';
+        s.jumpMove(229, 232, "jump", true);
+      } else if (downKeys['d']) {
+        s.dir = 'r';
+        s.jumpMove(229, 232, "jump", true);
+      } else {
+        s.jumpMove(229, 232, "jump", false);
+      }
      } else if (downKeys['c'] && s.curMove.equals("") || s.curMove.equals("kamekameha")) {
        s.attack(240, 243, "kamekameha");
      } else {
@@ -290,7 +315,15 @@ void action(Sprite s, Sprite s2) {
      } else if (downKeys2[','] && s2.curMove.equals("") || s2.curMove.equals("spinningKick")) {
        s2.attack(258, 267, "spinningKick");
      } else if (downKeys2[259] && s2.curMove.equals("") || s2.curMove.equals("jump")) {
-       s2.jumpMove(229, 232, "jump");
+      if (downKeys[256]) { // either or - not both
+        s.dir = 'l';
+        s.jumpMove(229, 232, "jump", true);
+      } else if (downKeys[257]) {
+        s.dir = 'r';
+        s.jumpMove(229, 232, "jump", true);
+      } else {
+        s.jumpMove(229, 232, "jump", false);
+      }
      } else if (downKeys2['.'] && s2.curMove.equals("") || s2.curMove.equals("kamekameha")) {
        s2.attack(240, 243, "kamekameha");
      } else {
@@ -331,7 +364,15 @@ void action(Sprite s, Sprite s2) {
      } else if (downKeys['x'] && s.curMove.equals("") || s.curMove.equals("spinningKick")) {
        s.attack(371, 380, "spinningKick");
      } else if (downKeys['w'] && s.curMove.equals("") || s.curMove.equals("jump")) {
-       s.jumpMove(341, 343, "jump");
+      if (downKeys['a']) { // either or - not both
+        s.dir = 'l';
+        s.jumpMove(341, 343, "jump", true);
+      } else if (downKeys['d']) {
+        s.dir = 'r';
+        s.jumpMove(341, 343, "jump", true);
+      } else {
+        s.jumpMove(341, 343, "jump", false);
+      }
      } else if (downKeys['c'] && s.curMove.equals("") || s.curMove.equals("kamekameha")) {
        s.attack(352, 355, "kamekameha");
      } else {
@@ -372,7 +413,15 @@ void action(Sprite s, Sprite s2) {
      } else if (downKeys2[','] && s.curMove.equals("") || s2.curMove.equals("spinningKick")) {
        s2.attack(371, 380, "spinningKick");
      } else if (downKeys2[259] && s2.curMove.equals("") || s2.curMove.equals("jump")) {
-       s2.jumpMove(341, 343, "jump");
+      if (downKeys[256]) { // either or - not both
+        s.dir = 'l';
+        s.jumpMove(341, 343, "jump", true);
+      } else if (downKeys[257]) {
+        s.dir = 'r';
+        s.jumpMove(341, 343, "jump", true);
+      } else {
+        s.jumpMove(341, 343, "jump", false);
+      }
      } else if (downKeys2['.'] && s2.curMove.equals("") || s2.curMove.equals("kamekameha")) {
        s2.attack(352, 355, "kamekameha");
      } else {
@@ -411,7 +460,7 @@ void action(Sprite s, Sprite s2) {
      } else if (downKeys['x'] && s.curMove.equals("") || s.curMove.equals("spinningKick")) {
        s.attack(477, 484, "spinningKick");
      } else if (downKeys['w'] && s.curMove.equals("") || s.curMove.equals("jump")) {
-       s.jumpMove(341, 343, "jump");
+       s.jumpMove(341, 343, "jump", false);
      } else if (downKeys['c'] && s.curMove.equals("") || s.curMove.equals("kamekameha")) {
        s.specialAttack(529, 536, "kamekameha");
      } else if (downKeys['t'] && s.curMove.equals("") || s.curMove.equals("combo")) {
@@ -452,7 +501,7 @@ void action(Sprite s, Sprite s2) {
      } else if (downKeys2[','] && s2.curMove.equals("") || s2.curMove.equals("spinningKick")) {
        s2.attack(477, 484, "spinningKick");
      } else if (downKeys2[259] && s2.curMove.equals("") || s2.curMove.equals("jump")) {
-       s2.jumpMove(341, 343, "jump");
+       s2.jumpMove(341, 343, "jump", false);
      } else if (downKeys2['.'] && s2.curMove.equals("") || s2.curMove.equals("kamekameha")) {
        s2.specialAttack(529, 536, "kamekameha");
      } else if (downKeys2['p'] && s2.curMove.equals("") || s2.curMove.equals("combo")) {
