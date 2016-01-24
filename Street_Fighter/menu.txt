@@ -1,3 +1,4 @@
 Versus
 Training
+Instructions
 Quit

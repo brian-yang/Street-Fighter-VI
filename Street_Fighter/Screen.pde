@@ -14,7 +14,7 @@ class Screen {
     
     Screen(String bg) {
         background = bg;
-        isSetUp = false;
+        isSetUp = true;
     }
     
     void setupButtons(int index, float widthB, float heightB) {
