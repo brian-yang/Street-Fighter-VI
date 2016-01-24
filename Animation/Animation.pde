@@ -15,7 +15,7 @@ void setup() {
   font = createFont("Courier", 20);
   textFont(font);
   frameRate(10);
-  p = new Sprite(width/2 - 100, 200, "Chun-li");
+  p = new Sprite(width/2 - 100, 200, "Cammy");
   q = new Sprite(width/2 + 100, 200, "Cammy");
   q.dir = 'l';
 }
