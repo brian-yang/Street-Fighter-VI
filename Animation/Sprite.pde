@@ -29,19 +29,19 @@ class Sprite {
     Sprite(int x, int y, String name) {
         images = new ArrayList < PImage > ();
         for (int i = 0; i < 181; i++) {
-            String imageName = "Cammy " + "(" + (i + 1) + ").png";
+            String imageName = "Cammy/Cammy " + "(" + (i + 1) + ").png";
             images.add(loadImage(imageName));
         }
         for (int i = 0; i < 116; i++) {
-            String imageName = "Ken " + "(" + (i + 1) + ").png";
+            String imageName = "Ken/Ken " + "(" + (i + 1) + ").png";
             images.add(loadImage(imageName));
         }
         for (int i = 0; i < 133; i++) {
-            String imageName = "Ryu " + "(" + (i + 1) + ").png";
+            String imageName = "Ryu/Ryu " + "(" + (i + 1) + ").png";
             images.add(loadImage(imageName));
         }
         for (int i = 0; i < 107; i++) {
-            String imageName = "Chun-li " + "(" + (i + 1) + ").png";
+            String imageName = "Chun-li/Chun-li " + "(" + (i + 1) + ").png";
             images.add(loadImage(imageName));
         }
         for (PImage i: images){
@@ -130,26 +130,15 @@ class Sprite {
             if (x + KNOCKBACK <= RIGHT_BOUND) {
               x += KNOCKBACK;
             }
-            if (name == "Ken"){
-              image(images.get(curFrame), -(x + images.get(curFrame).width / 2), y);
-            } else{
-              image(images.get(curFrame), x - images.get(curFrame).width / 2, y);
-            }
+            pushMatrix();
+            scale(-1, 1);
+            image(images.get(curFrame), -(x + images.get(curFrame).width / 2), y);
+            popMatrix();
         } else {
             if (x - KNOCKBACK >= LEFT_BOUND) {
               x -= KNOCKBACK;
             }
-            if (name == "Ken"){
-              pushMatrix();
-              scale(-1, 1);
-              image(images.get(curFrame), x - images.get(curFrame).width / 2, y);
-              popMatrix();
-            } else {
-              pushMatrix();
-              scale(-1, 1);
-              image(images.get(curFrame), -(x + images.get(curFrame).width / 2), y);
-              popMatrix();
-            }
+            image(images.get(curFrame), x - images.get(curFrame).width / 2, y);
         }
         curFrame++;
         if (curFrame > endFrame) {
