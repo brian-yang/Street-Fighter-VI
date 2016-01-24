@@ -69,3 +69,13 @@ New Feature: Added player selection screen.
 
 Goal: Complete jump animation.
 
+### 1/24/2016
+**Anthony Liang** -- Created Chun-li character, working on adding the special moves.
+
+Bug: Some of the special animations require the frames to move forward. Also kamekameha for Chun-li
+doesn't work fluidly, needs to be fixed.
+
+Goal: Make the animations more realistic, add victory screen
+
+
+
