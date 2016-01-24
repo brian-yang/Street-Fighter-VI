@@ -40,7 +40,7 @@ class Sprite {
             String imageName = "Ryu " + "(" + (i + 1) + ").png";
             images.add(loadImage(imageName));
         }
-        for (int i = 0; i < 98; i++) {
+        for (int i = 0; i < 107; i++) {
             String imageName = "Chun-li " + "(" + (i + 1) + ").png";
             images.add(loadImage(imageName));
         }

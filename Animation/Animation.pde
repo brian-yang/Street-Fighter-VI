@@ -15,7 +15,7 @@ void setup() {
   font = createFont("Courier", 20);
   textFont(font);
   frameRate(10);
-  p = new Sprite(width/2 - 100, 200, "Cammy");
+  p = new Sprite(width/2 - 100, 200, "Chun-li");
   q = new Sprite(width/2 + 100, 200, "Cammy");
   q.dir = 'l';
 }
@@ -405,7 +405,7 @@ void action(Sprite s, Sprite s2) {
      } else if (downKeys['w'] && s.curMove.equals("") || s.curMove.equals("jump")) {
        s.jumpMove(341, 343, "jump");
      } else if (downKeys['c'] && s.curMove.equals("") || s.curMove.equals("kamekameha")) {
-       s.attack(494, 496, "kamekameha");
+       s.attack(529, 536, "kamekameha");
      } else {
        s.reset(430);
      }
