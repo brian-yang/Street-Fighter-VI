@@ -15,7 +15,7 @@ void setup() {
   font = createFont("Courier", 20);
   textFont(font);
   frameRate(10);
-  p = new Sprite(width/2 - 100, 200, "Ken");
+  p = new Sprite(width/2 - 100, 200, "Ryu");
   q = new Sprite(width/2 + 100, 200, "Ken");
   q.dir = 'l';
 }
@@ -282,6 +282,44 @@ void action(Sprite s, Sprite s2) {
        s2.reset(181);
      }
   }
+  if (s.name == "Ryu"){
+    if (downKeys['d'] && s.curMove.equals("") || s.curMove.equals("walkRight")) {
+       s.dir = 'r';
+       s.walkMove(300, 304, "walkRight");
+     } else if (downKeys['a'] && s.curMove.equals("") || s.curMove.equals("walkLeft")) {
+       s.dir = 'l';
+       s.walkMove(300, 304, "walkLeft");
+     } else if (downKeys['f'] && downKeys['s'] && s.curMove.equals("") || s.curMove.equals("crouchKick")) {
+       s.crouchMove(309, 311, "crouchKick");
+     } else if (downKeys['h'] && downKeys['s'] && s.curMove.equals("") || s.curMove.equals("crouchKick2")) {
+       s.crouchMove(333, 338, "crouchKick2");
+     } else if (downKeys['q'] && downKeys['s'] && s.curMove.equals("") || s.curMove.equals("crouchPunch")) {
+       s.crouchMove(320, 323, "crouchPunch");
+     //} else if (downKeys['e'] && downKeys['s'] && s.curMove.equals("") || s.curMove.equals("crouchPunch2")) {
+     //  s.crouchMove(197, 200, "crouchPunch2");
+     } else if (downKeys['s'] && s.curMove.equals("") || s.curMove.equals("crouch")) {
+       s.crouchMove(309, 309, "crouch");
+     } else if (downKeys['q'] && !downKeys['s'] && s.curMove.equals("") || s.curMove.equals("punchOne")) {
+       s.attack(317, 319, "punchOne");
+     } else if (downKeys['r'] && s.curMove.equals("") || s.curMove.equals("kickUp")) {
+       s.attack(306, 308, "kickUp");
+     } else if (downKeys['f'] && !downKeys['w'] && s.curMove.equals("") || s.curMove.equals("kick2")) {
+       s.attack(328, 332, "kick2");
+     //} else if (downKeys['g'] && !downKeys['w'] && s.curMove.equals("") || s.curMove.equals("kick3")) {
+     //  s.attack(244, 247, "kick3");
+     } else if (downKeys['f'] && s.curMove.equals("") || s.curMove.equals("flyKick")) {
+       s.attack(399, 406, "flyKick");
+     } else if (downKeys['x'] && s.curMove.equals("") || s.curMove.equals("spinningKick")) {
+       s.attack(371, 380, "spinningKick");
+     } else if (downKeys['w'] && s.curMove.equals("") || s.curMove.equals("jump")) {
+       s.jumpMove(341, 343, "jump");
+     } else if (downKeys['c'] && s.curMove.equals("") || s.curMove.equals("kamekameha")) {
+       s.attack(352, 355, "kamekameha");
+     } else {
+       s.reset(297);
+     }
+  }
+    
 }
 
 void makeHealthBar(){

@@ -34,6 +34,10 @@ class Sprite {
             String imageName = "Ken " + "(" + (i + 1) + ").png";
             images.add(loadImage(imageName));
         }
+        for (int i = 0; i < 133; i++) {
+            String imageName = "Ryu " + "(" + (i + 1) + ").png";
+            images.add(loadImage(imageName));
+        }
         for (PImage i: images){
           i.resize((int) (i.width * 1.5),(int) (i.height * 1.5));
         }
