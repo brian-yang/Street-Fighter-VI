@@ -12,8 +12,7 @@ class PlayerTwo {
         if (s2.name.equals("Cammy")) {
             if (s.health <= 0 && s.curMove.equals("") || s.curMove.equals("victory")) {
                 s.victory(171, 176, "victory");
-            }
-            if (s2.state.equals("getHit") && s2.curMove.equals("") || s2.curMove.equals("getHit")) {
+            } else if (s2.state.equals("getHit") && s2.curMove.equals("") || s2.curMove.equals("getHit")) {
                 s2.getHit(106, 108, "getHit");
             } else if (downKeys2[256] && s2.curMove.equals("") || s2.curMove.equals("walkRight")) {
                 s2.dir = 'r';
@@ -62,7 +61,9 @@ class PlayerTwo {
             }
         }
         if (s2.name.equals("Ken")) {
-            if (s2.state.equals("getHit") && s2.curMove.equals("") || s2.curMove.equals("getHit")) {
+            if (s.health <= 0 && s2.curMove.equals("") || s2.curMove.equals("victory")) {
+                s2.victory(181, 183, "victory");
+            } else if (s2.state.equals("getHit") && s2.curMove.equals("") || s2.curMove.equals("getHit")) {
                 s2.getHit(226, 228, "getHit");
             } else if (downKeys2[256] && s2.curMove.equals("") || s2.curMove.equals("walkRight")) {
                 s2.dir = 'r';
@@ -111,7 +112,9 @@ class PlayerTwo {
             }
         }
         if (s2.name.equals("Ryu")) {
-            if (s2.state.equals("getHit") && s2.curMove.equals("") || s2.curMove.equals("getHit")) {
+            if (s.health <= 0 && s2.curMove.equals("") || s2.curMove.equals("victory")){
+                s2.victory(418, 420, "victory");
+            } else if (s2.state.equals("getHit") && s2.curMove.equals("") || s2.curMove.equals("getHit")) {
                 s2.getHit(312, 314, "getHit");
             } else if (downKeys2[256] && s2.curMove.equals("") || s2.curMove.equals("walkRight")) {
                 s2.dir = 'r';
@@ -159,6 +162,7 @@ class PlayerTwo {
                 s2.reset(297);
             }
         }
+        // VICTORY SCREEN FOR CHUN-LI
         if (s2.name.equals("Chun-li")) {
             if (s2.state.equals("getHit") && s2.curMove.equals("") || s2.curMove.equals("getHit")) {
                 s2.getHit(445, 445, "getHit");

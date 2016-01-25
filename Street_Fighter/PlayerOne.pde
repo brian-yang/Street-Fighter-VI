@@ -12,8 +12,7 @@ class PlayerOne {
         if (s.name.equals("Cammy")) {
             if (s2.health <= 0 && s.curMove.equals("") || s.curMove.equals("victory")) {
                 s.victory(171, 176, "victory");
-            } 
-            if (s.state.equals("getHit") && s.curMove.equals("") || s.curMove.equals("getHit")) {
+            } else if (s.state.equals("getHit") && s.curMove.equals("") || s.curMove.equals("getHit")) {
                 s.getHit(106, 108, "getHit");
             } else if (downKeys['d'] && s.curMove.equals("") || s.curMove.equals("walkRight")) {
                 s.dir = 'r';
@@ -64,8 +63,7 @@ class PlayerOne {
         if (s.name.equals("Ken")) {
             if (s2.health <= 0 && s.curMove.equals("") || s.curMove.equals("victory")) {
                 s.victory(181, 183, "victory");
-            }
-            if (s.state.equals("getHit") && s.curMove.equals("") || s.curMove.equals("getHit")) {
+            } else if (s.state.equals("getHit") && s.curMove.equals("") || s.curMove.equals("getHit")) {
                 s.getHit(226, 228, "getHit");
             } else if (downKeys['d'] && s.curMove.equals("") || s.curMove.equals("walkRight")) {
                 s.dir = 'r';
@@ -116,8 +114,7 @@ class PlayerOne {
         if (s.name.equals("Ryu")) {
             if (s2.health <= 0 && s.curMove.equals("") || s.curMove.equals("victory")){
                 s.victory(418, 420, "victory");
-            }
-            if (s.state.equals("getHit") && s.curMove.equals("") || s.curMove.equals("getHit")) {
+            } else if (s.state.equals("getHit") && s.curMove.equals("") || s.curMove.equals("getHit")) {
                 s.getHit(312, 314, "getHit");
             } else if (downKeys['d'] && s.curMove.equals("") || s.curMove.equals("walkRight")) {
                 s.dir = 'r';
@@ -165,6 +162,8 @@ class PlayerOne {
                 s.reset(297);
             }
         }
+        
+        // VICTORY SCREEN FOR CHUNLI
         if (s.name.equals("Chun-li")) {
             if (s.state.equals("getHit") && s.curMove.equals("") || s.curMove.equals("getHit")) {
                 s.getHit(445, 445, "getHit");
