@@ -218,6 +218,13 @@ void showScreen(Screen activeScreen) {
         activeScreen.placeButtons(0, -415, 700, 510, "horizontal");
         activeScreen.placeButtons(1, width / 2 - 165, 100, 75, "vertical");
         activeScreen.placeButtons(2, width / 2 - 165, 500, 100, "vertical");
+        textSize(18);
+        if (!fighter1.isEmpty()) {
+          text(fighter1, width / 2 - 300, height / 2);
+        }
+        if (!fighter2.isEmpty()) {
+          text(fighter2, width / 2 + 300, height / 2);
+        }
     }
     if (curScreenName.equals("Instructions")) {
         activeScreen.placeButtons(0, -415, 700, 510, "horizontal");
@@ -244,9 +251,9 @@ void initializeScreens() {
     screens = new HashMap < String, Screen > ();
     screens.put("Menu", createScreen("menu.txt", "Background.png"));
     //screens.put("Versus", createScreen("vs.txt", "Background.png"));
-    screens.put("Training", createScreen("training.txt", "Background.png"));
+    screens.put("Training", createScreen("training.txt", "character-select.jpg"));
     screens.put("Instructions", createScreen("instructions-buttons.txt", "Background.png"));
-    screens.put("Arena", createArena("Background.png"));
+    screens.put("Arena", createArena("arena.jpg"));
 }
 
 // instantiates screens

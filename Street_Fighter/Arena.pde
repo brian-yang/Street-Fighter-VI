@@ -22,8 +22,8 @@ class Arena extends Screen {
     timer.run();
     
     // Health
-    makeHealthBar(p, 50, 50);
-    makeHealthBar(q, 350, 50);
+    makeHealthBar(p, 80, 90);
+    makeHealthBar(q, width - 380, 90);
 
     // Fighters
     actionP1(p, keys);
@@ -188,7 +188,7 @@ void actionP2(Sprite s2, boolean[] downKeys2) {
   }
 }
   void makeHealthBar(Sprite s, int x, int y){
-    float rectWidth = 200;
+    float rectWidth = 300;
     if (s.health < 0.25 * s.MAX_HEALTH){
       fill(255, 0, 0);
     } else if (s.health < 0.4 *s.MAX_HEALTH){

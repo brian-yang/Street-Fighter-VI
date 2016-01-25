@@ -16,7 +16,7 @@ class Timer {
         t = interval - int(millis() / 1000);
         if (t > 0) {
             time = nf(t, 3);
-            text(time, width / 2, height / 2);
+            text(time.substring(1), width / 2, 100);
         } else {
             text("GAME OVER", width / 2, height / 2);
         }

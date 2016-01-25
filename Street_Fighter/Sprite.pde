@@ -27,11 +27,11 @@ class Sprite {
     Sprite(int x, int y, String name) {
         images = new ArrayList < PImage > ();
         for (int i = 0; i < 181; i++) {
-            String imageName = "../Animation/Cammy " + "(" + (i + 1) + ").png";
+            String imageName = "../Animation/Cammy/Cammy " + "(" + (i + 1) + ").png";
             images.add(loadImage(imageName));
         }
         for (int i = 0; i < 116; i++) {
-            String imageName = "../Animation/Ken " + "(" + (i + 1) + ").png";
+            String imageName = "../Animation/Ken/Ken " + "(" + (i + 1) + ").png";
             images.add(loadImage(imageName));
         }
         for (PImage i: images){
