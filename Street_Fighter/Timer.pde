@@ -18,6 +18,10 @@ class Timer {
             time = nf(t, 3);
             text(time.substring(1), width / 2, 100);
         } else {
+            font = loadFont("ShowcardGothic-Reg-48.vlw");
+            textFont(font);
+            textSize(100);
+            fill(#2EB73D);
             text("GAME OVER", width / 2, height / 2);
         }
     }

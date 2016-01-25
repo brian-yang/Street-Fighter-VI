@@ -15,6 +15,7 @@ char[] controls = new char[] {'w','a','s','d',
                            'g','h','e','q',
                            'r','f','x','c'}; // player 1
 char[] controls2 = new char[] {',','.','/','m'};  // player 2 -- does not include the arrow keys
+PFont font;
 // =======================================================================================================================
 void setup() {
     size(1024, 768);
@@ -220,10 +221,16 @@ void showScreen(Screen activeScreen) {
         activeScreen.placeButtons(2, width / 2 - 165, 500, 100, "vertical");
         textSize(18);
         if (!fighter1.isEmpty()) {
-          text(fighter1, width / 2 - 300, height / 2);
+          textSize(80);
+          text(fighter1, width / 2 - 330, height / 2);
         }
         if (!fighter2.isEmpty()) {
+          textSize(80);
           text(fighter2, width / 2 + 300, height / 2);
+        }
+        if (!fighter1.isEmpty() && !fighter2.isEmpty()){
+          textSize(70);
+          text("VERSUS", width / 2 - 20, height / 2 + 130);
         }
     }
     if (curScreenName.equals("Instructions")) {
@@ -243,6 +250,12 @@ void showScreen(Screen activeScreen) {
     }
     if (curScreenName.equals("Arena")) {
         ((Arena) activeScreen).run(downKeys, downKeys2);
+        font = loadFont("ShowcardGothic-Reg-48.vlw");
+        textFont(font);
+        textSize(60);
+        fill(#2EB73D);
+        text(fighter1, width/2 - 280, height / 2 - 220);
+        text(fighter2, width/2 + 280, height / 2 - 220);
     }
 }
 
@@ -250,7 +263,7 @@ void showScreen(Screen activeScreen) {
 void initializeScreens() {
     screens = new HashMap < String, Screen > ();
     screens.put("Menu", createScreen("menu.txt", "Background.png"));
-    //screens.put("Versus", createScreen("vs.txt", "Background.png"));
+    //screens.put("Versus", createScreen("vs.txt", "arena.png"));
     screens.put("Training", createScreen("training.txt", "character-select.jpg"));
     screens.put("Instructions", createScreen("instructions-buttons.txt", "Background.png"));
     screens.put("Arena", createArena("arena.jpg"));
