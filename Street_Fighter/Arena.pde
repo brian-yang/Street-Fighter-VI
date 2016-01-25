@@ -26,16 +26,17 @@ class Arena extends Screen {
     makeHealthBar(q, width - 380, 90);
 
     // Fighters
-    actionP1(p, keys);
-    actionP2(q, keys2);
+    action(p, keys, q, keys2);
     hitbox(p, q);
     hitbox(q, p);
   }
   
-void actionP1(Sprite s, boolean[] downKeys) {
+void action(Sprite s, boolean[] downKeys, Sprite s2, boolean[] downKeys2) {
   // P1
    if (s.name.equals("Cammy")) {
-    if (s.state.equals("getHit") && s.curMove.equals("") || s.curMove.equals("getHit")){
+    if (s2.health == 0 && s.curMove.equals("") || s.curMove.equals("victory")){
+      s.victory(171, 176, "victory");
+    } else if (s.state.equals("getHit") && s.curMove.equals("") || s.curMove.equals("getHit")){
       s.getHit(106, 108, "getHit");
     } else if (downKeys['d'] && s.curMove.equals("") || s.curMove.equals("walkRight")) {
       s.dir = 'r';
@@ -84,7 +85,9 @@ void actionP1(Sprite s, boolean[] downKeys) {
     }
   }
  if (s.name.equals("Ken")) {
-     if (s.state.equals("getHit") && s.curMove.equals("") || s.curMove.equals("getHit")){
+     if (s2.health == 0 && s.curMove.equals("") || s.curMove.equals("victory")){
+       s.victory(274, 276, "victory");
+     } else if (s.state.equals("getHit") && s.curMove.equals("") || s.curMove.equals("getHit")){
        s.getHit(226, 228, "getHit");
      } else if (downKeys['d'] && s.curMove.equals("") || s.curMove.equals("walkRight")) {
        s.dir = 'r';
@@ -230,12 +233,11 @@ void actionP1(Sprite s, boolean[] downKeys) {
        s.reset(430);
      }
   }
-}
-
-void actionP2(Sprite s2, boolean[] downKeys2) {
   // P2
   if (s2.name.equals("Cammy")) {
-     if (s2.state.equals("getHit") && s2.curMove.equals("") || s2.curMove.equals("getHit")){
+    if (s.health == 0 && s.curMove.equals("") || s.curMove.equals("victory")){
+      s.victory(171, 176, "victory");
+    } else if (s2.state.equals("getHit") && s2.curMove.equals("") || s2.curMove.equals("getHit")){
       s2.getHit(106, 108, "getHit");
     } else if (downKeys2[256] && s2.curMove.equals("") || s2.curMove.equals("walkRight")) {
       s2.dir = 'r';
@@ -482,7 +484,7 @@ boolean hitboxLeft(Sprite s, Sprite s2) {
 }
 
 void beginHit(Sprite s, Sprite s2) {
-  s.takeDamage(25);
+  s.takeDamage(100);
   s.state = "getHit";
   if (s2.dir == 'r') {
     s.dir = 'l';

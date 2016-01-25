@@ -276,5 +276,27 @@ class Sprite {
             state = "";
         }
     }
-
+    
+    void victory(int startFrame, int endFrame, String victory) {
+        // checks if curMove has already been set to this attack
+        state = "victory";
+        if (!curMove.equals(victory)) {
+            curMove = victory;
+            curFrame = startFrame;
+        }
+        if (dir == 'l') {
+            pushMatrix();
+            scale(-1, 1);
+            image(images.get(curFrame), width / 2, y);
+            popMatrix();
+        } else {
+            image(images.get(curFrame), width / 2, y);
+        }
+        curFrame++;
+        if (curFrame > endFrame) {
+            curMove = "";
+            curFrame = 0;
+            state = "";
+        }
+    }
 }
