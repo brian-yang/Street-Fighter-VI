@@ -83,5 +83,19 @@ Bug: Characters are disappearing when implementing victory animations
 
 Goal: Continue to add improvements and get victory animation to work
 
+**Brian Yang** -- Added jump down animation
+-- Tried to add parabolic motion to jumping
+-- Fixed orientation of pictures
+-- Added training screen (one player is frozen)
+-- Added versus screen (two players)
 
+Bug: Fighters don't jump very far on the x-plane.
+How high fighters can jump depends on the fighter chosen.
+Need to press the up key and then the left and right keys
+to move in midair.
 
+New Features: Fighters can jump (somewhat).
+Players can train without having to fight an actual opponent.
+Players can fight each other.
+
+Goal: Fix victory screen. Modify hitboxes to be more accurate.
