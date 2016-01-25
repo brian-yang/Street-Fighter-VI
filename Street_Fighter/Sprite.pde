@@ -54,6 +54,9 @@ class Sprite {
         curFrame = 0;
         state = "";
         goingUp = false;
+        if (name.equals("Ken") || name.equals("Ryu")) {
+          ACCEL = 50;
+        }
     }
     
     float getX() {
@@ -170,7 +173,6 @@ class Sprite {
         }
         if (dir == 'l') {
             if (moveHorizontal) {
-              print("ok");
               if (x - STEP >= LEFT_BOUND) {
                 x -= STEP;
               }

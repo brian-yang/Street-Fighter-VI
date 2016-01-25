@@ -5,6 +5,7 @@ Screen activeScreen;
 PImage bg;
 FileParser parser;
 // checks if a key has been pressed when the fight has started
+int numPlayers;
 boolean[] downKeys = new boolean[260];
 boolean[] downKeys2 = new boolean[260];
 String fighter1 = "";
@@ -198,7 +199,7 @@ void setActiveScreen(String name) {
     activeScreen = screens.get(name);
     curScreenName = name;
     if (name.equals("Arena")) {
-        ((Arena) activeScreen).initialize(fighter1, fighter2);
+        ((Arena) activeScreen).initialize(fighter1, downKeys, fighter2, downKeys2);
     }
 }
 
@@ -215,21 +216,29 @@ void showScreen(Screen activeScreen) {
     if (curScreenName.equals("Menu")) {
         activeScreen.placeButtons(0, 100, 200, 100, "vertical");
     }
-    if (curScreenName.equals("Training")) {
+    if (curScreenName.equals("Versus") || curScreenName.equals("Training")) {
+        if (curScreenName.equals("Versus")) {
+          numPlayers = 2;
+        } else {
+          numPlayers = 1;
+        }
         activeScreen.placeButtons(0, -415, 700, 510, "horizontal");
         activeScreen.placeButtons(1, width / 2 - 165, 100, 75, "vertical");
         activeScreen.placeButtons(2, width / 2 - 165, 500, 100, "vertical");
         textSize(18);
         if (!fighter1.isEmpty()) {
           textSize(80);
+          fill(255, 0, 0);
           text(fighter1, width / 2 - 330, height / 2);
         }
         if (!fighter2.isEmpty()) {
           textSize(80);
+          fill(0, 0, 255);
           text(fighter2, width / 2 + 300, height / 2);
         }
         if (!fighter1.isEmpty() && !fighter2.isEmpty()){
           textSize(70);
+          fill(255);
           text("VERSUS", width / 2 - 20, height / 2 + 130);
         }
     }
@@ -249,7 +258,7 @@ void showScreen(Screen activeScreen) {
         }
     }
     if (curScreenName.equals("Arena")) {
-        ((Arena) activeScreen).run(downKeys, downKeys2);
+        ((Arena) activeScreen).run(numPlayers);
         font = loadFont("ShowcardGothic-Reg-48.vlw");
         textFont(font);
         textSize(60);
@@ -263,8 +272,8 @@ void showScreen(Screen activeScreen) {
 void initializeScreens() {
     screens = new HashMap < String, Screen > ();
     screens.put("Menu", createScreen("menu.txt", "Background.png"));
-    //screens.put("Versus", createScreen("vs.txt", "arena.png"));
-    screens.put("Training", createScreen("training.txt", "character-select.jpg"));
+    screens.put("Versus", createScreen("character-select.txt", "character-select.jpg"));
+    screens.put("Training", createScreen("character-select.txt", "character-select.jpg"));
     screens.put("Instructions", createScreen("instructions-buttons.txt", "Background.png"));
     screens.put("Arena", createArena("arena.jpg"));
 }
@@ -290,4 +299,4 @@ Screen createScreen(String screenBG) {
 Arena createArena(String screenBG) {
     Arena arena = new Arena(screenBG);
     return arena;
-} //<>//
+} //<>// //<>//
