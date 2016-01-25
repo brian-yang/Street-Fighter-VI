@@ -77,5 +77,11 @@ doesn't work fluidly, needs to be fixed.
 
 Goal: Make the animations more realistic, add victory screen
 
+**Anthony Liang** -- Added special moves, ported animation code into the Arena, fixed the graphics for arena 
+
+Bug: Characters are disappearing when implementing victory animations
+
+Goal: Continue to add improvements and get victory animation to work
+
 
 

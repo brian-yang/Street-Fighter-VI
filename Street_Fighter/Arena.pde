@@ -34,9 +34,10 @@ class Arena extends Screen {
 void action(Sprite s, boolean[] downKeys, Sprite s2, boolean[] downKeys2) {
   // P1
    if (s.name.equals("Cammy")) {
-    if (s2.health == 0 && s.curMove.equals("") || s.curMove.equals("victory")){
+    if (s2.health <= 0 && s.curMove.equals("") || s.curMove.equals("victory")){
       s.victory(171, 176, "victory");
-    } else if (s.state.equals("getHit") && s.curMove.equals("") || s.curMove.equals("getHit")){
+    } 
+    if (s.state.equals("getHit") && s.curMove.equals("") || s.curMove.equals("getHit")){
       s.getHit(106, 108, "getHit");
     } else if (downKeys['d'] && s.curMove.equals("") || s.curMove.equals("walkRight")) {
       s.dir = 'r';
@@ -85,9 +86,10 @@ void action(Sprite s, boolean[] downKeys, Sprite s2, boolean[] downKeys2) {
     }
   }
  if (s.name.equals("Ken")) {
-     if (s2.health == 0 && s.curMove.equals("") || s.curMove.equals("victory")){
-       s.victory(274, 276, "victory");
-     } else if (s.state.equals("getHit") && s.curMove.equals("") || s.curMove.equals("getHit")){
+     if (s2.health <= 0 && s.curMove.equals("") || s.curMove.equals("victory")){
+       s.victory(181, 183, "victory");
+     } 
+     if (s.state.equals("getHit") && s.curMove.equals("") || s.curMove.equals("getHit")){
        s.getHit(226, 228, "getHit");
      } else if (downKeys['d'] && s.curMove.equals("") || s.curMove.equals("walkRight")) {
        s.dir = 'r';
@@ -136,6 +138,9 @@ void action(Sprite s, boolean[] downKeys, Sprite s2, boolean[] downKeys2) {
      }
   }
    if (s.name.equals("Ryu")){
+     if (s2.health <= 0 && s.curMove.equals("") || s.curMove.equals("victory")){
+       s.victory(418, 420, "victory");
+     }
      if (s.state.equals("getHit") && s.curMove.equals("") || s.curMove.equals("getHit")){
        s.getHit(312, 314, "getHit");
      } else if (downKeys['d'] && s.curMove.equals("") || s.curMove.equals("walkRight")) {
@@ -188,7 +193,7 @@ void action(Sprite s, boolean[] downKeys, Sprite s2, boolean[] downKeys2) {
     if (downKeys['d'] && s.curMove.equals("") || s.curMove.equals("walkRight")) {
        s.dir = 'r';
        s.walkMove(433, 437, "walkRight");
-     } else if (downKeys['a'] && s.curMove.equals("") || s.curMove.equals("walkLeft")) {
+     }if (downKeys['a'] && s.curMove.equals("") || s.curMove.equals("walkLeft")) {
        s.dir = 'l';
        s.walkMove(433, 437, "walkLeft");
      } else if (downKeys['f'] && downKeys['s'] && s.curMove.equals("") || s.curMove.equals("crouchKick")) {
@@ -235,9 +240,10 @@ void action(Sprite s, boolean[] downKeys, Sprite s2, boolean[] downKeys2) {
   }
   // P2
   if (s2.name.equals("Cammy")) {
-    if (s.health == 0 && s.curMove.equals("") || s.curMove.equals("victory")){
+    if (s.health <= 0 && s.curMove.equals("") || s.curMove.equals("victory")){
       s.victory(171, 176, "victory");
-    } else if (s2.state.equals("getHit") && s2.curMove.equals("") || s2.curMove.equals("getHit")){
+    }
+    if (s2.state.equals("getHit") && s2.curMove.equals("") || s2.curMove.equals("getHit")){
       s2.getHit(106, 108, "getHit");
     } else if (downKeys2[256] && s2.curMove.equals("") || s2.curMove.equals("walkRight")) {
       s2.dir = 'r';
