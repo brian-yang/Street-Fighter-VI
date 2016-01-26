@@ -42,10 +42,6 @@ class PlayerTwo {
                 s2.attack(27, 29, "kick2");
             } else if (downKeys2[','] && s2.curMove.equals("") || s2.curMove.equals("spinningKnuckle")) {
                 s2.attack(30, 33, "spinningKnuckle");
-            } else if (downKeys2['n'] && downKeys2[259] && s2.curMove.equals("") || s2.curMove.equals("flyKick")) {
-                s2.jumpMove(53, 54, "flyKick", false);
-                //} else if (downKeys2['m'] && downKeys2[259] && s2.curMove.equals("") || s2.curMove.equals("flyKick2")) {
-                //  s2.jumpMove(53, 54, "flyKick2");
             } else if (downKeys2[259] && s2.curMove.equals("") || s2.curMove.equals("jump")) {
                 if (downKeys2[256]) { // either or - not both
                     s2.dir = 'r';
@@ -91,8 +87,6 @@ class PlayerTwo {
                 s2.attack(218, 225, "kick");
             } else if (downKeys2['m'] && !downKeys2[259] && s2.curMove.equals("") || s2.curMove.equals("kick2")) {
                 s2.attack(244, 247, "kick2");
-            } else if (downKeys2['/'] && s2.curMove.equals("") || s2.curMove.equals("flyKick")) {
-                s2.attack(254, 257, "flyKick");
             } else if (downKeys2[','] && s2.curMove.equals("") || s2.curMove.equals("spinningKick")) {
                 s2.attack(258, 267, "spinningKick");
             } else if (downKeys2[259] && s2.curMove.equals("") || s2.curMove.equals("jump")) {
@@ -142,8 +136,6 @@ class PlayerTwo {
                 s2.attack(328, 332, "kick");
                 //} else if (downKeys2['m'] && !downKeys2['w'] && s2.curMove.equals("") || s2.curMove.equals("kick2")) {
                 //  s2.attack(244, 247, "kick2");
-            } else if (downKeys2['/'] && s2.curMove.equals("") || s2.curMove.equals("flyKick")) {
-                s2.attack(399, 406, "flyKick");
             } else if (downKeys2[','] && s2.curMove.equals("") || s2.curMove.equals("spinningKick")) {
                 s2.attack(371, 380, "spinningKick");
             } else if (downKeys2[259] && s2.curMove.equals("") || s2.curMove.equals("jump")) {
@@ -192,8 +184,6 @@ class PlayerTwo {
                 s2.attack(451, 453, "kick");
             } else if (downKeys2['m'] && !downKeys2[259] && s2.curMove.equals("") || s2.curMove.equals("kick2")) {
                 s2.attack(485, 493, "kick2");
-            } else if (downKeys2['/'] && s2.curMove.equals("") || s2.curMove.equals("flyKick")) {
-                s2.attack(502, 512, "flyKick");
             } else if (downKeys2[','] && s2.curMove.equals("") || s2.curMove.equals("spinningKick")) {
                 s2.attack(477, 484, "spinningKick");
             } else if (downKeys2[259] && s2.curMove.equals("") || s2.curMove.equals("jump")) {

@@ -42,10 +42,6 @@ class PlayerOne {
                 s.attack(27, 29, "kick2");
             } else if (downKeys['x'] && s.curMove.equals("") || s.curMove.equals("spinningKnuckle")) {
                 s.attack(30, 33, "spinningKnuckle");
-            } else if (downKeys['f'] && downKeys['w'] && s.curMove.equals("") || s.curMove.equals("flyKick")) {
-                s.jumpMove(53, 54, "flyKick", false);
-            } else if (downKeys['h'] && s.curMove.equals("") || s.curMove.equals("flyKick2")) {
-                s.attack(80, 85, "flyKick2");
             } else if (downKeys['w'] && s.curMove.equals("") || s.curMove.equals("jump")) {
                 if (downKeys['a']) { // either or - not both
                     s.dir = 'l';
@@ -91,8 +87,6 @@ class PlayerOne {
                 s.attack(218, 225, "kick");
             } else if (downKeys['g'] && !downKeys['w'] && s.curMove.equals("") || s.curMove.equals("kick2")) {
                 s.attack(244, 247, "kick2");
-            } else if (downKeys['z'] && s.curMove.equals("") || s.curMove.equals("flyKick")) {
-                s.attack(254, 257, "flyKick");
             } else if (downKeys['x'] && s.curMove.equals("") || s.curMove.equals("spinningKick")) {
                 s.attack(258, 267, "spinningKick");
             } else if (downKeys['w'] && s.curMove.equals("") || s.curMove.equals("jump")) {
@@ -142,8 +136,6 @@ class PlayerOne {
                 s.attack(328, 332, "kick");
                 //} else if (downKeys['g'] && !downKeys['w'] && s.curMove.equals("") || s.curMove.equals("kick2")) {
                 //  s.attack(244, 247, "kick2");
-            } else if (downKeys['z'] && s.curMove.equals("") || s.curMove.equals("flyKick")) {
-                s.attack(399, 406, "flyKick");
             } else if (downKeys['x'] && s.curMove.equals("") || s.curMove.equals("spinningKick")) {
                 s.attack(371, 380, "spinningKick");
             } else if (downKeys['w'] && s.curMove.equals("") || s.curMove.equals("jump")) {
@@ -193,8 +185,6 @@ class PlayerOne {
                 s.attack(451, 453, "kick");
             } else if (downKeys['g'] && !downKeys['w'] && s.curMove.equals("") || s.curMove.equals("kick2")) {
                 s.attack(485, 493, "kick2");
-            } else if (downKeys['z'] && s.curMove.equals("") || s.curMove.equals("flyKick")) {
-                s.attack(502, 512, "flyKick");
             } else if (downKeys['x'] && s.curMove.equals("") || s.curMove.equals("spinningKick")) {
                 s.attack(477, 484, "spinningKick");
             } else if (downKeys['w'] && s.curMove.equals("") || s.curMove.equals("jump")) {

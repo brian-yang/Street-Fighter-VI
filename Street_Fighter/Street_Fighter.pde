@@ -14,9 +14,10 @@ String fighter2 = "";
 boolean playerTurn = true; // determines whose turn it is to select a character
 // list of controls for each player -- do not change unless you change it in the Arena class too
 char[] controls = new char[] {'w','a','s','d',
-                           'g','h','e','q',
-                           'r','f','x','c'}; // player 1
-char[] controls2 = new char[] {',','.','/','m'};  // player 2 -- does not include the arrow keys
+                              'g','h','e','q',
+                              'r','f','x','c'}; // player 1
+char[] controls2 = new char[] {',','.','/','m',
+                               'j','k','l','n'};  // player 2 -- does not include the arrow keys
 // =======================================================================================================================
 void setup() {
     size(1024, 768);
@@ -291,5 +292,5 @@ Screen createScreen(String file, String screenBG) {
 // arena
 Arena createArena(String screenBG) {
     Arena arena = new Arena(screenBG);
-    return arena;
-} //<>// //<>//
+    return arena; //<>//
+}
