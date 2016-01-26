@@ -113,7 +113,7 @@ Bug: Timer is not exact.
 
 New Feature: Returned player to main menu after match.
 
-**Final Version Complete!** 
+### Final Version Complete! 
 Things we were able to accomplish:
 Animated four different characters: Ken, Ryu, Chun-li, Cammy
 Created a menu, arena, versus, and training screen with properly working buttons
