@@ -154,9 +154,10 @@ class PlayerTwo {
                 s2.reset(297);
             }
         }
-        // VICTORY SCREEN FOR CHUN-LI
         if (s2.name.equals("Chun-li")) {
-            if (s2.state.equals("getHit") && s2.curMove.equals("") || s2.curMove.equals("getHit")) {
+            if (s.health <= 0 && s.curMove.equals("") || s.curMove.equals("victory")){
+                s2.victory(438, 440, "victory");  
+            } else if (s2.state.equals("getHit") && s2.curMove.equals("") || s2.curMove.equals("getHit")) {
                 s2.getHit(445, 445, "getHit");
             } else if (downKeys2[256] && s2.curMove.equals("") || s2.curMove.equals("walkRight")) {
                 s2.dir = 'r';

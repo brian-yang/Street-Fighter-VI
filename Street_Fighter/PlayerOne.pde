@@ -155,9 +155,10 @@ class PlayerOne {
             }
         }
         
-        // VICTORY SCREEN FOR CHUNLI
         if (s.name.equals("Chun-li")) {
-            if (s.state.equals("getHit") && s.curMove.equals("") || s.curMove.equals("getHit")) {
+            if (s2.health <= 0 && s.curMove.equals("") || s.curMove.equals("victory")){
+                s.victory(438, 440, "victory");
+            } else if (s.state.equals("getHit") && s.curMove.equals("") || s.curMove.equals("getHit")) {
                 s.getHit(445, 445, "getHit");
             } else if (downKeys['d'] && s.curMove.equals("") || s.curMove.equals("walkRight")) {
                 s.dir = 'r';
