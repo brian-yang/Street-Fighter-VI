@@ -11,12 +11,23 @@ light kick(Z), medium kick(X), and heavy kick(C).
 
 ## Directions to compile/run
 Press play button on processing to run the sketch.
-Enter main menu.
-Choose to enter a battle or train with an AI.
-Pick a character and brawl it out using your arsenal of moves.
+Enter main menu and select from the menu options.
+Choose to enter a battle or train with an NPC.
 
 ## Directions to use it.
-Same as Part 2.
+The player buttons will be shown when the user navigates to the instructions
+screen. Clicking versus or training will bring the user to the character
+selection screen, where depending on the number of players, fighters will be
+chosen. In the training screen, the lone player will choose both fighters.
+In the versus screen, players will take turns selecting fighters. When
+both players have been chosen, click the fight button to begin the match.
+
+The match has a 60-second countdown before the match ends. With the player
+buttons, players should be able to move and attack with their fighters.
+In versus, players will be able to duke it out. In training, players
+will be able to fight against an NPC that does not move. Once a player has won,
+the player's fighter will do a victory dance before the screen switches
+back to the main menu.
 
 ## Day by Day Changelog
 ### 1/19/2016
