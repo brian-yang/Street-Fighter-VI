@@ -99,3 +99,35 @@ Players can train without having to fight an actual opponent.
 Players can fight each other.
 
 Goal: Fix victory screen. Modify hitboxes to be more accurate.
+
+### 1/25/2016
+**Anthony Liang** -- Added victory screens for each character
+
+Bug:  Victory dances are not completely on the platform.
+
+New Feature: Added victory screens.
+
+**Brian Yang** -- Returned player to main menu when match is over
+
+Bug: Timer is not exact.
+
+New Feature: Returned player to main menu after match.
+
+**Final Version Complete!** 
+Things we were able to accomplish:
+Animated four different characters: Ken, Ryu, Chun-li, Cammy
+Created a menu, arena, versus, and training screen with properly working buttons
+Created a selection menu for characters 
+Arena contains a working timer, health bars for the characters, and display character names
+Characters are able to walk, punch, kick, jump, crouch, and get hit
+Got hitboxes to work so that the characters are able to interact
+Created an instructions screen and standardized character keys
+
+Things that we are still lacking, but can add/fix if we had more time:
+Mid air moves (we tried to include these, but too many bugs popped up)
+More special move animations (we were trying to work on those, but could not get the hitbox to work properly)
+Fix special move animations to make them more realistic and move forward
+Include sound in the game to make it more engaging
+Fix the walking/jumping animation and hitboxes to make the game more smooth in general
+Make the timer more accurate
+Create more characters!
