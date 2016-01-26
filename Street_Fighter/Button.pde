@@ -23,7 +23,6 @@ class Button {
     rect(x, y, w, h, 10); // last argument causes the rounded corners
     textAlign(CENTER, CENTER);
     fill(0);
-    textSize(12);
     text(label, x + (w / 2), y + (h / 2));
   }
   

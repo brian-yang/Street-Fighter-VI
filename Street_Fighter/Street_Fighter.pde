@@ -4,6 +4,7 @@ String curScreenName;
 Screen activeScreen;
 PImage bg;
 FileParser parser;
+PFont defaultFont;
 // checks if a key has been pressed when the fight has started
 int numPlayers;
 boolean[] downKeys = new boolean[260];
@@ -16,12 +17,12 @@ char[] controls = new char[] {'w','a','s','d',
                            'g','h','e','q',
                            'r','f','x','c'}; // player 1
 char[] controls2 = new char[] {',','.','/','m'};  // player 2 -- does not include the arrow keys
-PFont font;
 // =======================================================================================================================
 void setup() {
     size(1024, 768);
     smooth();
 
+    defaultFont = loadFont("Ubuntu-48.vlw");
     parser = new FileParser(); // see FileParser class
     initializeScreens();
     curScreenName = "Menu";
@@ -68,10 +69,12 @@ void activateButton(Button b) {
           playerTurn = true;
         }
     } else if (!fighter1.isEmpty() && !fighter2.isEmpty() && b.getLabel().equals("Fight!")) {
-        setActiveScreen("Arena");
         resetKeys();
+        setActiveScreen("Arena");
     } else if (b.getLabel().equals("Back")) {
         setActiveScreen("Menu");
+        fighter1 = "";
+        fighter2 = "";
     } else if (!b.getLabel().equals("Fight!")) {
         setActiveScreen(b.getLabel());
     }
@@ -213,10 +216,11 @@ void showScreen(Screen activeScreen) {
     // Show background and place buttons
     bg = loadImage(activeScreen.background);
     background(bg);
+    textFont(defaultFont);
+    textSize(20);
     if (curScreenName.equals("Menu")) {
         activeScreen.placeButtons(0, 100, 200, 100, "vertical");
-    }
-    if (curScreenName.equals("Versus") || curScreenName.equals("Training")) {
+    } else if (curScreenName.equals("Versus") || curScreenName.equals("Training")) {
         if (curScreenName.equals("Versus")) {
           numPlayers = 2;
         } else {
@@ -241,8 +245,7 @@ void showScreen(Screen activeScreen) {
           fill(255);
           text("VERSUS", width / 2 - 20, height / 2 + 130);
         }
-    }
-    if (curScreenName.equals("Instructions")) {
+    } else if (curScreenName.equals("Instructions")) {
         activeScreen.placeButtons(0, -415, 700, 510, "horizontal");
         fill(218);
         stroke(255,0,0);
@@ -252,20 +255,17 @@ void showScreen(Screen activeScreen) {
         ArrayList<String> instructions = new ArrayList<String>();
         parser.readTextBlocks("instructions.txt", instructions);
         for (int i = 0; i < instructions.size(); i++) {
+          textSize(16);
           fill(0);
-          textSize(15);
           text(instructions.get(i), 260 + i * 490, 375);
         }
-    }
-    if (curScreenName.equals("Arena")) {
+    } else if (curScreenName.equals("Arena")) {
         ((Arena) activeScreen).run(numPlayers);
-        font = loadFont("ShowcardGothic-Reg-48.vlw");
-        textFont(font);
-        textSize(60);
-        fill(#2EB73D);
-        text(fighter1, width/2 - 280, height / 2 - 220);
-        text(fighter2, width/2 + 280, height / 2 - 220);
-    }
+        // goes back to the menu if the match is over and 5 seconds have passed
+        if (((Arena) activeScreen).timer.time > 3 && !((Arena) activeScreen).winner.isEmpty()) {
+          setActiveScreen("Menu");
+        }
+    } 
 }
 
 // store each screen in a hashmap of screens
@@ -288,13 +288,6 @@ Screen createScreen(String file, String screenBG) {
     Screen s = new Screen(buttons, labels, screenBG);
     return s;
 }
-
-// plain screen
-Screen createScreen(String screenBG) {
-    Screen s = new Screen(screenBG);
-    return s;
-}
-
 // arena
 Arena createArena(String screenBG) {
     Arena arena = new Arena(screenBG);

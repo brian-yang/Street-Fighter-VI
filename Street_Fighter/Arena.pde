@@ -1,9 +1,11 @@
 class Arena extends Screen {
+    PFont font;
     Timer timer;
     Sprite p;
     Sprite q;
     PlayerOne p1;
     PlayerTwo p2;
+    String winner;
 
 
     Arena(String bg) {
@@ -13,22 +15,27 @@ class Arena extends Screen {
 
     void initialize(String fighter1, boolean[] downKeys, String fighter2, boolean[] downKeys2) {
         // initialize arena
-        timer = new Timer(60);
+        font = loadFont("ShowcardGothic-Reg-48.vlw");
+        timer = new Timer(62); // actually starts at 60 seconds because timer is slightly off
         p = new Sprite(300, width / 2, fighter1);
         q = new Sprite(700, width / 2, fighter2);
         q.dir = 'l';
         p1 = new PlayerOne(p, downKeys);
         p2 = new PlayerTwo(q, downKeys2);
+        winner = "";
     }
 
     void run(int players) {
+        // Stylize screen
+        stylize();
+      
         // Timer
-        timer.run();
+        runTimer();
 
         // Health
         makeHealthBar(p, 80, 90);
         makeHealthBar(q, width - 380, 90);
-
+        
         // Fighters
         p1.action(q);
         if (players == 2) {
@@ -38,6 +45,32 @@ class Arena extends Screen {
         }
         hitbox(p, q);
         hitbox(q, p);
+    }
+
+    void stylize() {
+        textFont(font);
+        textSize(60);
+        fill(#2EB73D);
+        text(fighter1, width/2 - 280, height / 2 - 220);
+        text(fighter2, width/2 + 280, height / 2 - 220);
+    }
+
+    void runTimer() {
+        if (p.health <= 0 || q.health <= 0 || timer.interval - timer.time <= 0) {
+          if (winner.isEmpty()) {
+            timer.reset(); // calls reset to start 3-second countdown before switch to main menu
+          }
+          timer.stop();
+          if (q.health <= 0) {
+            winner = "Player 1";
+          } else if (p.health <= 0) {
+            winner = "Player 2";
+          } else {
+            winner = "Tie";
+          }
+        } else {
+          timer.run();
+        }
     }
 
     void freeze(Sprite s) {
@@ -98,7 +131,7 @@ class Arena extends Screen {
                 }
             }
         }
-        // checks if Sprite s is within hitbox of Sprite s2 on the s's right side
+    // checks if Sprite s is within hitbox of Sprite s2 on the s's right side
     boolean hitboxRight(Sprite s, Sprite s2) {
         float widthFactor = 0.73;
         return s.dir == 'l' &&

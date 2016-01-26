@@ -1,8 +1,9 @@
 class Timer {
     PFont font;
-    String time;
-    int t;
+    int time;
     int interval;
+    int startTime;
+    int currentTime;
 
     Timer(int countdown) {
         interval = countdown;
@@ -10,19 +11,32 @@ class Timer {
         font = createFont("Waree", 32);
         textFont(font);
         fill(0);
+        startTime = millis();
     }
 
     void run() {
-        t = interval - int(millis() / 1000);
-        if (t > 0) {
-            time = nf(t, 3);
-            text(time.substring(1), width / 2, 100);
-        } else {
-            font = loadFont("ShowcardGothic-Reg-48.vlw");
-            textFont(font);
-            textSize(100);
-            fill(#2EB73D);
-            text("GAME OVER", width / 2, height / 2);
+        currentTime = millis();
+        time = round((currentTime - startTime) / 1000);
+        //println(startTime + " : " + currentTime);
+        if (interval - time > 0) {
+            text(nf(interval - time, 2), width / 2, 100);
         }
+    }
+    
+    void stop() {
+        // still keeps track of time to make sure a few seconds have passed
+        // before screen switches back to the main menu
+        currentTime = millis();
+        time = round((currentTime - startTime) / 1000);
+        text("00", width / 2, 100);        
+        font = loadFont("ShowcardGothic-Reg-48.vlw");
+        textFont(font);
+        textSize(100);
+        fill(#2EB73D);
+        text("GAME OVER", width / 2, height / 2);
+    }
+    
+    void reset() {
+        startTime = millis();
     }
 }
