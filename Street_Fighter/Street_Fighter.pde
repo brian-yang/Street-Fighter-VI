@@ -204,6 +204,11 @@ void setActiveScreen(String name) {
     curScreenName = name;
     if (name.equals("Arena")) {
         ((Arena) activeScreen).initialize(fighter1, downKeys, fighter2, downKeys2);
+        if (random(2) == 0){
+          ((Arena) activeScreen).background = "arena.jpg";
+        } else {
+          ((Arena) activeScreen).background = "arena2.jpeg";
+         }
     }
 }
 
