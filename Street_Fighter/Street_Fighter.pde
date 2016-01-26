@@ -61,7 +61,7 @@ void checkScreenButtons(ArrayList < ArrayList < Button >> buttons) {
 void activateButton(Button b) {
     if (b.getLabel().equals("Quit")) {
         exit();
-    } else if (parser.isInFile("characters.txt", b.getLabel())) {
+    } else if (parser.isInFile("data/customization/characters.txt", b.getLabel())) {
         if (playerTurn) {
           fighter1 = b.getLabel();
           playerTurn = false;
@@ -204,10 +204,10 @@ void setActiveScreen(String name) {
     curScreenName = name;
     if (name.equals("Arena")) {
         ((Arena) activeScreen).initialize(fighter1, downKeys, fighter2, downKeys2);
-        if (random(2) == 0){
-          ((Arena) activeScreen).background = "arena.jpg";
+        if (round(random(1)) == 0){
+          ((Arena) activeScreen).background = "data/images/arena.jpg";
         } else {
-          ((Arena) activeScreen).background = "arena2.jpeg";
+          ((Arena) activeScreen).background = "data/images/arena2.jpeg";
          }
     }
 }
@@ -259,7 +259,7 @@ void showScreen(Screen activeScreen) {
         line(510, 150, 510, 650);
         textAlign(CENTER, CENTER);
         ArrayList<String> instructions = new ArrayList<String>();
-        parser.readTextBlocks("instructions.txt", instructions);
+        parser.readTextBlocks("data/customization/instructions.txt", instructions);
         for (int i = 0; i < instructions.size(); i++) {
           textSize(16);
           fill(0);
@@ -277,11 +277,11 @@ void showScreen(Screen activeScreen) {
 // store each screen in a hashmap of screens
 void initializeScreens() {
     screens = new HashMap < String, Screen > ();
-    screens.put("Menu", createScreen("menu.txt", "Background.png"));
-    screens.put("Versus", createScreen("character-select.txt", "character-select.jpg"));
-    screens.put("Training", createScreen("character-select.txt", "character-select.jpg"));
-    screens.put("Instructions", createScreen("instructions-buttons.txt", "Background.png"));
-    screens.put("Arena", createArena("arena.jpg"));
+    screens.put("Menu", createScreen("data/customization/menu.txt", "data/images/Background.png"));
+    screens.put("Versus", createScreen("data/customization/character-select.txt", "data/images/character-select.jpg"));
+    screens.put("Training", createScreen("data/customization/character-select.txt", "data/images/character-select.jpg"));
+    screens.put("Instructions", createScreen("data/customization/instructions-buttons.txt", "data/images/Background.png"));
+    screens.put("Arena", createArena("data/images/arena.jpg"));
 }
 
 // instantiates screens
@@ -292,7 +292,7 @@ Screen createScreen(String file, String screenBG) {
     parser.readLabels(file, labels);
     ArrayList < ArrayList < Button >> buttons = new ArrayList < ArrayList < Button >> (labels.size());
     Screen s = new Screen(buttons, labels, screenBG);
-    return s;
+    return s; //<>//
 }
 // arena
 Arena createArena(String screenBG) {

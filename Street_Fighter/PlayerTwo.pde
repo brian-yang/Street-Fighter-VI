@@ -10,8 +10,8 @@ class PlayerTwo {
     void action(Sprite s) {
         // P2
         if (s2.name.equals("Cammy")) {
-            if (s.health <= 0 && s.curMove.equals("") || s.curMove.equals("victory")) {
-                s.victory(171, 176, "victory");
+            if (s.health <= 0 && s2.curMove.equals("") || s2.curMove.equals("victory")) {
+                s2.victory(171, 176, "victory");
             } else if (s2.state.equals("getHit") && s2.curMove.equals("") || s2.curMove.equals("getHit")) {
                 s2.getHit(106, 108, "getHit");
             } else if (downKeys2[256] && s2.curMove.equals("") || s2.curMove.equals("walkRight")) {
@@ -107,7 +107,7 @@ class PlayerTwo {
         }
         if (s2.name.equals("Ryu")) {
             if (s.health <= 0 && s2.curMove.equals("") || s2.curMove.equals("victory")){
-                s2.victory(418, 420, "victory");
+                s2.victory(420, 420, "victory");
             } else if (s2.state.equals("getHit") && s2.curMove.equals("") || s2.curMove.equals("getHit")) {
                 s2.getHit(312, 314, "getHit");
             } else if (downKeys2[256] && s2.curMove.equals("") || s2.curMove.equals("walkRight")) {
@@ -155,7 +155,7 @@ class PlayerTwo {
             }
         }
         if (s2.name.equals("Chun-li")) {
-            if (s.health <= 0 && s.curMove.equals("") || s.curMove.equals("victory")){
+            if (s.health <= 0 && s2.curMove.equals("") || s2.curMove.equals("victory")){
                 s2.victory(438, 440, "victory");  
             } else if (s2.state.equals("getHit") && s2.curMove.equals("") || s2.curMove.equals("getHit")) {
                 s2.getHit(445, 445, "getHit");

@@ -107,7 +107,7 @@ class PlayerOne {
         }
         if (s.name.equals("Ryu")) {
             if (s2.health <= 0 && s.curMove.equals("") || s.curMove.equals("victory")){
-                s.victory(418, 420, "victory");
+                s.victory(420, 420, "victory");
             } else if (s.state.equals("getHit") && s.curMove.equals("") || s.curMove.equals("getHit")) {
                 s.getHit(312, 314, "getHit");
             } else if (downKeys['d'] && s.curMove.equals("") || s.curMove.equals("walkRight")) {

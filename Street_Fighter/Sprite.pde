@@ -29,19 +29,19 @@ class Sprite {
     Sprite(int x, int y, String name) {
         images = new ArrayList < PImage > ();
         for (int i = 0; i < 181; i++) {
-            String imageName = "Cammy/Cammy " + "(" + (i + 1) + ").png";
+            String imageName = "data/Cammy/Cammy " + "(" + (i + 1) + ").png";
             images.add(loadImage(imageName));
         }
         for (int i = 0; i < 116; i++) {
-            String imageName = "Ken/Ken " + "(" + (i + 1) + ").png";
+            String imageName = "data/Ken/Ken " + "(" + (i + 1) + ").png";
             images.add(loadImage(imageName));
         }
         for (int i = 0; i < 133; i++) {
-            String imageName = "Ryu/Ryu " + "(" + (i + 1) + ").png";
+            String imageName = "data/Ryu/Ryu " + "(" + (i + 1) + ").png";
             images.add(loadImage(imageName));
         }
         for (int i = 0; i < 114; i++) {
-            String imageName = "Chun-li/Chun-li " + "(" + (i + 1) + ").png";
+            String imageName = "data/Chun-li/Chun-li " + "(" + (i + 1) + ").png";
             images.add(loadImage(imageName));
         }
         for (PImage i: images){
